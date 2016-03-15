@@ -7,6 +7,7 @@ package packageFacades;
 
 import java.util.List;
 import javax.ejb.Local;
+import packageEntites.Client;
 import packageEntites.CompteBancaire;
 
 /**
@@ -29,5 +30,9 @@ public interface CompteBancaireFacadeLocal {
     List<CompteBancaire> findRange(int[] range);
 
     int count();
+
+    List<CompteBancaire> RetournerComptes();
+
+    void CreerCompte(int num, String titulaire, String banque, String guichet, Client client);
     
 }

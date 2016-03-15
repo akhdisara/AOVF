@@ -5,10 +5,12 @@
  */
 package packageFacades;
 
+import java.util.Date;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import packageEntites.CarteAPuce;
+import packageEntites.Personne;
 
 /**
  *
@@ -26,6 +28,15 @@ public class CarteAPuceFacade extends AbstractFacade<CarteAPuce> implements Cart
 
     public CarteAPuceFacade() {
         super(CarteAPuce.class);
+    }
+
+    @Override
+    public CarteAPuce CreerCarteAPuce(Date dateAttribution, Date dateLimite) {
+        CarteAPuce c = new CarteAPuce();
+        c.setDateDebutValidite(dateAttribution);
+        c.setDateFinValidite(dateLimite);
+        em.persist(c);
+        return c;
     }
     
 }

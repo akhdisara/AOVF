@@ -7,6 +7,7 @@ package packageFacades;
 
 import java.util.List;
 import javax.ejb.Local;
+import packageEntites.CarteAPuce;
 import packageEntites.Client;
 
 /**
@@ -30,6 +31,10 @@ public interface ClientFacadeLocal {
 
     int count();
 
-    void CreerClient(String numClient, String mdp, String nom, String prenom);
+    Client CreerClient(String numClient, String mdp, String nom, String prenom, CarteAPuce carte);
+
+    List<Client> RetournerClients();
+
+    Client RechercherClientParId(long id);
     
 }

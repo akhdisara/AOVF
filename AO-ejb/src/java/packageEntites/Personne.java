@@ -112,7 +112,7 @@ public class Personne implements Serializable {
         this.prenom = prenom;
     }
 
-    @OneToOne
+    @OneToOne 
     private CarteAPuce laCarteAPuce;
 
     /**

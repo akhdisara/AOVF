@@ -5,9 +5,17 @@
  */
 package packageSessions;
 
+import java.util.Date;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import packageEntites.CarteAPuce;
+import packageEntites.Client;
+import packageEntites.CompteBancaire;
+import packageEntites.Personne;
+import packageFacades.CarteAPuceFacadeLocal;
 import packageFacades.ClientFacadeLocal;
+import packageFacades.CompteBancaireFacadeLocal;
 
 /**
  *
@@ -16,13 +24,38 @@ import packageFacades.ClientFacadeLocal;
 @Stateless
 public class SessionCommercial implements SessionCommercialLocal {
     @EJB
+    private CarteAPuceFacadeLocal carteAPuceFacade;
+    @EJB
+    private CompteBancaireFacadeLocal compteBancaireFacade;
+    @EJB
     private ClientFacadeLocal clientFacade;
 
     @Override
-    public void CreerClient(String num, String mdp, String nom, String prenom) {
-        clientFacade.CreerClient(num, mdp, nom, prenom);
+    public Client CreerClient(String num, String mdp, String nom, String prenom, CarteAPuce carte) {
+        Client c = clientFacade.CreerClient(num, mdp, nom, prenom, carte);
+        return c;
     }
 
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
+    @Override
+    public List<Client> RetournerClients() {
+        return clientFacade.RetournerClients();
+    }
+
+    @Override
+    public List<CompteBancaire> RetournerComptes() {
+        return compteBancaireFacade.RetournerComptes();
+    }
+
+    @Override
+    public void CreerCompte(int num, String titulaire, String banque, String guichet, Client client) {
+        compteBancaireFacade.CreerCompte(num, titulaire, banque, guichet, client);
+    }
+
+    @Override
+    public CarteAPuce CreerCarteAPuce(Date datedebut, Date datefin) {
+        CarteAPuce c = carteAPuceFacade.CreerCarteAPuce(datedebut, datefin);
+        return c;
+    }
+
+
 }

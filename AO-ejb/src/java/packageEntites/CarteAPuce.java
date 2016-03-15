@@ -54,7 +54,7 @@ public class CarteAPuce implements Serializable {
     public void setLesAbonnements(List<Abonnement> lesAbonnements) {
         this.lesAbonnements = lesAbonnements;
     }
-    @OneToOne(mappedBy = "laCarteAPuce")
+    @OneToOne (mappedBy = "laCarteAPuce")
     private Personne laPersonne;
 
     public Personne getLaPersonne() {

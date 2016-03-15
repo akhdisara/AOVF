@@ -5,9 +5,11 @@
  */
 package packageFacades;
 
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Local;
 import packageEntites.CarteAPuce;
+import packageEntites.Personne;
 
 /**
  *
@@ -29,5 +31,7 @@ public interface CarteAPuceFacadeLocal {
     List<CarteAPuce> findRange(int[] range);
 
     int count();
+
+    CarteAPuce CreerCarteAPuce(Date dateAttribution, Date dateLimite);
     
 }

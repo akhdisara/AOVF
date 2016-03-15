@@ -5,7 +5,13 @@
  */
 package packageSessions;
 
+import java.util.Date;
+import java.util.List;
 import javax.ejb.Local;
+import packageEntites.CarteAPuce;
+import packageEntites.Client;
+import packageEntites.CompteBancaire;
+import packageEntites.Personne;
 
 /**
  *
@@ -14,6 +20,14 @@ import javax.ejb.Local;
 @Local
 public interface SessionCommercialLocal {
 
-    void CreerClient(String num, String mdp, String nom, String prenom);
+    Client CreerClient(String num, String mdp, String nom, String prenom, CarteAPuce carte);
+
+    List<Client> RetournerClients();
+
+    List<CompteBancaire> RetournerComptes();
+
+    void CreerCompte(int num, String titulaire, String banque, String guichet, Client client);
+
+    CarteAPuce CreerCarteAPuce(Date datedebut, Date datefin);
     
 }
