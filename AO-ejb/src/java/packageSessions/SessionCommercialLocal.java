@@ -26,8 +26,16 @@ public interface SessionCommercialLocal {
 
     List<CompteBancaire> RetournerComptes();
 
-    void CreerCompte(int num, String titulaire, String banque, String guichet, Client client);
+    void CreerCompte(int num, String titulaire, String banque, int guichet, Client client);
 
     CarteAPuce CreerCarteAPuce(Date datedebut, Date datefin);
+
+    Client RechercherClientParId(long id);
+
+    void ModifierClient(Long id, String num, String nom, String prenom);
+
+    CompteBancaire RechercherCompteParId(long id);
+
+    void ModifierCompte(long id, int num, String titulaire, String banque, int guichet);
     
 }

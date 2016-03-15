@@ -33,6 +33,10 @@ public interface CompteBancaireFacadeLocal {
 
     List<CompteBancaire> RetournerComptes();
 
-    void CreerCompte(int num, String titulaire, String banque, String guichet, Client client);
+    void CreerCompte(int num, String titulaire, String banque, int guichet, Client client);
+
+    CompteBancaire RechercherCompteParId(long id);
+
+    void ModifierCompte(long id, int num, String titulaire, String banque, int guichet);
     
 }

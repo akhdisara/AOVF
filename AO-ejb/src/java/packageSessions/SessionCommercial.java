@@ -47,7 +47,7 @@ public class SessionCommercial implements SessionCommercialLocal {
     }
 
     @Override
-    public void CreerCompte(int num, String titulaire, String banque, String guichet, Client client) {
+    public void CreerCompte(int num, String titulaire, String banque, int guichet, Client client) {
         compteBancaireFacade.CreerCompte(num, titulaire, banque, guichet, client);
     }
 
@@ -55,6 +55,26 @@ public class SessionCommercial implements SessionCommercialLocal {
     public CarteAPuce CreerCarteAPuce(Date datedebut, Date datefin) {
         CarteAPuce c = carteAPuceFacade.CreerCarteAPuce(datedebut, datefin);
         return c;
+    }
+
+    @Override
+    public Client RechercherClientParId(long id) {
+        return clientFacade.RechercherClientParId(id);
+    }
+
+    @Override
+    public void ModifierClient(Long id, String num, String nom, String prenom) {
+        clientFacade.ModifierClient(id, num, nom, prenom);
+    }
+
+    @Override
+    public CompteBancaire RechercherCompteParId(long id) {
+        return compteBancaireFacade.RechercherCompteParId(id);
+    }
+
+    @Override
+    public void ModifierCompte(long id, int num, String titulaire, String banque, int guichet) {
+        compteBancaireFacade.ModifierCompte(id, num, titulaire, banque, guichet);
     }
 
 

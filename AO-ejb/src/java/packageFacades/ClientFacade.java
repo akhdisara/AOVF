@@ -62,5 +62,14 @@ public class ClientFacade extends AbstractFacade<Client> implements ClientFacade
         c = (Client) req.getSingleResult();
         return c;
     }
+
+    @Override
+    public void ModifierClient(long id, String num, String nom, String prenom) {
+        Client c = RechercherClientParId(id);
+        c.setNumClient(num);
+        c.setNom(nom);
+        c.setPrenom(prenom);
+        em.merge(c);
+    }
     
 }

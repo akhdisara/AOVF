@@ -74,7 +74,6 @@ public class Servlet extends HttpServlet {
                 List<Client> list = sessionCommercial.RetournerClients();
                 request.setAttribute("listeclients", list);
                 request.setAttribute("message", "");
-                //System.out.println("WWWWW"+list.get(0).getLaCarteAPuce().getDateDebutValidite());
             }
             
             else if (act.equals("CreationClient")) {
@@ -85,8 +84,31 @@ public class Servlet extends HttpServlet {
                 jspClient = "/ClientAfficher.jsp";
                 doActionAjouterClient(request, response);
             } 
+            else if (act.equals("ModificationClient")) {
+                jspClient = "/ClientModifier.jsp";
+                doActionAfficherModifClient(request, response);
+            }
+            else if (act.equals("ModifierClient")) {
+                jspClient = "/ClientAfficher.jsp";
+                doActionModifierClient(request, response);
+            }
+            else if (act.equals("GererCompte")) {
+                jspClient = "/CompteGerer.jsp";
+                doActionAfficherGestionCompteClient(request, response);
+            }
+            else if (act.equals("CompteAjouter")) {
+                jspClient = "/CompteGerer.jsp";
+                doActionAjouterCompte(request, response);
+            }
+            else if (act.equals("ModificationCompte")) {
+                jspClient = "/CompteModifier.jsp";
+                doActionAfficherModifCompte(request, response);
+            }
+            else if (act.equals("ModifierCompte")) {
+                jspClient = "/CompteGerer.jsp";
+                doActionModifierCompte(request, response);
+            }
             
-    
             RequestDispatcher Rd;
             Rd = getServletContext().getRequestDispatcher(jspClient);
             Rd.forward(request, response);
@@ -161,6 +183,134 @@ public class Servlet extends HttpServlet {
         request.setAttribute("message", message);
         List<Client> list = sessionCommercial.RetournerClients();
         request.setAttribute("listeclients", list);
+    }
+    
+    protected void doActionAfficherModifClient(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String c = request.getParameter("modif");
+        Long idclient = Long.valueOf(c);
+        
+        Client client = sessionCommercial.RechercherClientParId(idclient);
+
+        String message = "Modifier les informations du client N°"+client.getNumClient()+", "+client.getPrenom()+" "+client.getNom();
+        request.setAttribute("message", message);
+        request.setAttribute("client", client);
+    }
+    
+    protected void doActionModifierClient(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        
+        String c = request.getParameter("client");
+        Long idclient = Long.valueOf(c);
+        Client client = sessionCommercial.RechercherClientParId(idclient);
+        
+        String num = request.getParameter("num");
+        String nom = request.getParameter("nom");
+        String prenom = request.getParameter("prenom");
+        
+        if (num.trim().isEmpty()){
+            num = client.getNumClient();
+        }
+        if (nom.trim().isEmpty()){
+            nom = client.getNom();
+        }
+        if (prenom.trim().isEmpty()){
+            prenom = client.getPrenom();
+        }
+        
+        sessionCommercial.ModifierClient(idclient, num, nom, prenom);
+
+        String message = "<div class='msg_success'>Client modifié avec succès !</div>";
+        request.setAttribute("message", message);
+
+        List<Client> listc = sessionCommercial.RetournerClients();
+        request.setAttribute("listeclients", listc);
+    }
+    
+    protected void doActionAfficherGestionCompteClient(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String c = request.getParameter("client");
+        Long idclient = Long.valueOf(c);
+        
+        Client client = sessionCommercial.RechercherClientParId(idclient);
+
+        String message = "Informations bancaires du client N°"+client.getNumClient()+", "+client.getPrenom()+" "+client.getNom();
+        request.setAttribute("message", message);
+        request.setAttribute("client", client);
+    }
+    
+    protected void doActionAjouterCompte(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String c = request.getParameter("client");
+        Long idclient = Long.valueOf(c);
+        Client client = sessionCommercial.RechercherClientParId(idclient);
+        
+        String num = request.getParameter("num");
+        String titulaire = request.getParameter("titulaire");
+        String banque = request.getParameter("banque");
+        String guichet = request.getParameter("guichet");
+        
+        String message;
+
+        if (num.trim().isEmpty() || titulaire.trim().isEmpty() || banque.trim().isEmpty() || guichet.trim().isEmpty()) {
+            message = "<div class='msg_error'>Erreur - Vous n'avez pas rempli tous les champs obligatoires.</div>";
+        } else {
+            int numcompte = Integer.parseInt(num);
+            int numguichet = Integer.parseInt(guichet);
+            
+            sessionCommercial.CreerCompte(numcompte, titulaire, banque, numguichet, client);
+            
+            message = "<div class='msg_success'>Le compte est ajouté avec succès !</div>";
+        }
+        
+        request.setAttribute("message", message);
+        request.setAttribute("client", client);
+    }
+    
+    protected void doActionAfficherModifCompte(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String cpt = request.getParameter("compte");
+        Long idcompte = Long.valueOf(cpt);
+        String c = request.getParameter("client");
+        Long idclient = Long.valueOf(c);
+        
+        CompteBancaire compte = sessionCommercial.RechercherCompteParId(idcompte);
+        Client client = sessionCommercial.RechercherClientParId(idclient);
+
+        String message = "Modifier les informations du compte N°"+compte.getNumCompte();
+        request.setAttribute("message", message);
+        request.setAttribute("compte", compte);
+        request.setAttribute("client", client);
+    }
+    
+    protected void doActionModifierCompte(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String cpt = request.getParameter("compte");
+        Long idcompte = Long.valueOf(cpt);
+        CompteBancaire compte = sessionCommercial.RechercherCompteParId(idcompte);
+        
+        String cli = request.getParameter("client");
+        Long idclient = Long.valueOf(cli);
+        Client client = sessionCommercial.RechercherClientParId(idclient);
+        
+        String num = request.getParameter("num");
+        String titulaire = request.getParameter("titulaire");
+        String banque = request.getParameter("banque");
+        String guichet = request.getParameter("guichet");
+        
+        if (num.trim().isEmpty()){
+            num = Integer.toString(compte.getNumCompte());
+        }
+        if (titulaire.trim().isEmpty()){
+            titulaire = compte.getTitulaire();
+        }
+        if (banque.trim().isEmpty()){
+            banque = compte.getNomBanque();
+        }
+        if (guichet.trim().isEmpty()){
+            guichet = Integer.toString(compte.getCodeGuichet());
+        }
+
+        sessionCommercial.ModifierCompte(idcompte, Integer.parseInt(num), titulaire, banque, Integer.parseInt(guichet));
+
+        String message = "<div class='msg_success'>Compte modifié avec succès !</div>";
+        request.setAttribute("message", message);
+
+        request.setAttribute("client", client);
     }
     
 }

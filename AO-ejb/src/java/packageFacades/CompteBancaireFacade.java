@@ -42,14 +42,34 @@ public class CompteBancaireFacade extends AbstractFacade<CompteBancaire> impleme
     }
 
     @Override
-    public void CreerCompte(int num, String titulaire, String banque, String guichet, Client client) {
+    public void CreerCompte(int num, String titulaire, String banque, int guichet, Client client) {
         CompteBancaire c = new CompteBancaire();
         c.setNumCompte(num);
         c.setTitulaire(titulaire);
         c.setNomBanque(banque);
-        c.setCodeGuichet(num);
+        c.setCodeGuichet(guichet);
         c.setLeClient(client);
         em.persist(c);
+    }
+
+    @Override
+    public CompteBancaire RechercherCompteParId(long id) {
+        CompteBancaire c;
+        String txt = "SELECT c FROM CompteBancaire AS c WHERE c.id=:id";
+        Query req = getEntityManager().createQuery(txt);
+        req = req.setParameter("id", id);
+        c = (CompteBancaire) req.getSingleResult();
+        return c;
+    }
+
+    @Override
+    public void ModifierCompte(long id, int num, String titulaire, String banque, int guichet) {
+        CompteBancaire c = RechercherCompteParId(id);
+        c.setNumCompte(num);
+        c.setTitulaire(titulaire);
+        c.setNomBanque(banque);
+        c.setCodeGuichet(guichet);
+        em.merge(c);
     }
     
 }
