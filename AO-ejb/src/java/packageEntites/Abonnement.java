@@ -97,4 +97,24 @@ public class Abonnement extends Paiement implements Serializable {
         this.laCarteAPuce = laCarteAPuce;
     }
 
+    private String Type;
+
+    /**
+     * Get the value of Type
+     *
+     * @return the value of Type
+     */
+    public String getType() {
+        return Type;
+    }
+
+    /**
+     * Set the value of Type
+     *
+     * @param Type new value of Type
+     */
+    public void setType(String Type) {
+        this.Type = Type;
+    }
+
 }

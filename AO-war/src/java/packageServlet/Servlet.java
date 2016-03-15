@@ -108,6 +108,11 @@ public class Servlet extends HttpServlet {
                 jspClient = "/CompteGerer.jsp";
                 doActionModifierCompte(request, response);
             }
+            else if (act.equals("GererAbonnement")) {
+                jspClient = "/AbonnementGerer.jsp";
+                doActionAfficherGestionAbonnementClient(request, response);
+            }
+            
             
             RequestDispatcher Rd;
             Rd = getServletContext().getRequestDispatcher(jspClient);
@@ -310,6 +315,17 @@ public class Servlet extends HttpServlet {
         String message = "<div class='msg_success'>Compte modifié avec succès !</div>";
         request.setAttribute("message", message);
 
+        request.setAttribute("client", client);
+    }
+    
+    protected void doActionAfficherGestionAbonnementClient(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String c = request.getParameter("client");
+        Long idclient = Long.valueOf(c);
+        
+        Client client = sessionCommercial.RechercherClientParId(idclient);
+
+        String message = "Informations bancaires du client N°"+client.getNumClient()+", "+client.getPrenom()+" "+client.getNom();
+        request.setAttribute("message", message);
         request.setAttribute("client", client);
     }
     
