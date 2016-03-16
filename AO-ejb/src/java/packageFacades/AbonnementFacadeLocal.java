@@ -8,6 +8,7 @@ package packageFacades;
 import java.util.List;
 import javax.ejb.Local;
 import packageEntites.Abonnement;
+import packageEntites.CarteAPuce;
 
 /**
  *
@@ -29,5 +30,7 @@ public interface AbonnementFacadeLocal {
     List<Abonnement> findRange(int[] range);
 
     int count();
+
+    void CreerAbonnement(String num, String type, Double montant, CarteAPuce carte);
     
 }

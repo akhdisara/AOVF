@@ -112,7 +112,10 @@ public class Servlet extends HttpServlet {
                 jspClient = "/AbonnementGerer.jsp";
                 doActionAfficherGestionAbonnementClient(request, response);
             }
-            
+            else if (act.equals("AbonnementAjouter")) {
+                jspClient = "/AbonnementGerer.jsp";
+                doActionAjouterAbonnement(request, response);
+            }
             
             RequestDispatcher Rd;
             Rd = getServletContext().getRequestDispatcher(jspClient);
@@ -324,9 +327,38 @@ public class Servlet extends HttpServlet {
         
         Client client = sessionCommercial.RechercherClientParId(idclient);
 
-        String message = "Informations bancaires du client N°"+client.getNumClient()+", "+client.getPrenom()+" "+client.getNom();
+        String message = "Abonnements du client N°"+client.getNumClient()+", "+client.getPrenom()+" "+client.getNom();
         request.setAttribute("message", message);
         request.setAttribute("client", client);
     }
     
+    protected void doActionAjouterAbonnement(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String c = request.getParameter("client");
+        Long idclient = Long.valueOf(c);
+        Client client = sessionCommercial.RechercherClientParId(idclient);
+        
+        String num = request.getParameter("num");
+        String typeabo = request.getParameter("type");
+        String ligne = request.getParameter("ligne");
+        String depart = request.getParameter("depart");
+        String arrivee = request.getParameter("arrivee");
+        String message;
+
+        if (num.trim().isEmpty() || typeabo.trim().isEmpty() || ligne.trim().isEmpty() || depart.trim().isEmpty() || arrivee.trim().isEmpty()) {
+            message = "<div class='msg_error'>Erreur - Vous n'avez pas rempli tous les champs obligatoires.</div>";
+        } else {
+            Double montant=null;
+            
+            //Appel du web service: 
+            //montant = MethodeRechercherTarif(String typeabo, String ligne, String depart, String arrivee);
+            //recherche de la ligne et des arrets de la ligne, récupère le tarif associé, recherche l'abonnement et applique le taux de réduction au tarif trouvé
+            
+            sessionCommercial.CreerAbonnement(num, typeabo, montant, client.getLaCarteAPuce());
+            
+            message = "<div class='msg_success'>L'abonnement est ajouté avec succès !</div>";
+        }
+        
+        request.setAttribute("message", message);
+        request.setAttribute("client", client);
+    }
 }

@@ -50,7 +50,7 @@
                     <td Width=15%><%=abo.getLeSousTrajet().getLigne()%></td>
                     <td Width=15%><%=abo.getLeSousTrajet().getArretDepart()%></td>
                     <td Width=15%><%=abo.getLeSousTrajet().getArretArrivee()%></td>
-                    <td Width=15%><%=abo.getLeSousTrajet().getTarif()%>€</td>
+                    <td Width=15%><%=abo.getMontant()%>€</td>
                     <td id="ligneTDModifier" Width=10%>
                         <a href="Servlet?abo=<%=abo.getId()%>&action=ModificationAbonnement&client=<%=client.getId()%>"><button>Modifier</button></a>
                     </td>
@@ -73,11 +73,14 @@
                         </tr>
                         <tr>
                             <td Width=100px><label for="type">Type d'abonnement<span class="requis">*</span></label></td>
-                            <td Width=200px><input type="text" name="type" value="" size="50" maxlength="20" /></td>
+                            <td Width=200px><select name="type">
+                                <option value="scolaire">Scolaire</option>
+                                <option value="mensuel">Mensuel</option>
+                                <option value="hebdo">Hebdomadaire</option></select></td>
                         </tr>
                         <tr>
                             <td Width=100px><label for="ligne">Ligne<span class="requis">*</span></label></td>
-                            <td Width=200px><input type="text" name="banque" value="" size="50" maxlength="20" /></td>
+                            <td Width=200px><input type="text" name="ligne" value="" size="50" maxlength="20" /></td>
                         </tr>
                         <tr>
                             <td Width=100px><label for="depart">Départ<span class="requis">*</span></label></td>

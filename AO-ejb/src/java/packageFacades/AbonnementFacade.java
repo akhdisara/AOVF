@@ -9,6 +9,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import packageEntites.Abonnement;
+import packageEntites.CarteAPuce;
 
 /**
  *
@@ -26,6 +27,16 @@ public class AbonnementFacade extends AbstractFacade<Abonnement> implements Abon
 
     public AbonnementFacade() {
         super(Abonnement.class);
+    }
+
+    @Override
+    public void CreerAbonnement(String num, String type, Double montant, CarteAPuce carte) {
+        Abonnement a = new Abonnement ();
+        a.setNumAbonnement(num);
+        a.setType(type);
+        a.setMontant(montant);
+        a.setLaCarteAPuce(carte);
+        em.persist(a);
     }
     
 }

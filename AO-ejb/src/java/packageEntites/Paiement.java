@@ -80,4 +80,24 @@ public class Paiement implements Serializable {
         this.leSousTrajet = leSousTrajet;
     }
 
+    private double montant;
+
+    /**
+     * Get the value of montant
+     *
+     * @return the value of montant
+     */
+    public double getMontant() {
+        return montant;
+    }
+
+    /**
+     * Set the value of montant
+     *
+     * @param montant new value of montant
+     */
+    public void setMontant(double montant) {
+        this.montant = montant;
+    }
+
 }

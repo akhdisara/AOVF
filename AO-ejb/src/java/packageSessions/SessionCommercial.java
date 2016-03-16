@@ -13,6 +13,7 @@ import packageEntites.CarteAPuce;
 import packageEntites.Client;
 import packageEntites.CompteBancaire;
 import packageEntites.Personne;
+import packageFacades.AbonnementFacadeLocal;
 import packageFacades.CarteAPuceFacadeLocal;
 import packageFacades.ClientFacadeLocal;
 import packageFacades.CompteBancaireFacadeLocal;
@@ -23,6 +24,8 @@ import packageFacades.CompteBancaireFacadeLocal;
  */
 @Stateless
 public class SessionCommercial implements SessionCommercialLocal {
+    @EJB
+    private AbonnementFacadeLocal abonnementFacade;
     @EJB
     private CarteAPuceFacadeLocal carteAPuceFacade;
     @EJB
@@ -75,6 +78,11 @@ public class SessionCommercial implements SessionCommercialLocal {
     @Override
     public void ModifierCompte(long id, int num, String titulaire, String banque, int guichet) {
         compteBancaireFacade.ModifierCompte(id, num, titulaire, banque, guichet);
+    }
+
+    @Override
+    public void CreerAbonnement(String num, String type, Double montant, CarteAPuce carte) {
+        abonnementFacade.CreerAbonnement(num, type, montant, carte);
     }
 
 

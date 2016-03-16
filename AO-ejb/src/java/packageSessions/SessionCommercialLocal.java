@@ -37,5 +37,7 @@ public interface SessionCommercialLocal {
     CompteBancaire RechercherCompteParId(long id);
 
     void ModifierCompte(long id, int num, String titulaire, String banque, int guichet);
+
+    void CreerAbonnement(String num, String type, Double montant, CarteAPuce carte);
     
 }
