@@ -117,6 +117,16 @@ public class Servlet extends HttpServlet {
                 doActionAjouterAbonnement(request, response);
             }
             
+            else if (act.equals("Trajet")) {
+                jspClient = "/TrajetRechercher.jsp";
+                request.setAttribute("message", "");
+            }
+            else if (act.equals("ChercherTrajet")) {
+                jspClient = "/TrajetRechercher.jsp";
+                doActionChercherTrajet(request, response);
+            }
+            
+            
             RequestDispatcher Rd;
             Rd = getServletContext().getRequestDispatcher(jspClient);
             Rd.forward(request, response);
@@ -186,6 +196,7 @@ public class Servlet extends HttpServlet {
             Client client = sessionCommercial.CreerClient(num, mdp, nom, prenom, carte);
             message = "<div class='msg_success'>Le client est créé avec succès !</div>";
 
+            System.out.println("WWWWWW"+client.getId());
         }
         
         request.setAttribute("message", message);
@@ -349,7 +360,7 @@ public class Servlet extends HttpServlet {
         } else {
             Double montant=null;
             
-            //Appel du web service: 
+            //Appel de la couche service: 
             //montant = MethodeRechercherTarif(String typeabo, String ligne, String depart, String arrivee);
             //recherche de la ligne et des arrets de la ligne, récupère le tarif associé, recherche l'abonnement et applique le taux de réduction au tarif trouvé
             
@@ -360,5 +371,79 @@ public class Servlet extends HttpServlet {
         
         request.setAttribute("message", message);
         request.setAttribute("client", client);
+    }
+    
+    protected void doActionChercherTrajet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String depart = request.getParameter("depart");
+        String arrivee = request.getParameter("arrivee");
+        
+        /*
+        //Appel de la couche service
+        
+        //Traitements de la couche service:
+        
+        //Trouver les arrêts STR à partir des Strings
+        Arret a = RechercherArretParNom(String depart);
+        Arret b = RechercherArretParNom(String arrivee);
+        
+        //Trouver les gares STF à partir des Strings
+        Gare a = RechercherGareParNom(String depart);
+        Gare b = RechercherGareParNom(String arrivee);
+        
+        //Trouver les lignes STR qui contiennent au moins 1 des 2 arrêts
+        List<Ligne> lesLignesSTR = RechercherLignesParArrets(Arret a, Arret b);
+        if (!lesLignesSTR.isempty()) {
+            List<Ligne> lignesSTRDirectes = new ArrayList();
+            for (Ligne l: lesLignesSTR) {
+                if (l.getLesArrets().contains(a) && l.getLesArrets().contains(b)) {
+                    lignesSTRDirectes.add(l);
+                }
+            }
+        }
+        
+        //Trouver les lignes STF qui contiennent au moins 1 des 2 gares
+        List<Ligne> lesLignesSTF = RechercherLignesParArrets(Gare a, Gare b);
+        if (!lesLignesSTF.isempty()) {
+        List<Ligne> lignesSTFDirectes = new ArrayList();
+            for (Ligne l: lesLignesSTF) {
+                if (l.getLesGares().contains(a) && l.getLesGares().contains(b)) {
+                    lignesSTFDirectes.add(l);
+                }
+            }
+        }
+        
+        //Si des lignes directes ont été trouvées (au moins une par réseau)
+        if (!lignesSTRDirectes.isempty() && !lignesSTFDirectes.isempty()) {
+            //Retourner une des lignes?
+        }
+        
+        //Sinon si des lignes STR sont directes, on les retourne
+        else if (!lignesSTRDirectes.isempty()) {
+            return lignesSTRDirectes;
+        }
+        
+        //Sinon si des lignes STF sont directes, on les retourne
+        else if (!lignesSTFDirectes.isempty()) {
+            return lignesSTFDirectes;
+        }
+        
+        //Sinon (si aucune ligne directe n'est trouvée), on tri les lignes qui contiennent le départ, les lignes qui contiennent l'arrivée, et on cherche les arrêts communs entre ces lignes)
+        else {
+            List<Ligne> lesLignesSTRDepart = RechercherLignesParArretDepart(Arret a);
+            List<Ligne> lesLignesSTFDepart = RechercherLignesParGareDepart(Gare a);
+            List<Ligne> lesLignesSTRArrivee = RechercherLignesParArretArrivee(Arret b);
+            List<Ligne> lesLignesSTFArrivee = RechercherLignesParGareArrivee(Gare b);
+        
+            Pour chaque ligne depart (STR puis STF), parcourir les lignes arrivee  et les lignes stf trouvées (si non null), et vérifier si elles contiennent 
+        }
+        
+        
+        
+        
+        
+        */
+        
+        request.setAttribute("message", "message");
+
     }
 }

@@ -14,7 +14,7 @@
         <ul id="navigation">
             <li><a href="Accueil.jsp">Page d'accueil</a></li>
             <li><a href="Servlet?action=AfficherClients">Clients</a></li>
-            <li><a href="Servlet?action=AfficherGares">wwwwwwww</a></li>
+            <li><a href="Servlet?action=Trajet">Trajets</a></li>
             <li><a href="Servlet?action=AfficherAbonnement">wwwwwwwww</a></li>
         </ul>
         <br><br>
