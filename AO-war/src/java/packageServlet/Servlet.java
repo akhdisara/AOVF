@@ -377,7 +377,7 @@ public class Servlet extends HttpServlet {
         List<Object> listResult = port.afficherListeReductions();
         List<Reduction> list = new ArrayList<Reduction>();
         for (Object o : listResult) {
-            Reduction r = (Reduction) r;
+            Reduction r = (Reduction) o;
             list.add(r);
         }
         return list;
