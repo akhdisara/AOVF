@@ -371,14 +371,14 @@ public class Servlet extends HttpServlet {
         return port.afficherListeArretsSTR();
     }
 
-    private List<Abonnement> retournerAbonnementsSTR() {
+    private List<Reduction> retournerAbonnementsSTR() {
         webservice.WebServiceSTR service = new webservice.WebServiceSTR();
         webservice.WebServicesSTR port = service.getWebServicesSTRPort();
-        List<Object> listResult = port.listeLignesSTR();
-        List<Abonnement> list = new ArrayList<Abonnement>();
+        List<Object> listResult = port.afficherListeReductions();
+        List<Reduction> list = new ArrayList<Reduction>();
         for (Object o : listResult) {
-            Abonnement a = (Abonnement) o;
-            list.add(a);
+            Reduction r = (Reduction) r;
+            list.add(r);
         }
         return list;
     }
