@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 /**
@@ -98,6 +99,48 @@ public class Paiement implements Serializable {
      */
     public void setMontant(double montant) {
         this.montant = montant;
+    }
+
+    @OneToOne
+    private Facture laFacture;
+
+    /**
+     * Get the value of laFacture
+     *
+     * @return the value of laFacture
+     */
+    public Facture getLaFacture() {
+        return laFacture;
+    }
+
+    /**
+     * Set the value of laFacture
+     *
+     * @param laFacture new value of laFacture
+     */
+    public void setLaFacture(Facture laFacture) {
+        this.laFacture = laFacture;
+    }
+
+    @ManyToOne
+    private PorteMonnaieElec lePorteMonnaie;
+
+    /**
+     * Get the value of lePorteMonnaie
+     *
+     * @return the value of lePorteMonnaie
+     */
+    public PorteMonnaieElec getLePorteMonnaie() {
+        return lePorteMonnaie;
+    }
+
+    /**
+     * Set the value of lePorteMonnaie
+     *
+     * @param lePorteMonnaie new value of lePorteMonnaie
+     */
+    public void setLePorteMonnaie(PorteMonnaieElec lePorteMonnaie) {
+        this.lePorteMonnaie = lePorteMonnaie;
     }
 
 }

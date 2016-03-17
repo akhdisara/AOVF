@@ -38,6 +38,8 @@
                 <th>Nom</th>
                 <th>Prenom</th>
                 <th>Carte</th>
+                <th>Solde du porte monnaie</th>
+                <th></th>
                 <th>Comptes bancaire</th>
                 <th></th>
                 <th>Abonnements</th>
@@ -54,6 +56,10 @@
                     <td Width=15%><%=c.getNom()%></td>
                     <td Width=15%><%=c.getPrenom()%></td>
                     <td Width=15%>Expire le <%=format.format(c.getLaCarteAPuce().getDateFinValidite())%></td>
+                    <td Width=15%><%=c.getLaCarteAPuce().getLePorteMonnaie().getSolde()%>€</td>
+                    <td id="ligneTDModifier" Width=10%>
+                        <a href="Servlet?client=<%=c.getId()%>&action=Crediter"><button>Crediter</button></a>
+                    </td>
                     <td Width=15%><%if(!c.getLesComptesBancaires().isEmpty()){ 
                         for (CompteBancaire cpt: c.getLesComptesBancaires()){%><%=cpt.getNumCompte()%><%
                         }

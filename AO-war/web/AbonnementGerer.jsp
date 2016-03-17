@@ -68,6 +68,11 @@
                 <br>
                     <TABLE>
                         <tr>
+                            <td Width=100px><label for="reseau">Réseau<span class="requis">*</span></label></td>
+                            <td Width=200px><input type="radio" name="reseau" value="str">STR<br>
+                                            <input type="radio" name="reseau" value="stf">STF<br></td>
+                        </tr>
+                        <tr>
                             <td Width=100px><label for="num">Numéro abonnement<span class="requis">*</span></label></td>
                             <td Width=200px><input type="text" name="num" value="" size="50" maxlength="20" /></td>
                         </tr>

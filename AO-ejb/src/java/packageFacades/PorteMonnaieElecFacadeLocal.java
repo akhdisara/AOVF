@@ -7,6 +7,7 @@ package packageFacades;
 
 import java.util.List;
 import javax.ejb.Local;
+import packageEntites.CarteAPuce;
 import packageEntites.PorteMonnaieElec;
 
 /**
@@ -29,5 +30,7 @@ public interface PorteMonnaieElecFacadeLocal {
     List<PorteMonnaieElec> findRange(int[] range);
 
     int count();
+
+    void CreerPorteMonnaieElec(CarteAPuce laCarte);
     
 }

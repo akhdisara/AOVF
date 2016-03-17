@@ -39,5 +39,7 @@ public interface SessionCommercialLocal {
     void ModifierCompte(long id, int num, String titulaire, String banque, int guichet);
 
     void CreerAbonnement(String num, String type, Double montant, CarteAPuce carte);
+
+    void CreerPorteMonnaieElectronique(CarteAPuce carte);
     
 }
