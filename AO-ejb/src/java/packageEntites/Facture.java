@@ -20,6 +20,16 @@ import javax.persistence.OneToOne;
 @Entity
 public class Facture implements Serializable {
     @OneToOne(mappedBy = "laFacture")
+    private Paiement lePaiement;
+
+    public Paiement getLePaiement() {
+        return lePaiement;
+    }
+
+    public void setLePaiement(Paiement lePaiement) {
+        this.lePaiement = lePaiement;
+    }
+    @OneToOne(mappedBy = "laFacture")
     private Trajet leTrajet;
 
     public Trajet getLeTrajet() {

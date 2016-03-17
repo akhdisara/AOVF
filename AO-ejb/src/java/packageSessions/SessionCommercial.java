@@ -17,6 +17,7 @@ import packageFacades.AbonnementFacadeLocal;
 import packageFacades.CarteAPuceFacadeLocal;
 import packageFacades.ClientFacadeLocal;
 import packageFacades.CompteBancaireFacadeLocal;
+import packageFacades.PorteMonnaieElecFacadeLocal;
 
 /**
  *
@@ -24,6 +25,8 @@ import packageFacades.CompteBancaireFacadeLocal;
  */
 @Stateless
 public class SessionCommercial implements SessionCommercialLocal {
+    @EJB
+    private PorteMonnaieElecFacadeLocal porteMonnaieElecFacade;
     @EJB
     private AbonnementFacadeLocal abonnementFacade;
     @EJB
@@ -85,5 +88,8 @@ public class SessionCommercial implements SessionCommercialLocal {
         abonnementFacade.CreerAbonnement(num, type, montant, carte);
     }
 
-
+    @Override
+    public void CreerPorteMonnaieElectronique(CarteAPuce carte) {
+        porteMonnaieElecFacade.CreerPorteMonnaieElec(carte);
+    }
 }

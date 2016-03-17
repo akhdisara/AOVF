@@ -8,6 +8,7 @@ package packageFacades;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import packageEntites.CarteAPuce;
 import packageEntites.PorteMonnaieElec;
 
 /**
@@ -26,6 +27,14 @@ public class PorteMonnaieElecFacade extends AbstractFacade<PorteMonnaieElec> imp
 
     public PorteMonnaieElecFacade() {
         super(PorteMonnaieElec.class);
+    }
+
+    @Override
+    public void CreerPorteMonnaieElec(CarteAPuce laCarte) {
+        PorteMonnaieElec p = new PorteMonnaieElec();
+        p.setLaCarteAPuce(laCarte);
+        p.setSolde(0);
+        em.persist(p);
     }
     
 }

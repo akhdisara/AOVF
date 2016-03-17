@@ -6,10 +6,12 @@
 package packageEntites;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 /**
@@ -17,7 +19,17 @@ import javax.persistence.OneToOne;
  * @author 3092790
  */
 @Entity
-public class PorteMonnaieElec extends Paiement implements Serializable {
+public class PorteMonnaieElec implements Serializable {
+    @OneToMany(mappedBy = "lePorteMonnaie")
+    private List<Paiement> lesPaiements;
+
+    public List<Paiement> getLesPaiements() {
+        return lesPaiements;
+    }
+
+    public void setLesPaiements(List<Paiement> lesPaiements) {
+        this.lesPaiements = lesPaiements;
+    }
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
