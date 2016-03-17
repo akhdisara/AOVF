@@ -1,0 +1,382 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is Metro/2.3.1-b419 (branches/2.3.1.x-7937; 2014-08-04T08:11:03+0000) JAXWS-RI/2.2.10-b140803.1500 JAXWS-API/2.2.11 JAXB-RI/2.2.10-b140802.1033 JAXB-API/2.2.12-b140109.1041 svn-revision#unknown. --><xs:schema xmlns:tns="http://webService/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://webService/">
+
+<xs:element name="InvokeFicheHoraire" type="tns:InvokeFicheHoraire"/>
+
+<xs:element name="InvokeFicheHoraireResponse" type="tns:InvokeFicheHoraireResponse"/>
+
+<xs:element name="InvokeLigne" type="tns:InvokeLigne"/>
+
+<xs:element name="InvokeLigneResponse" type="tns:InvokeLigneResponse"/>
+
+<xs:element name="InvokePlageHoraire" type="tns:InvokePlageHoraire"/>
+
+<xs:element name="InvokePlageHoraireResponse" type="tns:InvokePlageHoraireResponse"/>
+
+<xs:element name="InvokePositionArretLigne" type="tns:InvokePositionArretLigne"/>
+
+<xs:element name="InvokePositionArretLigneResponse" type="tns:InvokePositionArretLigneResponse"/>
+
+<xs:element name="InvokeReduction" type="tns:InvokeReduction"/>
+
+<xs:element name="InvokeReductionResponse" type="tns:InvokeReductionResponse"/>
+
+<xs:element name="InvokeTrajet" type="tns:InvokeTrajet"/>
+
+<xs:element name="InvokeTrajetResponse" type="tns:InvokeTrajetResponse"/>
+
+<xs:element name="Ligne" type="tns:ligneSTR"/>
+
+<xs:element name="PositionArretLigne" type="tns:positionArretLigne"/>
+
+<xs:element name="RechercheFicheHoraireParLignePeriode" type="tns:RechercheFicheHoraireParLignePeriode"/>
+
+<xs:element name="RechercheFicheHoraireParLignePeriodeResponse" type="tns:RechercheFicheHoraireParLignePeriodeResponse"/>
+
+<xs:element name="RechercheLigneParId" type="tns:RechercheLigneParId"/>
+
+<xs:element name="RechercheLigneParIdResponse" type="tns:RechercheLigneParIdResponse"/>
+
+<xs:element name="RechercheLigneSTRParIdentifiant" type="tns:RechercheLigneSTRParIdentifiant"/>
+
+<xs:element name="RechercheLigneSTRParIdentifiantResponse" type="tns:RechercheLigneSTRParIdentifiantResponse"/>
+
+<xs:element name="RecherchePlagesHorairesParFicheHoraire" type="tns:RecherchePlagesHorairesParFicheHoraire"/>
+
+<xs:element name="RecherchePlagesHorairesParFicheHoraireResponse" type="tns:RecherchePlagesHorairesParFicheHoraireResponse"/>
+
+<xs:element name="RecherchePositionParLigne" type="tns:RecherchePositionParLigne"/>
+
+<xs:element name="RecherchePositionParLigneResponse" type="tns:RecherchePositionParLigneResponse"/>
+
+<xs:element name="RechercheTrajetParLigne" type="tns:RechercheTrajetParLigne"/>
+
+<xs:element name="RechercheTrajetParLigneID" type="tns:RechercheTrajetParLigneID"/>
+
+<xs:element name="RechercheTrajetParLigneIDResponse" type="tns:RechercheTrajetParLigneIDResponse"/>
+
+<xs:element name="RechercheTrajetParLigneResponse" type="tns:RechercheTrajetParLigneResponse"/>
+
+<xs:element name="TarifBaseParArrets" type="tns:TarifBaseParArrets"/>
+
+<xs:element name="TarifBaseParArretsResponse" type="tns:TarifBaseParArretsResponse"/>
+
+<xs:element name="TarifHebdomadaireParArrets" type="tns:TarifHebdomadaireParArrets"/>
+
+<xs:element name="TarifHebdomadaireParArretsResponse" type="tns:TarifHebdomadaireParArretsResponse"/>
+
+<xs:element name="TarifMensuelParArrets" type="tns:TarifMensuelParArrets"/>
+
+<xs:element name="TarifMensuelParArretsResponse" type="tns:TarifMensuelParArretsResponse"/>
+
+<xs:element name="afficherListeArretsSTR" type="tns:afficherListeArretsSTR"/>
+
+<xs:element name="afficherListeArretsSTRResponse" type="tns:afficherListeArretsSTRResponse"/>
+
+<xs:element name="afficherListeReductions" type="tns:afficherListeReductions"/>
+
+<xs:element name="afficherListeReductionsResponse" type="tns:afficherListeReductionsResponse"/>
+
+<xs:element name="arret" type="tns:arret"/>
+
+<xs:element name="ficheHoraire" type="tns:ficheHoraire"/>
+
+<xs:element name="listeLignesSTR" type="tns:listeLignesSTR"/>
+
+<xs:element name="listeLignesSTRResponse" type="tns:listeLignesSTRResponse"/>
+
+<xs:element name="trajet" type="tns:trajet"/>
+
+<xs:complexType name="RechercheLigneParId">
+<xs:sequence>
+<xs:element name="id" type="xs:long" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="RechercheLigneParIdResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:ligneSTR" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="ligneSTR">
+<xs:sequence>
+<xs:element name="id" type="xs:long" minOccurs="0"/>
+<xs:element name="Identifiant" type="xs:string" minOccurs="0"/>
+<xs:element name="debut" type="tns:arret" minOccurs="0"/>
+<xs:element name="Fin" type="tns:arret" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="arret">
+<xs:sequence>
+<xs:element name="id" type="xs:long" minOccurs="0"/>
+<xs:element name="Nom" type="xs:string" minOccurs="0"/>
+<xs:element name="Adresse" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="afficherListeReductions">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="afficherListeReductionsResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:anyType" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="InvokePositionArretLigne">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="InvokePositionArretLigneResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:positionArretLigne" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="positionArretLigne">
+<xs:sequence>
+<xs:element name="id" type="xs:long" minOccurs="0"/>
+<xs:element name="ligne" type="tns:ligneSTR" minOccurs="0"/>
+<xs:element name="arret" type="tns:arret" minOccurs="0"/>
+<xs:element name="position" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="InvokeTrajet">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="InvokeTrajetResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:trajet" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="trajet">
+<xs:sequence>
+<xs:element name="id" type="xs:long" minOccurs="0"/>
+<xs:element name="Debut" type="tns:arret" minOccurs="0"/>
+<xs:element name="Fin" type="tns:arret" minOccurs="0"/>
+<xs:element name="tarifBase" type="xs:double" minOccurs="0"/>
+<xs:element name="tarifMensuel" type="xs:double" minOccurs="0"/>
+<xs:element name="tarifHebdomadaire" type="xs:double" minOccurs="0"/>
+<xs:element name="ligne" type="tns:ligneSTR" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="RecherchePositionParLigne">
+<xs:sequence>
+<xs:element name="ligne" type="tns:ligneSTR" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="RecherchePositionParLigneResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:anyType" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="InvokePlageHoraire">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="InvokePlageHoraireResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:plageHoraire" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="plageHoraire">
+<xs:sequence>
+<xs:element name="arret" type="tns:arret" minOccurs="0"/>
+<xs:element name="ficheHoraire" type="tns:ficheHoraire" minOccurs="0"/>
+<xs:element name="horaire" type="xs:dateTime" minOccurs="0"/>
+<xs:element name="id" type="xs:long" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="ficheHoraire">
+<xs:sequence>
+<xs:element name="id" type="xs:long" minOccurs="0"/>
+<xs:element name="ligne" type="tns:ligneSTR" minOccurs="0"/>
+<xs:element name="periode" type="tns:periode" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="RechercheFicheHoraireParLignePeriode">
+<xs:sequence>
+<xs:element name="ligne" type="tns:ligneSTR" minOccurs="0"/>
+<xs:element name="periode" type="tns:periode" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="RechercheFicheHoraireParLignePeriodeResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:anyType" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="TarifBaseParArrets">
+<xs:sequence>
+<xs:element name="ligne" type="tns:ligneSTR" minOccurs="0"/>
+<xs:element name="debut" type="tns:arret" minOccurs="0"/>
+<xs:element name="arrivee" type="tns:arret" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="TarifBaseParArretsResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:double"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="RechercheTrajetParLigne">
+<xs:sequence>
+<xs:element name="ligne" type="tns:ligneSTR" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="RechercheTrajetParLigneResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:anyType" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="TarifMensuelParArrets">
+<xs:sequence>
+<xs:element name="ligne" type="tns:ligneSTR" minOccurs="0"/>
+<xs:element name="debut" type="tns:arret" minOccurs="0"/>
+<xs:element name="arrivee" type="tns:arret" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="TarifMensuelParArretsResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:double"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="InvokeLigne">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="InvokeLigneResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:ligneSTR" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="RechercheLigneSTRParIdentifiant">
+<xs:sequence>
+<xs:element name="arg0" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="RechercheLigneSTRParIdentifiantResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:ligneSTR" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="InvokeReduction">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="InvokeReductionResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:reduction" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="reduction">
+<xs:sequence>
+<xs:element name="id" type="xs:long" minOccurs="0"/>
+<xs:element name="tauxReduction" type="xs:int"/>
+<xs:element name="typeReduction" type="tns:typeReduction" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="RechercheTrajetParLigneID">
+<xs:sequence>
+<xs:element name="id" type="xs:long" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="RechercheTrajetParLigneIDResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:anyType" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="RecherchePlagesHorairesParFicheHoraire">
+<xs:sequence>
+<xs:element name="ficheHoraire" type="tns:ficheHoraire" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="RecherchePlagesHorairesParFicheHoraireResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:anyType" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="InvokeFicheHoraire">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="InvokeFicheHoraireResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:ficheHoraire" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="afficherListeArretsSTR">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="afficherListeArretsSTRResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:arret" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="TarifHebdomadaireParArrets">
+<xs:sequence>
+<xs:element name="ligne" type="tns:ligneSTR" minOccurs="0"/>
+<xs:element name="debut" type="tns:arret" minOccurs="0"/>
+<xs:element name="arrivee" type="tns:arret" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="TarifHebdomadaireParArretsResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:double"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="listeLignesSTR">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="listeLignesSTRResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:anyType" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:simpleType name="periode">
+<xs:restriction base="xs:string">
+<xs:enumeration value="Blanche"/>
+<xs:enumeration value="Jaune"/>
+</xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="typeReduction">
+<xs:restriction base="xs:string">
+<xs:enumeration value="Scolaire"/>
+<xs:enumeration value="PorteMonnaie"/>
+</xs:restriction>
+</xs:simpleType>
+</xs:schema>

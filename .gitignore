@@ -4,3 +4,6 @@
 /dist/
 /AO-war/build/
 /AO-war/dist/
+/AO-ejb/nbproject/private/
+/nbproject/private/
+/AO-war/nbproject/private/
