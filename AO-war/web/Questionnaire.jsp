@@ -4,6 +4,8 @@
     Author     : vanna
 --%>
 
+<%@page import="packageEntites.QuestionProposition"%>
+<%@page import="packageEntites.Question"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -11,7 +13,6 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <jsp:useBean id="listequestions" scope="request" class="java.util.List"></jsp:useBean>
-        <jsp:useBean id="listepropositions" scope="request" class="java.util.List"></jsp:useBean>
         <%@ include file="Navigation.jsp" %>
         <title>Questionnaire</title>
     </head>
@@ -23,23 +24,25 @@
             out.println(attribut);
         %>
         </div>
-        
+        <form method="get" action="Servlet">
         <br><br>
-        <TABLE id="allTable">
             <%
                 List<Question> lesQuestions=listequestions;
                 for(Question q: lesQuestions){%>
-                <tr><%=q.getQuestion%><tr>
+                <%=q.getNumquestion()%> . <%=q.getQuestion()%><br>
+                
+                <%for(QuestionProposition p: q.getLesPropositions()){%>
+                <INPUT TYPE=RADIO NAME="<%=q.getId()%>" VALUE="<%=p.getId()%>"><%=p.getProposition()%></input><br>
+                <%}%>
             <%}%>
-            <%
-                List<QuestionProposition> lesPropositions=listepropositions;
-                for(QuestionProposition p: lesPropositions){%>
-                <tr><INPUT TYPE=RADIO NAME="choix"><%=p.getProposition%></input></tr>
-            <%}%>
+       
                 
         </TABLE>
-        <div class ="btn_gauche">
-            <a href="Servlet?action=CreationClient"><button>Nouveau client</button></a>
-        </div>
+        
+        <input type="hidden" name="action" value="AjouterReponse">
+
+                <input type="submit" value="Valider"/>
+                <input type="reset" value="Remettre à zéro"/>
+        </form>    
     </body>
 </html>

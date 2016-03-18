@@ -21,7 +21,10 @@ import javax.servlet.http.HttpServletResponse;
 import packageEntites.CarteAPuce;
 import packageEntites.Client;
 import packageEntites.CompteBancaire;
+import packageEntites.Question;
+import packageEntites.QuestionProposition;
 import packageSessions.SessionCommercialLocal;
+import packageSessions.SessionPersonneLocal;
 import webservice.Abonnement;
 import webservice.Arret;
 import webservice.DistanceGare;
@@ -42,6 +45,8 @@ import webservice.Trajet;
  */
 @WebServlet(name = "Servlet", urlPatterns = {"/Servlet"})
 public class Servlet extends HttpServlet {
+    @EJB
+    private SessionPersonneLocal sessionPersonne;
 
     @EJB
     private SessionCommercialLocal sessionCommercial;
@@ -157,6 +162,19 @@ public class Servlet extends HttpServlet {
             jspClient = "/ficheTarifaireSTF.jsp";
             ficheTarifaireSTF(request, response);
         }
+        else if (act.equals("AfficherQuestionnaire")) {
+                jspClient = "/Questionnaire.jsp";
+                List<Question> listQ = sessionPersonne.RetournerQuestion();
+                request.setAttribute("listequestions", listQ);
+                request.setAttribute("message", "");
+            }
+            else if (act.equals("AjouterReponse")) {
+                jspClient = "/Questionnaire.jsp";
+                List<Question> listQ = sessionPersonne.RetournerQuestion();
+                request.setAttribute("listequestions", listQ);
+                request.setAttribute("message", "");
+                doActionAjouterReponse(request, response);
+            }
 
         RequestDispatcher Rd;
         Rd = getServletContext().getRequestDispatcher(jspClient);
@@ -680,5 +698,21 @@ public class Servlet extends HttpServlet {
          */
         request.setAttribute("message", "message");
 
+    }
+    
+    protected void doActionAjouterReponse(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String message;
+        
+        List<Question> questions = sessionPersonne.RetournerQuestion();
+        for(Question q: questions){
+            String pId = request.getParameter(q.getId().toString());
+            if(pId != null)
+            {
+            QuestionProposition p = sessionPersonne.RechercherPropositionParId(Integer.parseInt(pId));
+            sessionPersonne.AjouterReponse(p);
+            }
+            
+        }
+        
     }
 }

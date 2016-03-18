@@ -16,6 +16,7 @@
             <li><a href="Servlet?action=AfficherClients">Clients</a></li>
             <li><a href="Servlet?action=Trajet">Trajets</a></li>
             <li><a href="Servlet?action=AfficherAbonnement">wwwwwwwww</a></li>
+            <li><a href="Servlet?action=AfficherQuestionnaire">Questionnaire</a></li>
             <a href="str.jsp">STR</a>
             <a href="stf.jsp">STF</a>
         </ul>
