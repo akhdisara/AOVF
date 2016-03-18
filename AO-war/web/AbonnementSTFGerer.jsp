@@ -1,9 +1,11 @@
 <%-- 
-    Document   : AbonnementGerer
-    Created on : 15 mars 2016, 16:29:30
+    Document   : AbonnementSTFGerer
+    Created on : 18 mars 2016, 09:52:13
     Author     : 3092790
 --%>
 
+<%@page import="webservice.Gare"%>
+<%@page import="webservice.Ligne"%>
 <%@page import="packageEntites.Abonnement"%>
 <%@page import="java.util.List"%>
 <%@page import="packageEntites.Client"%>
@@ -13,12 +15,14 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <jsp:useBean id="client" scope="request" class="Client"></jsp:useBean>
-        <title>Gestion abonnement</title>
+        <jsp:useBean id="listegares" scope="request" class="java.util.List"></jsp:useBean>
+        <jsp:useBean id="listelignes" scope="request" class="java.util.List"></jsp:useBean>
+        <title>Gerer abonnement STF</title>
     </head>
     <body>
         <%@ include file="Navigation.jsp" %>
         
-        <h1 id="h1">Gestion des abonnements</h1>
+        <h1 id="h1">Gestion des abonnements STF</h1>
         <br><br>
         <div class ="text">
         <%
@@ -64,14 +68,9 @@
             
         <form method="get" action="Servlet">
             
-                <legend> Ajouter un nouvel abonnement : </legend>
+                <legend> Ajouter un nouvel abonnement STF : </legend>
                 <br>
                     <TABLE>
-                        <tr>
-                            <td Width=100px><label for="reseau">Réseau<span class="requis">*</span></label></td>
-                            <td Width=200px><input type="radio" name="reseau" value="str">STR<br>
-                                            <input type="radio" name="reseau" value="stf">STF<br></td>
-                        </tr>
                         <tr>
                             <td Width=100px><label for="num">Numéro abonnement<span class="requis">*</span></label></td>
                             <td Width=200px><input type="text" name="num" value="" size="50" maxlength="20" /></td>
@@ -85,20 +84,35 @@
                         </tr>
                         <tr>
                             <td Width=100px><label for="ligne">Ligne<span class="requis">*</span></label></td>
-                            <td Width=200px><input type="text" name="ligne" value="" size="50" maxlength="20" /></td>
+                            <td Width=200px><select name="ligne">
+                        <%
+                            List<Ligne> lesLignes = listelignes;
+                            for (Ligne l : lesLignes) {%>
+                                <option value='<%=l.getId()%>'><%=l.getNumLigne()%></option> 
+                                <%}%></select></td>
                         </tr>
                         <tr>
                             <td Width=100px><label for="depart">Départ<span class="requis">*</span></label></td>
-                            <td Width=200px><input type="text" name="depart" value="" size="50" maxlength="20" /></td>
+                            <td Width=200px><select name="garedepart">
+                        <%
+                            List<Gare> lesGaresArrivee = listegares;
+                            for (Gare g : lesGaresArrivee) {%>
+                                <option value='<%=g.getId()%>'><%=g.getNomGare()%></option> 
+                                <%}%></select></td>
                         </tr>
                         <tr>
                             <td Width=100px><label for="arrivee">Arrivée<span class="requis">*</span></label></td>
-                            <td Width=200px><input type="text" name="arrivee" value="" size="50" maxlength="20" /></td>
+                            <td Width=200px><select name="garearrivee">
+                        <%
+                            List<Gare> lesGaresDepart = listegares;
+                            for (Gare g : lesGaresDepart) {%>
+                                <option value='<%=g.getId()%>'><%=g.getNomGare()%></option> 
+                                <%}%></select></td>
                         </tr>
                     </TABLE>
                 <br/>
 
-                <input type="hidden" name="action" value="AbonnementAjouter">
+                <input type="hidden" name="action" value="AbonnementSTFAjouter">
                 <input type="hidden" name="client" value="<%=client.getId()%>">
 
                 <input type="submit" value="Valider"/>

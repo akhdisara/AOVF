@@ -53,14 +53,14 @@
                 <tr>
                     <td Width=5%><%=c.getId()%></td>
                     <td Width=5%><%=c.getNumClient()%></td>
-                    <td Width=15%><%=c.getNom()%></td>
-                    <td Width=15%><%=c.getPrenom()%></td>
-                    <td Width=15%>Expire le <%=format.format(c.getLaCarteAPuce().getDateFinValidite())%></td>
-                    <td Width=15%><%=c.getLaCarteAPuce().getLePorteMonnaie().getSolde()%>€</td>
+                    <td Width=10%><%=c.getNom()%></td>
+                    <td Width=10%><%=c.getPrenom()%></td>
+                    <td Width=10%>Expire le <%=format.format(c.getLaCarteAPuce().getDateFinValidite())%></td>
+                    <td Width=10%><%=c.getLaCarteAPuce().getLePorteMonnaie().getSolde()%>€</td>
                     <td id="ligneTDModifier" Width=10%>
                         <a href="Servlet?client=<%=c.getId()%>&action=Crediter"><button>Crediter</button></a>
                     </td>
-                    <td Width=15%><%if(!c.getLesComptesBancaires().isEmpty()){ 
+                    <td Width=10%><%if(!c.getLesComptesBancaires().isEmpty()){ 
                         for (CompteBancaire cpt: c.getLesComptesBancaires()){%><%=cpt.getNumCompte()%><%
                         }
                     }
@@ -69,14 +69,15 @@
                     <td id="ligneTDModifier" Width=10%>
                         <a href="Servlet?client=<%=c.getId()%>&action=GererCompte"><button>Gérer comptes</button></a>
                     </td>
-                    <td Width=15%><%if(!c.getLaCarteAPuce().getLesAbonnements().isEmpty()){ 
+                    <td Width=10%><%if(!c.getLaCarteAPuce().getLesAbonnements().isEmpty()){ 
                         for (Abonnement a: c.getLaCarteAPuce().getLesAbonnements()){%><%=a.getNumAbonnement()%><%
                         }
                     }
                         else {%>Pas d'abonnement<%}%>
                     </td>
                     <td id="ligneTDModifier" Width=10%>
-                        <a href="Servlet?client=<%=c.getId()%>&action=GererAbonnement"><button>Gérer abonnements</button></a>
+                        <a href="Servlet?client=<%=c.getId()%>&action=GererAbonnementSTF"><button>Gérer abonnements STF</button></a>
+                        <a href="Servlet?client=<%=c.getId()%>&action=GererAbonnementSTR"><button>Gérer abonnements STR</button></a>
                     </td>
                     <td id="ligneTDModifier" Width=10%>
                         <a href="Servlet?modif=<%=c.getId()%>&action=ModificationClient"><button>Modifier client</button></a>

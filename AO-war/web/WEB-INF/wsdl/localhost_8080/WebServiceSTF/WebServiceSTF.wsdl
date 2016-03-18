@@ -10,6 +10,12 @@
 <message name="RetournerLignesSTFResponse">
 <part name="parameters" element="tns:RetournerLignesSTFResponse"/>
 </message>
+<message name="RetournerDistanceGareParLigne">
+<part name="parameters" element="tns:RetournerDistanceGareParLigne"/>
+</message>
+<message name="RetournerDistanceGareParLigneResponse">
+<part name="parameters" element="tns:RetournerDistanceGareParLigneResponse"/>
+</message>
 <message name="RechercherLigneSTFParId">
 <part name="parameters" element="tns:RechercherLigneSTFParId"/>
 </message>
@@ -28,17 +34,29 @@
 <message name="InvokePrix_KilometreResponse">
 <part name="parameters" element="tns:InvokePrix_KilometreResponse"/>
 </message>
-<message name="RetournerDistanceGareParLigne">
-<part name="parameters" element="tns:RetournerDistanceGareParLigne"/>
+<message name="RetournerAbonnementSTF">
+<part name="parameters" element="tns:RetournerAbonnementSTF"/>
 </message>
-<message name="RetournerDistanceGareParLigneResponse">
-<part name="parameters" element="tns:RetournerDistanceGareParLigneResponse"/>
+<message name="RetournerAbonnementSTFResponse">
+<part name="parameters" element="tns:RetournerAbonnementSTFResponse"/>
 </message>
-<message name="GetPrixilometre">
-<part name="parameters" element="tns:GetPrixilometre"/>
+<message name="RetournerGaresSTF">
+<part name="parameters" element="tns:RetournerGaresSTF"/>
 </message>
-<message name="GetPrixilometreResponse">
-<part name="parameters" element="tns:GetPrixilometreResponse"/>
+<message name="RetournerGaresSTFResponse">
+<part name="parameters" element="tns:RetournerGaresSTFResponse"/>
+</message>
+<message name="RechercherHoraireSTFParLigne">
+<part name="parameters" element="tns:RechercherHoraireSTFParLigne"/>
+</message>
+<message name="RechercherHoraireSTFParLigneResponse">
+<part name="parameters" element="tns:RechercherHoraireSTFParLigneResponse"/>
+</message>
+<message name="RechercherLigneSTFParNum">
+<part name="parameters" element="tns:RechercherLigneSTFParNum"/>
+</message>
+<message name="RechercherLigneSTFParNumResponse">
+<part name="parameters" element="tns:RechercherLigneSTFParNumResponse"/>
 </message>
 <message name="InvokeLigneSTF">
 <part name="parameters" element="tns:InvokeLigneSTF"/>
@@ -58,23 +76,11 @@
 <message name="InvokeHoraireResponse">
 <part name="parameters" element="tns:InvokeHoraireResponse"/>
 </message>
-<message name="RetournerGaresSTF">
-<part name="parameters" element="tns:RetournerGaresSTF"/>
+<message name="GetPrixilometre">
+<part name="parameters" element="tns:GetPrixilometre"/>
 </message>
-<message name="RetournerGaresSTFResponse">
-<part name="parameters" element="tns:RetournerGaresSTFResponse"/>
-</message>
-<message name="RetournerAbonnementSTF">
-<part name="parameters" element="tns:RetournerAbonnementSTF"/>
-</message>
-<message name="RetournerAbonnementSTFResponse">
-<part name="parameters" element="tns:RetournerAbonnementSTFResponse"/>
-</message>
-<message name="RechercherHoraireSTFParLigne">
-<part name="parameters" element="tns:RechercherHoraireSTFParLigne"/>
-</message>
-<message name="RechercherHoraireSTFParLigneResponse">
-<part name="parameters" element="tns:RechercherHoraireSTFParLigneResponse"/>
+<message name="GetPrixilometreResponse">
+<part name="parameters" element="tns:GetPrixilometreResponse"/>
 </message>
 <message name="InvokeAbonnement">
 <part name="parameters" element="tns:InvokeAbonnement"/>
@@ -82,16 +88,14 @@
 <message name="InvokeAbonnementResponse">
 <part name="parameters" element="tns:InvokeAbonnementResponse"/>
 </message>
-<message name="RechercherLigneSTFParNum">
-<part name="parameters" element="tns:RechercherLigneSTFParNum"/>
-</message>
-<message name="RechercherLigneSTFParNumResponse">
-<part name="parameters" element="tns:RechercherLigneSTFParNumResponse"/>
-</message>
 <portType name="WebServiceSTF">
 <operation name="RetournerLignesSTF">
 <input wsam:Action="http://webService/WebServiceSTF/RetournerLignesSTFRequest" message="tns:RetournerLignesSTF"/>
 <output wsam:Action="http://webService/WebServiceSTF/RetournerLignesSTFResponse" message="tns:RetournerLignesSTFResponse"/>
+</operation>
+<operation name="RetournerDistanceGareParLigne">
+<input wsam:Action="http://webService/WebServiceSTF/RetournerDistanceGareParLigneRequest" message="tns:RetournerDistanceGareParLigne"/>
+<output wsam:Action="http://webService/WebServiceSTF/RetournerDistanceGareParLigneResponse" message="tns:RetournerDistanceGareParLigneResponse"/>
 </operation>
 <operation name="RechercherLigneSTFParId">
 <input wsam:Action="http://webService/WebServiceSTF/RechercherLigneSTFParIdRequest" message="tns:RechercherLigneSTFParId"/>
@@ -105,13 +109,21 @@
 <input wsam:Action="http://webService/WebServiceSTF/InvokePrix_KilometreRequest" message="tns:InvokePrix_Kilometre"/>
 <output wsam:Action="http://webService/WebServiceSTF/InvokePrix_KilometreResponse" message="tns:InvokePrix_KilometreResponse"/>
 </operation>
-<operation name="RetournerDistanceGareParLigne">
-<input wsam:Action="http://webService/WebServiceSTF/RetournerDistanceGareParLigneRequest" message="tns:RetournerDistanceGareParLigne"/>
-<output wsam:Action="http://webService/WebServiceSTF/RetournerDistanceGareParLigneResponse" message="tns:RetournerDistanceGareParLigneResponse"/>
+<operation name="RetournerAbonnementSTF">
+<input wsam:Action="http://webService/WebServiceSTF/RetournerAbonnementSTFRequest" message="tns:RetournerAbonnementSTF"/>
+<output wsam:Action="http://webService/WebServiceSTF/RetournerAbonnementSTFResponse" message="tns:RetournerAbonnementSTFResponse"/>
 </operation>
-<operation name="GetPrixilometre">
-<input wsam:Action="http://webService/WebServiceSTF/GetPrixilometreRequest" message="tns:GetPrixilometre"/>
-<output wsam:Action="http://webService/WebServiceSTF/GetPrixilometreResponse" message="tns:GetPrixilometreResponse"/>
+<operation name="RetournerGaresSTF">
+<input wsam:Action="http://webService/WebServiceSTF/RetournerGaresSTFRequest" message="tns:RetournerGaresSTF"/>
+<output wsam:Action="http://webService/WebServiceSTF/RetournerGaresSTFResponse" message="tns:RetournerGaresSTFResponse"/>
+</operation>
+<operation name="RechercherHoraireSTFParLigne">
+<input wsam:Action="http://webService/WebServiceSTF/RechercherHoraireSTFParLigneRequest" message="tns:RechercherHoraireSTFParLigne"/>
+<output wsam:Action="http://webService/WebServiceSTF/RechercherHoraireSTFParLigneResponse" message="tns:RechercherHoraireSTFParLigneResponse"/>
+</operation>
+<operation name="RechercherLigneSTFParNum">
+<input wsam:Action="http://webService/WebServiceSTF/RechercherLigneSTFParNumRequest" message="tns:RechercherLigneSTFParNum"/>
+<output wsam:Action="http://webService/WebServiceSTF/RechercherLigneSTFParNumResponse" message="tns:RechercherLigneSTFParNumResponse"/>
 </operation>
 <operation name="InvokeLigneSTF">
 <input wsam:Action="http://webService/WebServiceSTF/InvokeLigneSTFRequest" message="tns:InvokeLigneSTF"/>
@@ -125,30 +137,27 @@
 <input wsam:Action="http://webService/WebServiceSTF/InvokeHoraireRequest" message="tns:InvokeHoraire"/>
 <output wsam:Action="http://webService/WebServiceSTF/InvokeHoraireResponse" message="tns:InvokeHoraireResponse"/>
 </operation>
-<operation name="RetournerGaresSTF">
-<input wsam:Action="http://webService/WebServiceSTF/RetournerGaresSTFRequest" message="tns:RetournerGaresSTF"/>
-<output wsam:Action="http://webService/WebServiceSTF/RetournerGaresSTFResponse" message="tns:RetournerGaresSTFResponse"/>
-</operation>
-<operation name="RetournerAbonnementSTF">
-<input wsam:Action="http://webService/WebServiceSTF/RetournerAbonnementSTFRequest" message="tns:RetournerAbonnementSTF"/>
-<output wsam:Action="http://webService/WebServiceSTF/RetournerAbonnementSTFResponse" message="tns:RetournerAbonnementSTFResponse"/>
-</operation>
-<operation name="RechercherHoraireSTFParLigne">
-<input wsam:Action="http://webService/WebServiceSTF/RechercherHoraireSTFParLigneRequest" message="tns:RechercherHoraireSTFParLigne"/>
-<output wsam:Action="http://webService/WebServiceSTF/RechercherHoraireSTFParLigneResponse" message="tns:RechercherHoraireSTFParLigneResponse"/>
+<operation name="GetPrixilometre">
+<input wsam:Action="http://webService/WebServiceSTF/GetPrixilometreRequest" message="tns:GetPrixilometre"/>
+<output wsam:Action="http://webService/WebServiceSTF/GetPrixilometreResponse" message="tns:GetPrixilometreResponse"/>
 </operation>
 <operation name="InvokeAbonnement">
 <input wsam:Action="http://webService/WebServiceSTF/InvokeAbonnementRequest" message="tns:InvokeAbonnement"/>
 <output wsam:Action="http://webService/WebServiceSTF/InvokeAbonnementResponse" message="tns:InvokeAbonnementResponse"/>
 </operation>
-<operation name="RechercherLigneSTFParNum">
-<input wsam:Action="http://webService/WebServiceSTF/RechercherLigneSTFParNumRequest" message="tns:RechercherLigneSTFParNum"/>
-<output wsam:Action="http://webService/WebServiceSTF/RechercherLigneSTFParNumResponse" message="tns:RechercherLigneSTFParNumResponse"/>
-</operation>
 </portType>
 <binding name="WebServiceSTFPortBinding" type="tns:WebServiceSTF">
 <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
 <operation name="RetournerLignesSTF">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="RetournerDistanceGareParLigne">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -184,7 +193,7 @@
 <soap:body use="literal"/>
 </output>
 </operation>
-<operation name="RetournerDistanceGareParLigne">
+<operation name="RetournerAbonnementSTF">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -193,7 +202,25 @@
 <soap:body use="literal"/>
 </output>
 </operation>
-<operation name="GetPrixilometre">
+<operation name="RetournerGaresSTF">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="RechercherHoraireSTFParLigne">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="RechercherLigneSTFParNum">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -229,25 +256,7 @@
 <soap:body use="literal"/>
 </output>
 </operation>
-<operation name="RetournerGaresSTF">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="RetournerAbonnementSTF">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="RechercherHoraireSTFParLigne">
+<operation name="GetPrixilometre">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -257,15 +266,6 @@
 </output>
 </operation>
 <operation name="InvokeAbonnement">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="RechercherLigneSTFParNum">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>

@@ -108,13 +108,21 @@ public class Servlet extends HttpServlet {
         } else if (act.equals("ModifierCompte")) {
             jspClient = "/CompteGerer.jsp";
             doActionModifierCompte(request, response);
-        } else if (act.equals("GererAbonnement")) {
-            jspClient = "/AbonnementGerer.jsp";
-            doActionAfficherGestionAbonnementClient(request, response);
-        } else if (act.equals("AbonnementAjouter")) {
-            jspClient = "/AbonnementGerer.jsp";
-            doActionAjouterAbonnement(request, response);
-        } else if (act.equals("Trajet")) {
+        } else if (act.equals("GererAbonnementSTR")) {
+            jspClient = "/AbonnementSTRGerer.jsp";
+            doActionAfficherGestionAbonnementSTRClient(request, response);
+        } else if (act.equals("AbonnementSTRAjouter")) {
+            jspClient = "/AbonnementSTRGerer.jsp";
+            doActionAjouterAbonnementSTR(request, response);
+        } 
+        else if (act.equals("GererAbonnementSTF")) {
+            jspClient = "/AbonnementSTFGerer.jsp";
+            doActionAfficherGestionAbonnementSTFClient(request, response);
+        } else if (act.equals("AbonnementSTFAjouter")) {
+            jspClient = "/AbonnementSTFGerer.jsp";
+            doActionAjouterAbonnementSTF(request, response);
+        } 
+        else if (act.equals("Trajet")) {
             jspClient = "/TrajetRechercher.jsp";
             request.setAttribute("message", "");
         } else if (act.equals("ChercherTrajet")) {
@@ -568,7 +576,7 @@ public class Servlet extends HttpServlet {
         request.setAttribute("client", client);
     }
 
-    protected void doActionAfficherGestionAbonnementClient(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doActionAfficherGestionAbonnementSTRClient(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String c = request.getParameter("client");
         Long idclient = Long.valueOf(c);
 
@@ -579,7 +587,48 @@ public class Servlet extends HttpServlet {
         request.setAttribute("client", client);
     }
 
-    protected void doActionAjouterAbonnement(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doActionAjouterAbonnementSTR(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String c = request.getParameter("client");
+        Long idclient = Long.valueOf(c);
+        Client client = sessionCommercial.RechercherClientParId(idclient);
+        
+        String reseau = request.getParameter("reseau");
+        String num = request.getParameter("num");
+        String typeabo = request.getParameter("type");
+        String ligne = request.getParameter("ligne");
+        String depart = request.getParameter("depart");
+        String arrivee = request.getParameter("arrivee");
+        String message;
+
+        if (reseau.trim().isEmpty() || num.trim().isEmpty() || typeabo.trim().isEmpty() || ligne.trim().isEmpty() || depart.trim().isEmpty() || arrivee.trim().isEmpty()) {
+            message = "<div class='msg_error'>Erreur - Vous n'avez pas rempli tous les champs obligatoires.</div>";
+        } else {
+            Double montant = null;
+
+            //Appel de la couche service: 
+            //montant = MethodeRechercherTarif(String reseau, String typeabo, String ligne, String depart, String arrivee);
+            //recherche de la ligne et des arrets de la ligne, récupère le tarif associé, recherche l'abonnement et applique le taux de réduction au tarif trouvé
+            sessionCommercial.CreerAbonnement(num, typeabo, montant, client.getLaCarteAPuce());
+
+            message = "<div class='msg_success'>L'abonnement est ajouté avec succès !</div>";
+        }
+
+        request.setAttribute("message", message);
+        request.setAttribute("client", client);
+    }
+    
+    protected void doActionAfficherGestionAbonnementSTFClient(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String c = request.getParameter("client");
+        Long idclient = Long.valueOf(c);
+
+        Client client = sessionCommercial.RechercherClientParId(idclient);
+
+        String message = "Abonnements du client N°" + client.getNumClient() + ", " + client.getPrenom() + " " + client.getNom();
+        request.setAttribute("message", message);
+        request.setAttribute("client", client);
+    }
+
+    protected void doActionAjouterAbonnementSTF(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String c = request.getParameter("client");
         Long idclient = Long.valueOf(c);
         Client client = sessionCommercial.RechercherClientParId(idclient);
