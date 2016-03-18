@@ -80,7 +80,7 @@
                             <td Width=200px><select name="type">
                                 <option value="scolaire">Scolaire</option>
                                 <option value="mensuel">Mensuel</option>
-                                <option value="hebdo">Hebdomadaire</option></select></td>
+                                <option value="hebdomadaire">Hebdomadaire</option></select></td>
                         </tr>
                         <tr>
                             <td Width=100px><label for="ligne">Ligne<span class="requis">*</span></label></td>
@@ -97,7 +97,7 @@
                         <%
                             List<Gare> lesGaresArrivee = listegares;
                             for (Gare g : lesGaresArrivee) {%>
-                                <option value='<%=g.getId()%>'><%=g.getNomGare()%></option> 
+                                <option value='<%=g.getNomGare()%>'><%=g.getNomGare()%></option> 
                                 <%}%></select></td>
                         </tr>
                         <tr>
@@ -106,7 +106,7 @@
                         <%
                             List<Gare> lesGaresDepart = listegares;
                             for (Gare g : lesGaresDepart) {%>
-                                <option value='<%=g.getId()%>'><%=g.getNomGare()%></option> 
+                                <option value='<%=g.getNomGare()%>'><%=g.getNomGare()%></option> 
                                 <%}%></select></td>
                         </tr>
                     </TABLE>
