@@ -1066,17 +1066,17 @@ public class Servlet extends HttpServlet {
 
             String type = "STR" + typeabo;
 
-            List<SousTrajet> listeST = sessionCommercial.RetournerSousTrajets();
+            /*List<SousTrajet> listeST = sessionCommercial.RetournerSousTrajets();
             SousTrajet leSousTrajet = null;
 
             for (SousTrajet st : listeST) {
                 if (st.getArretDepart().equalsIgnoreCase(depart) && st.getArretArrivee().equalsIgnoreCase(arrivee) && st.getLigne().equalsIgnoreCase(ligne)) {
                     leSousTrajet = st;
                 }
-            }
-            if (leSousTrajet == null) {
-                leSousTrajet = sessionCommercial.CreerSousTrajet(depart, arrivee, ligne, tarifbase);
-            }
+            } */
+            
+            SousTrajet leSousTrajet = sessionCommercial.CreerSousTrajet(depart, arrivee, ligne, tarifbase,null);
+           
 
             System.out.println("WWWWWWWAbonnement : " + num + " " + type + " " + tarif + " ------ SousTrajet : " + depart + " " + arrivee + " " + laligne.getIdentifiant() + " " + tarif);
             sessionCommercial.CreerAbonnement(num, type, tarif, client.getLaCarteAPuce(), leSousTrajet);
@@ -1168,17 +1168,17 @@ public class Servlet extends HttpServlet {
 
             Double montant = tarifbase * (1 - reduction) * nbtrajet; //Montant de l'abonnement avec la réduction
 
-            List<SousTrajet> listeST = sessionCommercial.RetournerSousTrajets();
-            SousTrajet leSousTrajet = null;
+            /*List<SousTrajet> listeST = sessionCommercial.RetournerSousTrajets();
+            
 
             for (SousTrajet st : listeST) {
                 if (st.getArretDepart().equalsIgnoreCase(depart) && st.getArretArrivee().equalsIgnoreCase(arrivee) && st.getLigne().equalsIgnoreCase(ligne)) {
                     leSousTrajet = st;
                 }
             }
-            if (leSousTrajet == null) {
-                leSousTrajet = sessionCommercial.CreerSousTrajet(depart, arrivee, ligne, tarifbase);
-            }
+            if (leSousTrajet == null) { */
+            SousTrajet leSousTrajet = sessionCommercial.CreerSousTrajet(depart, arrivee, ligne, tarifbase,null);
+            
 
             //System.out.println("WWWWWWWAbonnement : "+num+" "+ type+" "+reduction+" "+montant+" ------ SousTrajet : "+depart+" "+arrivee+" "+laligne.getNumLigne()+" "+tarif);
             sessionCommercial.CreerAbonnement(num, type, montant, client.getLaCarteAPuce(), leSousTrajet);
