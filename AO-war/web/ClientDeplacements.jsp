@@ -15,7 +15,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <jsp:useBean id="client" scope="request" class="Client"></jsp:useBean>
+        <jsp:useBean id="client" scope="session" class="Client"></jsp:useBean>
         <title>Relevé de déplacements</title>
     </head>
     <body>

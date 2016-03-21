@@ -2,12 +2,13 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
+        <%@ include file="Navigation.jsp" %>
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
         <meta name="keywords" content="THEMELOCK.COM - Private Transport and Car Hire HTML Template" />
         <meta name="description" content="THEMELOCK.COM - Private Transport and Car Hire HTML Template">
         <meta name="author" content="themeenergy.com">
 
-        <title>THEMELOCK.COM - Home</title>
+        <title>AO</title>
 
         <link rel="stylesheet" href="css/theme-red.css" />
         <link rel="stylesheet" href="css/style.css" />
@@ -24,39 +25,6 @@
     </head>
 
     <body class="home">
-        <!-- Header -->
-        <header class="header" role="banner">
-            <div class="wrap">
-                <!-- Logo -->
-                <div class="logo">
-                    <a href="index.html" title="Transfers"><img src="images/transfers.jpg" alt="Transfers" /></a>
-                </div>
-                <!-- //Logo -->
-
-                <!-- Main Nav -->
-                <nav role="navigation" class="main-nav">
-                    <ul>
-                        <li class="active"><a href="index.html" title="">accueil</a></li>
-                        <li><a href="destinations.html" title="Destinations">STR</a>
-                            <ul>
-                                <li><a href="Servlet?action=lignesSTR" title="Lignes STR">Lignes</a></li>
-                                <li><a href="Servlet?action=listReductionsSTR" title="Abonnements STR">Abonnements</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="blog.html" title="Blog">STF</a>
-                            <ul>
-                                <li><a href="Servlet?action=AfficherLignesSTF" title="Post">Lignes</a></li>
-                                <li><a href="Servlet?action=listAbonnementsSTF" title="Post">Abonnements</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="Servlet?action=AfficherQuestionnaire" title="Questionnaires">Questionnaires</a></li>
-                        <li><a href="login.jsp" title="Contact">Connexion</a></li>
-                       </ul>
-                </nav>
-                <!-- //Main Nav -->
-            </div>
-        </header>
-        <!-- //Header -->
 
         <!-- Main -->
         <main class="main" role="main">

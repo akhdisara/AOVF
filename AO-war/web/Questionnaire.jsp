@@ -17,88 +17,13 @@
         <link rel="stylesheet" href="css/animate.css" />
         <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Raleway:400,500,600,700|Montserrat:400,700">
         <link rel="shortcut icon" href="images/favicon.ico">
-
+        <%@ include file="Navigation.jsp" %>
         <jsp:useBean id="listequestions" scope="request" class="java.util.List"></jsp:useBean>
 
         </head>
 
         <body>
-            <!-- Header -->
-            <header class="header" role="banner">
-                <div class="wrap">
-                    <!-- Logo -->
-                    <div class="logo">
-                        <a href="index.html" title="Transfers"><img src="images/transfers.jpg" alt="Transfers" /></a>
-                    </div>
-                    <!-- //Logo -->
-
-                    <!-- Main Nav -->
-                    <nav role="navigation" class="main-nav">
-                        <ul>
-                            <li><a href="index.html" title="">Home</a></li>
-                            <li class="active"><a href="destinations.html" title="Destinations">Destinations</a>
-                                <ul>
-                                    <li><a href="destination-single.html" title="Single destination">Single destination</a></li>
-                                    <li><a href="destination-micro.html" title="Micro destination">Micro destination</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="tailor-made.html" title="Tailor made">Tailor made</a></li>
-                            <li><a href="blog.html" title="Blog">Blog</a>
-                                <ul>
-                                    <li><a href="blog.html" title="Post">Blog list</a></li>
-                                    <li><a href="blog2.html" title="Post">Blog grid</a></li>
-                                    <li><a href="blog-single.html" title="Post">Post</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="contact.html" title="Contact">Contact</a></li>
-                            <li><a href="#" title="Pages">Pages</a>
-                                <div>
-                                    <div class="one-fourth">
-                                        <h2>Common</h2>
-                                        <ul>
-                                            <li><a href="left-sidebar-page.html" title="Left sidebar page">Left sidebar page</a></li>
-                                            <li><a href="right-sidebar-page.html" title="Right sidebar page">Right sidebar page</a></li>
-                                            <li><a href="both-sidebar-page.html" title="Both sidebars page">Both sidebars page</a></li>
-                                            <li><a href="full-width-page.html" title="Full width page">Full width page</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="one-fourth">
-                                        <h2>Booking</h2>
-                                        <ul>
-                                            <li><a href="search-results.html" title="Search results page">Search results page</a></li>
-                                            <li><a href="booking-step1.html" title="Booking step 1">Booking step 1</a></li>
-                                            <li><a href="booking-step2.html" title="Booking step 2">Booking step 2</a></li>
-                                            <li><a href="booking-step3.html" title="Booking step 3">Booking step 3</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="one-fourth">
-                                        <h2>Corporate</h2>
-                                        <ul>
-                                            <li><a href="about.html" title="About u">About us</a></li>
-                                            <li><a href="services.html" title="Services">Services</a></li>
-                                            <li><a href="faq.html" title="Faq">Faq</a></li>
-                                            <li><a href="contact.html" title="Contact">Contact</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="one-fourth">
-                                        <h2>Special</h2>
-                                        <ul>
-                                            <li><a href="login.html" title="Login">Login</a></li>
-                                            <li><a href="register.html" title="Register">Register</a></li>
-                                            <li><a href="error.html" title="404 error">404 error</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </li>
-                            <li><a href="http://themeforest.net/user/themeenergy/portfolio" title="Purchase">Purchase</a></li>
-                        </ul>
-                    </nav>
-                    <!-- //Main Nav -->
-                </div>
-            </header>
-            <!-- //Header -->
-
-            <!-- Main -->
+         
             <!-- Main -->
             <main class="main" role="main">
 
