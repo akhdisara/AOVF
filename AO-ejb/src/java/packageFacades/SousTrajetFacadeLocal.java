@@ -32,4 +32,5 @@ public interface SousTrajetFacadeLocal {
     
     SousTrajet CreerSousTrajet(String d, String a, String l,double tarif);
     
+    List<SousTrajet> RetournerSousTrajets();
 }

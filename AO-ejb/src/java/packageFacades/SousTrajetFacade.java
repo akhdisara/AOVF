@@ -5,9 +5,11 @@
  */
 package packageFacades;
 
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import packageEntites.CarteAPuce;
 import packageEntites.Client;
 import packageEntites.SousTrajet;
@@ -39,5 +41,14 @@ public class SousTrajetFacade extends AbstractFacade<SousTrajet> implements Sous
         s.setTarif(tarif);
         em.persist(s);
         return s;
+    }
+    
+    @Override
+    public List<SousTrajet> RetournerSousTrajets() {
+        List<SousTrajet> listeS;
+        String txt = "SELECT s FROM SousTrajet as s";
+        Query req = getEntityManager().createQuery(txt);
+        listeS = req.getResultList();
+        return listeS;
     }
 }

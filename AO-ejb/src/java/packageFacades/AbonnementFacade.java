@@ -13,6 +13,7 @@ import javax.persistence.Query;
 import packageEntites.Abonnement;
 import packageEntites.CarteAPuce;
 import packageEntites.Question;
+import packageEntites.SousTrajet;
 
 /**
  *
@@ -33,13 +34,15 @@ public class AbonnementFacade extends AbstractFacade<Abonnement> implements Abon
     }
 
     @Override
-    public void CreerAbonnement(String num, String type, Double montant, CarteAPuce carte) {
+    public Abonnement CreerAbonnement(String num, String type, Double montant, CarteAPuce carte, SousTrajet st) {
         Abonnement a = new Abonnement ();
         a.setNumAbonnement(num);
         a.setType(type);
         a.setMontant(montant);
         a.setLaCarteAPuce(carte);
+        a.setLeSousTrajet(st);
         em.persist(a);
+        return a;
     }
     
     @Override

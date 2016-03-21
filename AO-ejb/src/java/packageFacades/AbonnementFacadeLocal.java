@@ -9,6 +9,7 @@ import java.util.List;
 import javax.ejb.Local;
 import packageEntites.Abonnement;
 import packageEntites.CarteAPuce;
+import packageEntites.SousTrajet;
 
 /**
  *
@@ -31,7 +32,7 @@ public interface AbonnementFacadeLocal {
 
     int count();
 
-    void CreerAbonnement(String num, String type, Double montant, CarteAPuce carte);
+    Abonnement CreerAbonnement(String num, String type, Double montant, CarteAPuce carte, SousTrajet st);
     
     List<Abonnement> RecherheAbonnementParCarte(CarteAPuce carte);
     
