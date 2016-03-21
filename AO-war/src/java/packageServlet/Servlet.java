@@ -1198,9 +1198,17 @@ public class Servlet extends HttpServlet {
         List<Question> questions = sessionPersonne.RetournerQuestion();
         for (Question q : questions) {
             String pId = request.getParameter(q.getId().toString());
-            if (pId != null) {
-                QuestionProposition p = sessionPersonne.RechercherPropositionParId(Integer.parseInt(pId));
+            
+            if (q.getId() == 503) {
+              QuestionProposition p  =  sessionPersonne.CreerProposition(pId, q);
                 sessionPersonne.AjouterReponse(p);
+            } else if (q.getId() == 504){
+                QuestionProposition p  =  sessionPersonne.CreerProposition(pId, q);
+                sessionPersonne.AjouterReponse(p);
+            }
+            else if (pId != null){
+                 QuestionProposition p = sessionPersonne.RechercherPropositionParId(Integer.parseInt(pId));
+                 sessionPersonne.AjouterReponse(p);
             }
 
         }

@@ -10,6 +10,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import packageEntites.Question;
 import packageEntites.QuestionProposition;
 
 /**
@@ -57,6 +58,15 @@ public class QuestionPropositionFacade extends AbstractFacade<QuestionPropositio
         Query req = getEntityManager().createQuery(txt);
         req = req.setParameter("id", id);
         p = (QuestionProposition) req.getSingleResult();
+        return p;
+    }
+
+    @Override
+    public QuestionProposition CreerProposition(String proposition, Question idquestion) {
+        QuestionProposition p = new QuestionProposition();
+        p.setProposition(proposition);
+        p.setLaQuestion(idquestion);
+        em.persist(p);
         return p;
     }
     

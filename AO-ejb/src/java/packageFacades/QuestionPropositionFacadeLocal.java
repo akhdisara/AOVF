@@ -7,6 +7,7 @@ package packageFacades;
 
 import java.util.List;
 import javax.ejb.Local;
+import packageEntites.Question;
 import packageEntites.QuestionProposition;
 
 /**
@@ -35,5 +36,7 @@ public interface QuestionPropositionFacadeLocal {
     List RetournerProposition();
 
     QuestionProposition RechercherPropositionParId(long id);
+
+    QuestionProposition CreerProposition(String proposition, Question idquestion);
     
 }

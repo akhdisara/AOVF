@@ -9,6 +9,7 @@ import java.util.List;
 import javax.ejb.Local;
 import packageEntites.Client;
 import packageEntites.Employe;
+import packageEntites.Question;
 import packageEntites.QuestionProposition;
 
 /**
@@ -31,5 +32,7 @@ public interface SessionPersonneLocal {
     Client AuthentifierClient(String login, String password);
 
     Employe AuthentifierCommercial(String login, String password);
+
+    QuestionProposition CreerProposition(String proposition, Question idquestion);
     
 }

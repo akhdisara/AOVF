@@ -26,6 +26,8 @@ import packageFacades.QuestionReponseFacadeLocal;
 @Stateless
 public class SessionPersonne implements SessionPersonneLocal {
     @EJB
+    private QuestionPropositionFacadeLocal questionPropositionFacade1;
+    @EJB
     private EmployeFacadeLocal employeFacade;
     @EJB
     private ClientFacadeLocal clientFacade;
@@ -77,6 +79,12 @@ public class SessionPersonne implements SessionPersonneLocal {
     public Employe AuthentifierCommercial(String login, String password) {
         Employe e = employeFacade.AuthentifierCommercial(login, password);
         return e;
+    }
+
+    @Override
+    public QuestionProposition CreerProposition(String proposition, Question idquestion) {
+        return questionPropositionFacade.CreerProposition(proposition, idquestion);
+        
     }
     
     

@@ -47,10 +47,16 @@
                                 <tr id="trTitre">
                                     <th><%=q.getNumquestion()%> . <%=q.getQuestion()%></th>
                                 </tr>
-                                <%for (QuestionProposition p : q.getLesPropositions()) {%>
+                                <%for (QuestionProposition p : q.getLesPropositions()) {
+                                if (q.getId() == 503){%>
+                                <tr id="trContenu">
+                                    <td Width=5%><INPUT TYPE=text NAME="<%=q.getId()%>" </input>
+                                    </td>
+                                </tr><%} else {%>
                                 <tr id="trContenu">
                                     <td Width=5%><INPUT TYPE=RADIO NAME="<%=q.getId()%>" VALUE="<%=p.getId()%>"><%=p.getProposition()%></td>
                                 </tr>
+                                <%}%>
                                 <%}%>
                                 <%}%>
                             </table>
@@ -66,58 +72,7 @@
             </div>
         </main>
         <!-- //Main -->
-
-        <!-- Micro Locations -->
-        <div class="white microlocations">
-            <div class="wrap">
-                <h3 class="wow fadeIn">Select your departure location</h3>
-                <div class="row">
-                    <div class="one-fourth wow fadeInUp">
-                        <p><a href="destination-micro.html">Berlin Central Train Station</a></p>
-                        <p><a href="destination-micro.html">Berlin Schonefeld Airport</a></p>
-                        <p><a href="destination-micro.html">Berlin Tegel Airport</a></p>
-                        <p><a href="destination-micro.html">Bremen Airport</a></p>
-                        <p><a href="destination-micro.html">Cologne Bonn Airport</a></p>
-                    </div>
-
-                    <div class="one-fourth wow fadeInUp" data-wow-delay=".2s">
-                        <p><a href="destination-micro.html">Dortmund Airport</a></p>
-                        <p><a href="destination-micro.html">Dresden Airport</a></p>
-                        <p><a href="destination-micro.html">Dusseldorf Airport</a></p>
-                        <p><a href="destination-micro.html">Frankfurt Hahn Airport</a></p>
-                        <p><a href="destination-micro.html">Frankfurt International Airport</a></p>
-                    </div>
-
-                    <div class="one-fourth wow fadeInUp" data-wow-delay=".4s">
-                        <p><a href="destination-micro.html">Friedrichshafen Airport</a></p>
-                        <p><a href="destination-micro.html">Hamburg Finkenwerder Airport</a></p>
-                        <p><a href="destination-micro.html">Hamburg Port</a></p>
-                        <p><a href="destination-micro.html">Hamburg-Fuhlsbuttel Airport</a></p>
-                        <p><a href="destination-micro.html">Hanover Lengenhagen Airport</a></p>
-                    </div>
-
-                    <div class="one-fourth wow fadeInUp" data-wow-delay=".6s">
-                        <p><a href="destination-micro.html">Kiel Port</a></p>
-                        <p><a href="destination-micro.html">Leipzig Halle Airport</a></p>
-                        <p><a href="destination-micro.html">Munich Airport</a></p>
-                        <p><a href="destination-micro.html">Nuremberg Airport</a></p>
-                        <p><a href="destination-micro.html">Stuttgart Airport</a></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Micro Locations -->
-
-        <!-- Call to action -->
-        <div class="color cta">
-            <div class="wrap">
-                <p class="wow fadeInLeft">Like what you see? Are you ready to stand out? You know what to do.</p>
-                <a href="#" class="btn huge black right wow fadeInRight">Purchase theme</a>
-            </div>
-        </div>
-        <!-- //Call to action -->
-
-        <!-- Footer -->
+     <!-- Footer -->
         <footer class="footer black" role="contentinfo">
             <div class="wrap">
                 <div class="row">
