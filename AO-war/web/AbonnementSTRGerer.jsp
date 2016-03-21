@@ -33,10 +33,11 @@
         </div>
         
         <br><br>
-        <% List<Abonnement> listeAboSTR = new ArrayList();
-        if(!client.getLaCarteAPuce().getLesAbonnements().isEmpty()){
-            List<Abonnement> listAbo = client.getLaCarteAPuce().getLesAbonnements();
-            for (Abonnement abo : listAbo){
+        <%List<Abonnement> listeAbo = (List<Abonnement>)request.getAttribute("listeabos");
+        List<Abonnement> listeAboSTR = new ArrayList();
+        if(listeAbo.isEmpty()){%>Aucun abonnement enregistré pour ce client<%}
+        else {
+            for (Abonnement abo : listeAbo){
                 if (abo.getType().startsWith("STR")){
                     listeAboSTR.add(abo);
                 }

@@ -47,4 +47,6 @@ public interface SessionCommercialLocal {
     SousTrajet CreerSousTrajet(String depart, String arrivee, String ligne, double tarif);
 
     List<SousTrajet> RetournerSousTrajets();
+    
+    public List<Abonnement> RecherheAbonnementParCarte(CarteAPuce carte);
 }

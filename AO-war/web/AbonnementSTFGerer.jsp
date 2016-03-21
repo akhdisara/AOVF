@@ -33,11 +33,11 @@
         </div>
         
         <br><br>
-        <%List<Abonnement> listeAboSTF = new ArrayList();
-        if(client.getLaCarteAPuce().getLesAbonnements().isEmpty()){%>Aucun abonnement enregistré pour ce client<%}
+        <%List<Abonnement> listeAbo = (List<Abonnement>)request.getAttribute("listeabos");
+        List<Abonnement> listeAboSTF = new ArrayList();
+        if(listeAbo.isEmpty()){%>Aucun abonnement enregistré pour ce client<%}
         else {
-            List<Abonnement> listAbo = client.getLaCarteAPuce().getLesAbonnements();
-            for (Abonnement abo : listAbo){
+            for (Abonnement abo : listeAbo){
                 if (abo.getType().startsWith("STF")){
                     listeAboSTF.add(abo);
                 }
