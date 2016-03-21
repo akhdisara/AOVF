@@ -1208,6 +1208,7 @@ public class Servlet extends HttpServlet {
         String message;
 
         List<Question> questions = sessionPersonne.RetournerQuestion();
+        
         for (Question q : questions) {
             String pId = request.getParameter(q.getId().toString());
             
