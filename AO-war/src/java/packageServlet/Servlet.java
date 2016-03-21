@@ -1211,19 +1211,17 @@ public class Servlet extends HttpServlet {
         
         for (Question q : questions) {
             String pId = request.getParameter(q.getId().toString());
-            
+            QuestionProposition p  =  null;
             if (q.getId() == 503) {
-              QuestionProposition p  =  sessionPersonne.CreerProposition(pId, q);
-                sessionPersonne.AjouterReponse(p);
+                p = sessionPersonne.CreerProposition(pId, q);
             } else if (q.getId() == 504){
-                QuestionProposition p  =  sessionPersonne.CreerProposition(pId, q);
-                sessionPersonne.AjouterReponse(p);
+                p = sessionPersonne.CreerProposition(pId, q);
+            } else if (q.getId() == 505){
+                p = sessionPersonne.CreerProposition(pId, q);
+            } else if (pId != null){
+                p = sessionPersonne.RechercherPropositionParId(Integer.parseInt(pId));
             }
-            else if (pId != null){
-                 QuestionProposition p = sessionPersonne.RechercherPropositionParId(Integer.parseInt(pId));
-                 sessionPersonne.AjouterReponse(p);
-            }
-
+            sessionPersonne.AjouterReponse(p);
         }
 
     }

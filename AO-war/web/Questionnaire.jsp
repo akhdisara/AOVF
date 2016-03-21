@@ -55,7 +55,7 @@
                                         </tr>
                                         <%} else if (q.getId() == 506) {%>
                                         <tr id="trContenu">
-                                            <td Width=5%><input type="time" name="horaire<%=pos.getArret().getNom()%>"/>
+                                            <td Width=5%><input type="time" name="<%=q.getId()%>"/>
                                             </td>
                                         </tr>
                                         <%} else {
