@@ -5,6 +5,7 @@
  */
 package packageFacades;
 
+import java.util.Date;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -30,4 +31,15 @@ public class TrajetFacade extends AbstractFacade<Trajet> implements TrajetFacade
     }
     
     
+    @Override
+    public Trajet CreerTrajet(String d, String a,double tarifSTF,double tarifSTR) {
+        Trajet t = new Trajet();
+        t.setArretArrivee(a);
+        t.setArretDepart(d);
+        t.setDateTrajet(new Date());
+        t.setTarifTotalSTF(tarifSTF);
+        t.setTarifTotalSTR(tarifSTR);
+        em.persist(t);
+        return t;
+    }
 }

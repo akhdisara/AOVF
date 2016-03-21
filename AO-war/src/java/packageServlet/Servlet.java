@@ -29,6 +29,7 @@ import packageFacades.AbonneFacadeLocal;
 import packageFacades.AbonnementFacadeLocal;
 import packageFacades.CarteAPuceFacadeLocal;
 import packageFacades.SousTrajetFacadeLocal;
+import packageFacades.TrajetFacadeLocal;
 import packageSessions.SessionCommercialLocal;
 import packageSessions.SessionPersonneLocal;
 import webservice.Abonnement;
@@ -51,6 +52,8 @@ import webservice.Trajet;
  */
 @WebServlet(name = "Servlet", urlPatterns = {"/Servlet"})
 public class Servlet extends HttpServlet {
+    @EJB
+    private TrajetFacadeLocal trajetFacade;
 
     @EJB
     private SousTrajetFacadeLocal sousTrajetFacade;
@@ -242,7 +245,7 @@ public class Servlet extends HttpServlet {
         String t2 = request.getParameter("t2");
         System.out.println("-->" + carte);
         CarteAPuce c = carteAPuceFacade.RechercherCarteParId(Integer.parseInt(carte));
-        System.out.println("-->" + c);
+        System.out.println("-->****1 " + A);
         if (c == null) {
             request.setAttribute("message", "Erreur Carte !!");
         } else {
@@ -251,6 +254,9 @@ public class Servlet extends HttpServlet {
             if (listeAbn.isEmpty()) {
                 System.out.println("n'est pas Abonné");
                 request.setAttribute("message", "Non abonné : Titre de transport enregistré");
+                packageEntites.Trajet t = trajetFacade.CreerTrajet(D, A , 0, 0);
+                System.out.println("****"+t.getArretArrivee());
+                System.out.println("****"+A);
                 sousTrajetFacade.CreerSousTrajet(D, C, l1, Double.valueOf(t1));
                 if (!l2.equals("")) {
                     sousTrajetFacade.CreerSousTrajet(C, A, l2, Double.valueOf(t2));
@@ -258,6 +264,9 @@ public class Servlet extends HttpServlet {
             } else {
                 System.out.println("Est Abonné");
                 request.setAttribute("message", "Abonné : Titre de transport enregistré");
+                packageEntites.Trajet t = trajetFacade.CreerTrajet(D, A , 0, 0);
+                System.out.println("****"+t.getArretArrivee());
+                System.out.println("****"+A);
                 sousTrajetFacade.CreerSousTrajet(D, C, l1, Double.valueOf(t1) * 0.15);
                 if (!l2.equals("")) {
                     sousTrajetFacade.CreerSousTrajet(C, A, l2, Double.valueOf(t2) * 0.15);
@@ -285,6 +294,7 @@ public class Servlet extends HttpServlet {
         request.setAttribute("t1", t1);
         request.setAttribute("t2", t2);
         request.setAttribute("message", "");
+        System.out.println("-->****2 " + A);
     }
 
     protected void doActionRechercherTrajet(HttpServletRequest request, HttpServletResponse response) {

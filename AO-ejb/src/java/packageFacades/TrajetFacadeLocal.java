@@ -30,4 +30,6 @@ public interface TrajetFacadeLocal {
 
     int count();
     
+    Trajet CreerTrajet(String d, String a,double tarifSTF,double tarifSTR);
+  
 }
