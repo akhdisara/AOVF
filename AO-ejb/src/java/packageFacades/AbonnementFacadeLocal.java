@@ -33,4 +33,6 @@ public interface AbonnementFacadeLocal {
 
     void CreerAbonnement(String num, String type, Double montant, CarteAPuce carte);
     
+    List<Abonnement> RecherheAbonnementParCarte(CarteAPuce carte);
+    
 }

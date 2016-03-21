@@ -7,8 +7,11 @@ package packageFacades;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import packageEntites.Abonne;
+import packageEntites.CarteAPuce;
 
 /**
  *
@@ -28,4 +31,17 @@ public class AbonneFacade extends AbstractFacade<Abonne> implements AbonneFacade
         super(Abonne.class);
     }
     
+    @Override
+    public Abonne RechercherAbonneParId(long id) {
+        try {
+            Abonne a;
+            String txt = "SELECT a FROM Abonne AS a WHERE a.id=:id";
+            Query req = getEntityManager().createQuery(txt);
+            req = req.setParameter("id", id);
+            a = (Abonne) req.getSingleResult();
+            return a;
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
 }

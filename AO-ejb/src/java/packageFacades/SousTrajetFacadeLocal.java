@@ -30,4 +30,6 @@ public interface SousTrajetFacadeLocal {
 
     int count();
     
+    SousTrajet CreerSousTrajet(String d, String a, String l,double tarif);
+    
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
-    <system systemId="http://localhost:8080/WebServiceSTF/WebServiceSTF?wsdl" uri="src/conf/xml-resources/web-service-references/WebServiceSTF/wsdl/localhost_8080/WebServiceSTF/WebServiceSTF.wsdl"/>
-    <system systemId="http://localhost:8080/WebServiceSTF/WebServiceSTF?xsd=1" uri="src/conf/xml-resources/web-service-references/WebServiceSTF/wsdl/localhost_8080/WebServiceSTF/WebServiceSTF.xsd_1.xsd"/>
     <system systemId="http://localhost:8080/webServiceSTR/WebServicesSTR?wsdl" uri="src/conf/xml-resources/web-service-references/WebServicesSTR/wsdl/localhost_8080/webServiceSTR/WebServicesSTR.wsdl"/>
     <system systemId="http://localhost:8080/webServiceSTR/WebServicesSTR?xsd=1" uri="src/conf/xml-resources/web-service-references/WebServicesSTR/wsdl/localhost_8080/webServiceSTR/WebServicesSTR.xsd_1.xsd"/>
+    <system systemId="http://localhost:8080/WebServiceSTF/WebServiceSTF?wsdl" uri="src/conf/xml-resources/web-service-references/WebServiceSTF/wsdl/localhost_8080/WebServiceSTF/WebServiceSTF.wsdl"/>
+    <system systemId="http://localhost:8080/WebServiceSTF/WebServiceSTF?xsd=1" uri="src/conf/xml-resources/web-service-references/WebServiceSTF/wsdl/localhost_8080/WebServiceSTF/WebServiceSTF.xsd_1.xsd"/>
 </catalog>

@@ -34,4 +34,6 @@ public interface CarteAPuceFacadeLocal {
 
     CarteAPuce CreerCarteAPuce(Date dateAttribution, Date dateLimite);
     
+    CarteAPuce RechercherCarteParId(long id);
+    
 }

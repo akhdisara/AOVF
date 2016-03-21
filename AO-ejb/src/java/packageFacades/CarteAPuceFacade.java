@@ -8,9 +8,11 @@ package packageFacades;
 import java.util.Date;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import packageEntites.CarteAPuce;
-import packageEntites.Personne;
+;
 
 /**
  *
@@ -18,6 +20,7 @@ import packageEntites.Personne;
  */
 @Stateless
 public class CarteAPuceFacade extends AbstractFacade<CarteAPuce> implements CarteAPuceFacadeLocal {
+
     @PersistenceContext(unitName = "AO-ejbPU")
     private EntityManager em;
 
@@ -38,5 +41,19 @@ public class CarteAPuceFacade extends AbstractFacade<CarteAPuce> implements Cart
         em.persist(c);
         return c;
     }
-    
+
+    @Override
+    public CarteAPuce RechercherCarteParId(long id) {
+        try {
+            CarteAPuce c;
+            String txt = "SELECT c FROM CarteAPuce AS c WHERE c.id=:id";
+            Query req = getEntityManager().createQuery(txt);
+            req = req.setParameter("id", id);
+            c = (CarteAPuce) req.getSingleResult();
+            return c;
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
 }

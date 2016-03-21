@@ -30,4 +30,6 @@ public interface AbonneFacadeLocal {
 
     int count();
     
+    Abonne RechercherAbonneParId(long id);
+    
 }

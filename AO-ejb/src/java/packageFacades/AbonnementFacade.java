@@ -5,11 +5,14 @@
  */
 package packageFacades;
 
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import packageEntites.Abonnement;
 import packageEntites.CarteAPuce;
+import packageEntites.Question;
 
 /**
  *
@@ -38,5 +41,16 @@ public class AbonnementFacade extends AbstractFacade<Abonnement> implements Abon
         a.setLaCarteAPuce(carte);
         em.persist(a);
     }
+    
+    @Override
+    public List<Abonnement> RecherheAbonnementParCarte(CarteAPuce carte) {
+        List<Abonnement> listeAbonnements;
+        String txt = "SELECT a FROM Abonnement AS a WHERE a.laCarteAPuce=:carte";
+        Query req = getEntityManager().createQuery(txt);
+        req = req.setParameter("carte", carte);
+        listeAbonnements = req.getResultList();
+        return listeAbonnements;
+    }
+
     
 }

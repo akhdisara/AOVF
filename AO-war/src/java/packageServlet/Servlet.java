@@ -21,8 +21,13 @@ import javax.servlet.http.HttpServletResponse;
 import packageEntites.CarteAPuce;
 import packageEntites.Client;
 import packageEntites.CompteBancaire;
+import packageEntites.Personne;
 import packageEntites.Question;
 import packageEntites.QuestionProposition;
+import packageFacades.AbonneFacadeLocal;
+import packageFacades.AbonnementFacadeLocal;
+import packageFacades.CarteAPuceFacadeLocal;
+import packageFacades.SousTrajetFacadeLocal;
 import packageSessions.SessionCommercialLocal;
 import packageSessions.SessionPersonneLocal;
 import webservice.Abonnement;
@@ -45,6 +50,17 @@ import webservice.Trajet;
  */
 @WebServlet(name = "Servlet", urlPatterns = {"/Servlet"})
 public class Servlet extends HttpServlet {
+
+    @EJB
+    private SousTrajetFacadeLocal sousTrajetFacade;
+    @EJB
+    private AbonnementFacadeLocal abonnementFacade;
+    @EJB
+    private AbonneFacadeLocal abonneFacade;
+
+    @EJB
+    private CarteAPuceFacadeLocal carteAPuceFacade;
+
     @EJB
     private SessionPersonneLocal sessionPersonne;
 
@@ -67,7 +83,8 @@ public class Servlet extends HttpServlet {
         String jspClient = null;
         String act = request.getParameter("action");
         if ((act == null) || (act.equals("null"))) {
-            jspClient = "/Accueil.jsp";
+            jspClient = "/index.jsp";
+            //trajet("Lyon", "Macon");
         } else if (act.equals("Accueil")) {
             jspClient = "/Accueil.jsp";
             //request.setAttribute("message", "");
@@ -119,15 +136,13 @@ public class Servlet extends HttpServlet {
         } else if (act.equals("AbonnementSTRAjouter")) {
             jspClient = "/AbonnementSTRGerer.jsp";
             doActionAjouterAbonnementSTR(request, response);
-        } 
-        else if (act.equals("GererAbonnementSTF")) {
+        } else if (act.equals("GererAbonnementSTF")) {
             jspClient = "/AbonnementSTFGerer.jsp";
             doActionAfficherGestionAbonnementSTFClient(request, response);
         } else if (act.equals("AbonnementSTFAjouter")) {
             jspClient = "/AbonnementSTFGerer.jsp";
             doActionAjouterAbonnementSTF(request, response);
-        } 
-        else if (act.equals("Trajet")) {
+        } else if (act.equals("Trajet")) {
             jspClient = "/TrajetRechercher.jsp";
             request.setAttribute("message", "");
         } else if (act.equals("ChercherTrajet")) {
@@ -169,24 +184,337 @@ public class Servlet extends HttpServlet {
         } else if (act.equals("ficheTarifaireSTF")) {
             jspClient = "/ficheTarifaireSTF.jsp";
             ficheTarifaireSTF(request, response);
+        } else if (act.equals("AfficherQuestionnaire")) {
+            jspClient = "/Questionnaire.jsp";
+            List<Question> listQ = sessionPersonne.RetournerQuestion();
+            request.setAttribute("listequestions", listQ);
+            request.setAttribute("message", "");
+            System.out.println("--" + listQ);
+        } else if (act.equals("AjouterReponse")) {
+            jspClient = "/Questionnaire.jsp";
+            List<Question> listQ = sessionPersonne.RetournerQuestion();
+            request.setAttribute("listequestions", listQ);
+            request.setAttribute("message", "");
+            doActionAjouterReponse(request, response);
+        } else if (act.equals("rechercherTrajet")) {
+            jspClient = "/resultatTrajet.jsp";
+            doActionRechercherTrajet(request, response);
+        } else if (act.equals("AvoirTitreTransport")) {
+            jspClient = "/AvoirTitreTransport.jsp";
+            AvoirTitreTransport(request, response);
+        } else if (act.equals("NCarteEtTitreTransport")) {
+            String checkbox = request.getParameter("checkbox");
+            String carte = request.getParameter("carte");
+            if (checkbox != null) {
+                CarteAPuce c = carteAPuceFacade.RechercherCarteParId(Integer.parseInt(carte));
+                if (c == null) {
+                    jspClient = "/AvoirTitreTransport.jsp";
+                    AvoirTitreTransport(request, response);
+                    request.setAttribute("message", "N°Carte invalide!");
+                } else {
+                    jspClient = "/NCarteEtTitreTransport.jsp";
+                    NCarteEtTitreTransport(request, response);
+                }
+            } else {
+                jspClient = "/AvoirTitreTransport.jsp";
+                AvoirTitreTransport(request, response);
+                request.setAttribute("message", "Veuillez accepter les générales d'utilisation !");
+            }
         }
-        else if (act.equals("AfficherQuestionnaire")) {
-                jspClient = "/Questionnaire.jsp";
-                List<Question> listQ = sessionPersonne.RetournerQuestion();
-                request.setAttribute("listequestions", listQ);
-                request.setAttribute("message", "");
-            }
-            else if (act.equals("AjouterReponse")) {
-                jspClient = "/Questionnaire.jsp";
-                List<Question> listQ = sessionPersonne.RetournerQuestion();
-                request.setAttribute("listequestions", listQ);
-                request.setAttribute("message", "");
-                doActionAjouterReponse(request, response);
-            }
 
         RequestDispatcher Rd;
         Rd = getServletContext().getRequestDispatcher(jspClient);
         Rd.forward(request, response);
+    }
+
+    protected void NCarteEtTitreTransport(HttpServletRequest request, HttpServletResponse response) {
+        String carte = request.getParameter("carte");
+        String l1 = request.getParameter("l1");
+        String l2 = request.getParameter("l2");
+        String D = request.getParameter("D");
+        String A = request.getParameter("A");
+        String C = request.getParameter("C");
+        String t1 = request.getParameter("t1");
+        String t2 = request.getParameter("t2");
+        System.out.println("-->" + carte);
+        CarteAPuce c = carteAPuceFacade.RechercherCarteParId(Integer.parseInt(carte));
+        System.out.println("-->" + c);
+        if (c == null) {
+            request.setAttribute("message", "Erreur Carte !!");
+        } else {
+            List<packageEntites.Abonnement> listeAbn = abonnementFacade.RecherheAbonnementParCarte(c);
+            System.out.println("-->" + listeAbn);
+            if (listeAbn.isEmpty()) {
+                System.out.println("n'est pas Abonné");
+                request.setAttribute("message", "Non abonné : Titre de transport enregistré");
+                sousTrajetFacade.CreerSousTrajet(D, C, l1, Double.valueOf(t1));
+                if (!l2.equals("")) {
+                    sousTrajetFacade.CreerSousTrajet(C, A, l2, Double.valueOf(t2));
+                }
+            } else {
+                System.out.println("Est Abonné");
+                request.setAttribute("message", "Abonné : Titre de transport enregistré");
+                sousTrajetFacade.CreerSousTrajet(D, C, l1, Double.valueOf(t1) * 0.15);
+                if (!l2.equals("")) {
+                    sousTrajetFacade.CreerSousTrajet(C, A, l2, Double.valueOf(t2) * 0.15);
+                }
+            }
+
+        }
+
+    }
+
+    protected void AvoirTitreTransport(HttpServletRequest request, HttpServletResponse response) {
+        String l1 = request.getParameter("l1");
+        String l2 = request.getParameter("l2");
+        String D = request.getParameter("D");
+        String A = request.getParameter("A");
+        String C = request.getParameter("C");
+        String t1 = request.getParameter("t1");
+        String t2 = request.getParameter("t2");
+        //
+        request.setAttribute("l1", l1);
+        request.setAttribute("l2", l2);
+        request.setAttribute("D", D);
+        request.setAttribute("A", A);
+        request.setAttribute("C", C);
+        request.setAttribute("t1", t1);
+        request.setAttribute("t2", t2);
+        request.setAttribute("message", "");
+    }
+
+    protected void doActionRechercherTrajet(HttpServletRequest request, HttpServletResponse response) {
+        String arretD = request.getParameter("depart");
+        String arretF = request.getParameter("arrivee");
+        // WS STR
+        webservice.WebServiceSTR service = new webservice.WebServiceSTR();
+        webservice.WebServicesSTR port = service.getWebServicesSTRPort();
+
+        //WS STF
+        webservice.WebServiceSTF_Service serviceSTF = new webservice.WebServiceSTF_Service();
+        webservice.WebServiceSTF portSTF = serviceSTF.getWebServiceSTFPort();
+        //
+        request.setAttribute("depart", arretD);
+        request.setAttribute("arrivee", arretF);
+        //
+        Arret ArretFin = port.rechercheArretSTRParNom(arretF);
+        Gare gareFin = portSTF.rechercherGareParNom(arretF);
+        Arret Arretdebut = port.rechercheArretSTRParNom(arretD);
+        Gare gareDebut = portSTF.rechercherGareParNom(arretD);
+        //
+        request.setAttribute("ligne1", "");
+        request.setAttribute("ligne2", "");
+        //Chercher si l'arret d'arrivée existe dans le reseau STR
+        if (arretD.equals(arretF)) {
+            request.setAttribute("message", "L'arrêt de départ et d'arrivée doivent être différentes !");
+        } else if (ArretFin == null && gareFin == null) {
+            request.setAttribute("message", "L'arrêt d'arrivée n'existe ni dans STR,ni dans STF.");
+        } //Chercher si l'arret d'arrivée existe dans le reseau STR        
+        else if (Arretdebut == null && gareDebut == null) {
+            request.setAttribute("message", "L'arrêt de départ n'existe ni dans STR,ni dans STF.");
+        } else {
+            //
+            request.setAttribute("message", "");
+            //
+            List<String> lignesAD = new ArrayList<String>();
+            List<String> lignesAF = new ArrayList<String>();
+            //Lignes STR pour arrêts de début
+            List<PositionArretLigne> listSTRADResult = port.recherchePositionSTRParArret(Arretdebut);
+
+            for (PositionArretLigne pos : listSTRADResult) {
+                lignesAD.add(pos.getLigne().getIdentifiant());
+            }
+
+            //Lignes STR pour arrêts de fin
+            List<PositionArretLigne> listSTRAFResult = port.recherchePositionSTRParArret(ArretFin);
+            for (PositionArretLigne pos : listSTRAFResult) {
+                lignesAF.add(pos.getLigne().getIdentifiant());
+            }
+            //Gares STF pour arrêts de début
+            List<DistanceGare> listSTFADResult = portSTF.retournerDistanceGareParGare(gareDebut);
+            System.out.println("--" + listSTFADResult);
+            System.out.println("--" + gareDebut.getNomGare());
+            for (DistanceGare pos : listSTFADResult) {
+                lignesAD.add(String.valueOf(pos.getLaLigne().getNumLigne()));
+            }
+
+            //Gares STF pour arrêts de fin
+            List<DistanceGare> listSTFAFResult = portSTF.retournerDistanceGareParGare(gareFin);
+            for (DistanceGare pos : listSTFAFResult) {
+                lignesAF.add(String.valueOf(pos.getLaLigne().getNumLigne()));
+            }
+
+            List<String> l3 = new ArrayList<String>(lignesAD);
+            l3.retainAll(lignesAF);
+            System.out.println("Ligne communes ---->" + l3);
+            if (!l3.isEmpty()) {
+                System.out.println(l3.get(0) + " Vous permet de faire trajet");
+                request.setAttribute("ligne1", l3.get(0));
+                LigneSTR lr = port.rechercheLigneSTRParIdentifiant(l3.get(0));
+                if (lr != null) {
+                    request.setAttribute("reseau1", "STR");
+                    request.setAttribute("ligne1Depart", lr.getDebut().getNom());
+                    request.setAttribute("ligne1Arrivee", lr.getFin().getNom());
+                    System.out.println("-->" + lr.getId());
+                    System.out.println("-->" + Arretdebut.getId());
+                    System.out.println("-->" + ArretFin.getId());
+                    double t = port.tarifBaseParArrets(lr, Arretdebut, ArretFin);
+                    request.setAttribute("tarif1", String.valueOf(t));
+                } else {
+                    Ligne lf = portSTF.rechercherLigneSTFParNum(Integer.parseInt(l3.get(0)));
+                    request.setAttribute("reseau1", "STF");
+                    request.setAttribute("ligne1Depart", lf.getGareDepart().getNomGare());
+                    request.setAttribute("ligne1Arrivee", lf.getGareArrivee().getNomGare());
+                    double t = portSTF.retournerDistanceLigneGare(lf, gareDebut);
+                    System.out.println("-->" + gareFin);
+                    System.out.println("-->" + gareFin.getNomGare());
+                    request.setAttribute("tarif1", String.valueOf(t * portSTF.getPrixilometre()));
+                }
+                request.setAttribute("depart1", arretD);
+                request.setAttribute("arrivee1", arretF);
+                request.setAttribute("ligne2", "");
+                request.setAttribute("reseau2", "");
+                request.setAttribute("ligne2Depart", "");
+                request.setAttribute("ligne2Arrivee", "");
+                request.setAttribute("depart2", "");
+                request.setAttribute("arrivee2", "");
+            } else {
+                for (DistanceGare posD : listSTFADResult) {
+                    System.out.println("**********" + posD.getLaLigne().getNumLigne());
+                    List<DistanceGare> l1 = portSTF.retournerDistanceGareParLigne(posD.getLaLigne());
+                    for (DistanceGare pos1 : l1) {
+                        {
+                            System.out.println("------>" + pos1.getLaGare().getNomGare());
+                            for (DistanceGare posF : listSTFAFResult) {
+                                List<DistanceGare> l2 = portSTF.retournerDistanceGareParLigne(posF.getLaLigne());
+                                for (DistanceGare pos2 : l2) {
+                                    System.out.println("-->" + pos2.getLaGare().getNomGare());
+                                    if (pos1.getLaGare().getNomGare().equals(pos2.getLaGare().getNomGare())) {
+                                        //System.out.println("Correspondance STF" + pos2.getLaGare().getNomGare());
+                                        System.out.println(arretD + "-->" + pos2.getLaGare().getNomGare() + "::" + posD.getLaLigne().getNumLigne());
+                                        request.setAttribute("ligne1", String.valueOf(posD.getLaLigne().getNumLigne()));
+                                        request.setAttribute("reseau1", "STF");
+                                        request.setAttribute("ligne1Depart", posD.getLaLigne().getGareDepart().getNomGare());
+                                        request.setAttribute("ligne1Arrivee", posD.getLaLigne().getGareArrivee().getNomGare());
+                                        request.setAttribute("depart1", arretD);
+                                        request.setAttribute("arrivee1", pos2.getLaGare().getNomGare());
+                                        double t1 = portSTF.retournerDistanceLigneGare(posD.getLaLigne(), gareDebut);
+                                        request.setAttribute("tarif1", String.valueOf(t1 * portSTF.getPrixilometre()));
+                                        System.out.println(pos2.getLaGare().getNomGare() + "-->" + arretF + "::" + pos2.getLaLigne().getNumLigne());
+                                        request.setAttribute("ligne2", String.valueOf(pos2.getLaLigne().getNumLigne()));
+                                        request.setAttribute("reseau2", "STF");
+                                        request.setAttribute("ligne2Depart", pos2.getLaLigne().getGareDepart().getNomGare());
+                                        request.setAttribute("ligne2Arrivee", pos2.getLaLigne().getGareArrivee().getNomGare());
+                                        request.setAttribute("depart2", pos2.getLaGare().getNomGare());
+                                        request.setAttribute("arrivee2", arretF);
+                                        double t2 = portSTF.retournerDistanceLigneGare(pos2.getLaLigne(), pos2.getLaGare());
+                                        request.setAttribute("tarif2", String.valueOf(t2 * portSTF.getPrixilometre()));
+                                        return;
+                                    }
+                                }
+                            }
+                            for (PositionArretLigne posF : listSTRAFResult) {
+                                List<PositionArretLigne> l2 = new ArrayList(port.recherchePositionParLigne(posF.getLigne()));
+                                for (PositionArretLigne pos2 : l2) {
+                                    System.out.println("-->" + pos2.getArret().getNom());
+                                    if (pos1.getLaGare().getNomGare().equals(pos2.getArret().getNom())) {
+                                        //System.out.println("Correspondance STR " + pos2.getArret().getNom());
+                                        System.out.println(arretD + "-->" + pos2.getArret().getNom() + "::" + posD.getLaLigne().getNumLigne());
+                                        request.setAttribute("ligne1", String.valueOf(posD.getLaLigne().getNumLigne()));
+                                        request.setAttribute("reseau1", "STF");
+                                        request.setAttribute("ligne1Depart", posD.getLaLigne().getGareDepart().getNomGare());
+                                        request.setAttribute("ligne1Arrivee", posD.getLaLigne().getGareArrivee().getNomGare());
+                                        request.setAttribute("depart1", arretD);
+                                        request.setAttribute("arrivee1", pos2.getArret().getNom());
+                                        double t1 = portSTF.retournerDistanceLigneGare(posD.getLaLigne(), gareDebut);
+                                        request.setAttribute("tarif1", String.valueOf(t1 * portSTF.getPrixilometre()));
+                                        System.out.println(pos2.getArret().getNom() + "-->" + arretF + "::" + pos2.getLigne().getIdentifiant());
+                                        request.setAttribute("ligne2", pos2.getLigne().getIdentifiant());
+                                        request.setAttribute("reseau2", "STR");
+                                        request.setAttribute("ligne2Depart", pos2.getLigne().getDebut().getNom());
+                                        request.setAttribute("ligne2Arrivee", pos2.getLigne().getFin().getNom());
+                                        request.setAttribute("depart2", pos2.getArret().getNom());
+                                        request.setAttribute("arrivee2", arretF);
+                                        double t = port.tarifBaseParArrets(pos2.getLigne(), pos2.getArret(), ArretFin);
+                                        request.setAttribute("tarif2", String.valueOf(t));
+                                        return;
+                                    }
+                                }
+                            }
+                        }
+
+                    }
+                }
+
+                for (PositionArretLigne posD : listSTRADResult) {
+                    List<PositionArretLigne> l1 = new ArrayList(port.recherchePositionParLigne(posD.getLigne()));
+                    System.out.println("**********" + posD.getLigne().getIdentifiant());
+                    for (PositionArretLigne pos1 : l1) {
+                        {
+                            System.out.println("----->" + pos1.getArret().getNom());
+                            for (PositionArretLigne posF : listSTRAFResult) {
+                                List<PositionArretLigne> l2 = new ArrayList(port.recherchePositionParLigne(posF.getLigne()));
+                                for (PositionArretLigne pos2 : l2) {
+                                    System.out.println("-->" + pos2.getArret().getNom());
+                                    if (pos1.getArret().getNom().equals(pos2.getArret().getNom())) {
+                                        //System.out.println("Correspondance STR " + pos2.getArret().getNom());
+                                        System.out.println(arretD + "-->" + pos2.getArret().getNom() + "::" + posD.getLigne().getIdentifiant());
+                                        request.setAttribute("ligne1", posD.getLigne().getIdentifiant());
+                                        request.setAttribute("reseau1", "STR");
+                                        request.setAttribute("ligne1Depart", posD.getLigne().getDebut().getNom());
+                                        request.setAttribute("ligne1Arrivee", posD.getLigne().getFin().getNom());
+                                        request.setAttribute("depart1", arretD);
+                                        request.setAttribute("arrivee1", pos2.getArret().getNom());
+                                        double t1 = port.tarifBaseParArrets(posD.getLigne(), Arretdebut, pos2.getArret());
+                                        request.setAttribute("tarif1", String.valueOf(t1));
+                                        System.out.println(pos2.getArret().getNom() + "-->" + arretF + "::" + pos2.getLigne().getIdentifiant());
+                                        request.setAttribute("ligne2", pos2.getLigne().getIdentifiant());
+                                        request.setAttribute("reseau2", "STR");
+                                        request.setAttribute("ligne2Depart", pos2.getLigne().getDebut().getNom());
+                                        request.setAttribute("ligne2Arrivee", pos2.getLigne().getFin().getNom());
+                                        request.setAttribute("depart2", pos2.getArret().getNom());
+                                        request.setAttribute("arrivee2", arretF);
+                                        double t2 = port.tarifBaseParArrets(pos2.getLigne(), pos2.getArret(), ArretFin);
+                                        request.setAttribute("tarif2", String.valueOf(t2));
+                                        return;
+                                    }
+                                }
+                            }
+                            for (DistanceGare posF : listSTFAFResult) {
+                                List<DistanceGare> l2 = portSTF.retournerDistanceGareParLigne(posF.getLaLigne());
+                                for (DistanceGare pos2 : l2) {
+                                    System.out.println("-->" + pos2.getLaGare().getNomGare());
+                                    if (pos1.getArret().getNom().equals(pos2.getLaGare().getNomGare())) {
+                                        //System.out.println("Correspondance STF " + pos2.getLaGare().getNomGare());
+                                        System.out.println(arretD + "-->" + pos2.getLaGare().getNomGare() + "::" + posD.getLigne().getIdentifiant());
+                                        request.setAttribute("ligne1", posD.getLigne().getIdentifiant());
+                                        request.setAttribute("reseau1", "STR");
+                                        request.setAttribute("ligne1Depart", posD.getLigne().getDebut().getNom());
+                                        request.setAttribute("ligne1Arrivee", posD.getLigne().getFin().getNom());
+                                        request.setAttribute("depart1", arretD);
+                                        request.setAttribute("arrivee1", pos2.getLaGare().getNomGare());
+                                        double t1 = port.tarifBaseParArrets(posD.getLigne(), Arretdebut, pos1.getArret());
+                                        request.setAttribute("tarif1", String.valueOf(t1));
+                                        System.out.println(pos2.getLaGare().getNomGare() + "-->" + arretF + "::" + pos2.getLaLigne().getNumLigne());
+                                        request.setAttribute("ligne2", String.valueOf(pos2.getLaLigne().getNumLigne()));
+                                        request.setAttribute("reseau2", "STF");
+                                        request.setAttribute("ligne2Depart", pos2.getLaLigne().getGareDepart().getNomGare());
+                                        request.setAttribute("ligne2Arrivee", pos2.getLaLigne().getGareArrivee().getNomGare());
+                                        request.setAttribute("depart2", pos2.getLaGare().getNomGare());
+                                        request.setAttribute("arrivee2", arretF);
+                                        double t2 = portSTF.retournerDistanceLigneGare(pos2.getLaLigne(), pos2.getLaGare());
+                                        request.setAttribute("tarif2", String.valueOf(t2 * portSTF.getPrixilometre()));
+                                        return;
+                                    }
+                                }
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
+
     }
 
     protected void ficheHoraireSTF(HttpServletRequest request, HttpServletResponse response) {
@@ -203,6 +531,8 @@ public class Servlet extends HttpServlet {
 
         List<DistanceGare> lesDistances = port.retournerDistanceGareParLigne(ligne);
         request.setAttribute("lesDistances", lesDistances);
+
+        request.setAttribute("ligne", ligne);
 
     }
 
@@ -319,20 +649,34 @@ public class Servlet extends HttpServlet {
         String identifiant = request.getParameter("identifiant");
         LigneSTR ligne = port.rechercheLigneSTRParIdentifiant(identifiant);
         Collection<LigneSTR> coll = new ArrayList<LigneSTR>();
-        coll.add(ligne);
+        if (ligne != null) {
+            coll.add(ligne);
+            request.setAttribute("message", "Résultat de votre recherche :");
+        } else {
+            request.setAttribute("message", "Aucune ligne trouvée !");
+        }
         request.setAttribute("collectionLignes", coll);
-        request.setAttribute("message", "");
     }
 
     protected void RechercherLigneSTF(HttpServletRequest request, HttpServletResponse response) {
-        webservice.WebServiceSTF_Service service = new webservice.WebServiceSTF_Service();
-        webservice.WebServiceSTF port = service.getWebServiceSTFPort();
-        String numLigne = request.getParameter("NumLigne");
-        Ligne ligne = port.rechercherLigneSTFParNum(Integer.parseInt(numLigne));
-        List<Ligne> list = new ArrayList<Ligne>();
-        list.add(ligne);
-        request.setAttribute("listelignes", list);
-        request.setAttribute("message", "");
+
+        try {
+            String numLigne = request.getParameter("NumLigne");
+            webservice.WebServiceSTF_Service service = new webservice.WebServiceSTF_Service();
+            webservice.WebServiceSTF port = service.getWebServiceSTFPort();
+            Ligne ligne = port.rechercherLigneSTFParNum(Integer.parseInt(numLigne));
+            List<Ligne> list = new ArrayList<Ligne>();
+            if (ligne != null) {
+                request.setAttribute("message", "Résultat de votre recherche :");
+                list.add(ligne);
+            } else {
+                request.setAttribute("message", "Aucune ligne trouvée !");
+            }
+            request.setAttribute("listelignes", list);
+        } catch (NumberFormatException e) {
+            request.setAttribute("listelignes", new ArrayList<Ligne>());
+            request.setAttribute("message", "Numéro de la ligne doit d'être numérique");
+        }
     }
 
     protected void listAbonnementsSTF(HttpServletRequest request, HttpServletResponse response) {
@@ -412,13 +756,11 @@ public class Servlet extends HttpServlet {
     protected void lignesSTR(HttpServletRequest request, HttpServletResponse response) {
         webservice.WebServiceSTR service = new webservice.WebServiceSTR();
         webservice.WebServicesSTR port = service.getWebServicesSTRPort();
-        //webservice.WebServiceSTR port2 = service.getWebServiceSTRPort();
-        // TODO process result here
         port.invokeLigne();
         java.util.List<Object> result = port.listeLignesSTR();
         Collection<LigneSTR> coll = (Collection) result;
         request.setAttribute("collectionLignes", coll);
-        request.setAttribute("message", "");
+        request.setAttribute("message", "Lignes STR");
     }
 
     protected void listReductionsSTR(HttpServletRequest request, HttpServletResponse response) {
@@ -457,7 +799,7 @@ public class Servlet extends HttpServlet {
 
             Client client = sessionCommercial.CreerClient(num, mdp, nom, prenom, carte);
             message = "<div class='msg_success'>Le client est créé avec succès !</div>";
-            
+
             sessionCommercial.CreerPorteMonnaieElectronique(carte);
         }
 
@@ -609,7 +951,7 @@ public class Servlet extends HttpServlet {
         String c = request.getParameter("client");
         Long idclient = Long.valueOf(c);
         Client client = sessionCommercial.RechercherClientParId(idclient);
-        
+
         String reseau = request.getParameter("reseau");
         String num = request.getParameter("num");
         String typeabo = request.getParameter("type");
@@ -634,7 +976,7 @@ public class Servlet extends HttpServlet {
         request.setAttribute("message", message);
         request.setAttribute("client", client);
     }
-    
+
     protected void doActionAfficherGestionAbonnementSTFClient(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String c = request.getParameter("client");
         Long idclient = Long.valueOf(c);
@@ -650,7 +992,7 @@ public class Servlet extends HttpServlet {
         String c = request.getParameter("client");
         Long idclient = Long.valueOf(c);
         Client client = sessionCommercial.RechercherClientParId(idclient);
-        
+
         String reseau = request.getParameter("reseau");
         String num = request.getParameter("num");
         String typeabo = request.getParameter("type");
@@ -748,20 +1090,23 @@ public class Servlet extends HttpServlet {
         request.setAttribute("message", "message");
 
     }
-    
+
+    private void trajet(String arretD, String arretF) {
+
+    }
+
     protected void doActionAjouterReponse(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String message;
-        
+
         List<Question> questions = sessionPersonne.RetournerQuestion();
-        for(Question q: questions){
+        for (Question q : questions) {
             String pId = request.getParameter(q.getId().toString());
-            if(pId != null)
-            {
-            QuestionProposition p = sessionPersonne.RechercherPropositionParId(Integer.parseInt(pId));
-            sessionPersonne.AjouterReponse(p);
+            if (pId != null) {
+                QuestionProposition p = sessionPersonne.RechercherPropositionParId(Integer.parseInt(pId));
+                sessionPersonne.AjouterReponse(p);
             }
-            
+
         }
-        
+
     }
 }
