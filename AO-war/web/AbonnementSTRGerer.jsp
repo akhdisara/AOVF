@@ -4,6 +4,7 @@
     Author     : 3092790
 --%>
 
+<%@page import="java.util.ArrayList"%>
 <%@page import="webservice.LigneSTR"%>
 <%@page import="webservice.Arret"%>
 <%@page import="packageEntites.Abonnement"%>
@@ -32,8 +33,18 @@
         </div>
         
         <br><br>
-        <%if(client.getLaCarteAPuce().getLesAbonnements().isEmpty()){%>Aucun abonnement enregistré pour ce client<%}
-        else {%>
+        <% List<Abonnement> listeAboSTR = new ArrayList();
+        if(!client.getLaCarteAPuce().getLesAbonnements().isEmpty()){
+            List<Abonnement> listAbo = client.getLaCarteAPuce().getLesAbonnements();
+            for (Abonnement abo : listAbo){
+                if (abo.getType().startsWith("STR")){
+                    listeAboSTR.add(abo);
+                }
+            }
+        }
+        if (listeAboSTR.isEmpty()){%>Aucun abonnement enregistré pour ce client<%}
+        else { 
+        %>
             <TABLE id="allTable">
             <tr id="allTr">
                 <th>Id</th>
@@ -45,8 +56,7 @@
                 <th>Tarif</th>
             </tr>
             <%
-                List<Abonnement> lesAbo=client.getLaCarteAPuce().getLesAbonnements();
-                for(Abonnement abo: lesAbo){%>
+                for(Abonnement abo: listeAboSTR){%>
                 <tr>
                     <td Width=5%><%=abo.getId()%></td>
                     <td Width=5%><%=abo.getNumAbonnement()%></td>

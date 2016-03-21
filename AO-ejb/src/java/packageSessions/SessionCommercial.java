@@ -9,15 +9,18 @@ import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import packageEntites.Abonnement;
 import packageEntites.CarteAPuce;
 import packageEntites.Client;
 import packageEntites.CompteBancaire;
 import packageEntites.Personne;
+import packageEntites.SousTrajet;
 import packageFacades.AbonnementFacadeLocal;
 import packageFacades.CarteAPuceFacadeLocal;
 import packageFacades.ClientFacadeLocal;
 import packageFacades.CompteBancaireFacadeLocal;
 import packageFacades.PorteMonnaieElecFacadeLocal;
+import packageFacades.SousTrajetFacadeLocal;
 
 /**
  *
@@ -35,7 +38,8 @@ public class SessionCommercial implements SessionCommercialLocal {
     private CompteBancaireFacadeLocal compteBancaireFacade;
     @EJB
     private ClientFacadeLocal clientFacade;
-
+    @EJB
+    private SousTrajetFacadeLocal sousTrajetFacade;
     @Override
     public Client CreerClient(String num, String mdp, String nom, String prenom, CarteAPuce carte) {
         Client c = clientFacade.CreerClient(num, mdp, nom, prenom, carte);
@@ -84,8 +88,8 @@ public class SessionCommercial implements SessionCommercialLocal {
     }
 
     @Override
-    public void CreerAbonnement(String num, String type, Double montant, CarteAPuce carte) {
-        abonnementFacade.CreerAbonnement(num, type, montant, carte);
+    public Abonnement CreerAbonnement(String num, String type, Double montant, CarteAPuce carte, SousTrajet st) {
+        return abonnementFacade.CreerAbonnement(num, type, montant, carte, st);
     }
 
     @Override
@@ -93,4 +97,13 @@ public class SessionCommercial implements SessionCommercialLocal {
         porteMonnaieElecFacade.CreerPorteMonnaieElec(carte);
     }
     
+    @Override
+    public SousTrajet CreerSousTrajet(String depart, String arrivee, String ligne, double tarif) {
+        return sousTrajetFacade.CreerSousTrajet(depart, arrivee, ligne, tarif);
+    }
+
+    @Override
+    public List<SousTrajet> RetournerSousTrajets() {
+        return sousTrajetFacade.RetournerSousTrajets();
+    }
 }

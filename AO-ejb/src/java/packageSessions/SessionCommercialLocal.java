@@ -8,10 +8,12 @@ package packageSessions;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Local;
+import packageEntites.Abonnement;
 import packageEntites.CarteAPuce;
 import packageEntites.Client;
 import packageEntites.CompteBancaire;
 import packageEntites.Personne;
+import packageEntites.SousTrajet;
 
 /**
  *
@@ -38,8 +40,11 @@ public interface SessionCommercialLocal {
 
     void ModifierCompte(long id, int num, String titulaire, String banque, int guichet);
 
-    void CreerAbonnement(String num, String type, Double montant, CarteAPuce carte);
+    Abonnement CreerAbonnement(String num, String type, Double montant, CarteAPuce carte, SousTrajet st);
 
     void CreerPorteMonnaieElectronique(CarteAPuce carte);
     
+    SousTrajet CreerSousTrajet(String depart, String arrivee, String ligne, double tarif);
+
+    List<SousTrajet> RetournerSousTrajets();
 }
