@@ -50,9 +50,15 @@
                                         <% if (q.getId() == 503 || q.getId() == 504){%>
                                         <tr id="trContenu">
                                             <td Width=5%><INPUT TYPE=text NAME="<%=q.getId()%>" </input>
+                                                
                                             </td>
                                         </tr>
-                                        <%} else {                              
+                                        <%} else if (q.getId() == 506) {%>
+                                        <tr id="trContenu">
+                                            <td Width=5%><input type="time" name="horaire<%=pos.getArret().getNom()%>"/>
+                                            </td>
+                                        </tr>
+                                        <%} else {
                                          for (QuestionProposition p : q.getLesPropositions()) {%>
                                 <tr id="trContenu">
                                     <td Width=5%><INPUT TYPE=RADIO NAME="<%=q.getId()%>" VALUE="<%=p.getId()%>"><%=p.getProposition()%></td>
