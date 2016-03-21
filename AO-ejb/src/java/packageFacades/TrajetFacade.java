@@ -8,6 +8,7 @@ package packageFacades;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import packageEntites.SousTrajet;
 import packageEntites.Trajet;
 
 /**
@@ -27,5 +28,6 @@ public class TrajetFacade extends AbstractFacade<Trajet> implements TrajetFacade
     public TrajetFacade() {
         super(Trajet.class);
     }
+    
     
 }
