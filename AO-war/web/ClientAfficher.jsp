@@ -4,6 +4,7 @@
     Author     : 3092790
 --%>
 
+<%@page import="packageEntites.PorteMonnaieElec"%>
 <%@page import="packageEntites.Abonnement"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="packageEntites.CompteBancaire"%>
@@ -89,7 +90,8 @@
                     <td Width=10%><%=c.getNom()%>&nbsp;<%=c.getPrenom()%></td>
                     
                     <td Width=10%>Expire le <%=format.format(c.getLaCarteAPuce().getDateFinValidite())%></td>
-                    <td Width=10%><%=c.getLaCarteAPuce().getLePorteMonnaie().getSolde()%>&euro;</td>
+                    <% PorteMonnaieElec t = c.getLaCarteAPuce().getLePorteMonnaie() ;%>
+                    <td Width=10%><%=t.getSolde()%>&euro;</td>
                     <td Width=10%><%if(!c.getLesComptesBancaires().isEmpty()){ 
                         for (CompteBancaire cpt: c.getLesComptesBancaires()){%><%=cpt.getNumCompte()%><%
                         }
@@ -111,7 +113,7 @@
                     </td>
                     <td id="ligneTDModifier" Width=10%>
                         <a href="Servlet?modif=<%=c.getId()%>&action=ModificationClient"><button>Modifier client</button></a>
-                    </td>
+                    </td> 
                 </tr><%}%>
                         </table>
 
