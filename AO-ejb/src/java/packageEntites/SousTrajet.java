@@ -6,12 +6,11 @@
 package packageEntites;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 /**
@@ -109,15 +108,15 @@ public class SousTrajet implements Serializable {
         this.arretArrivee = arretArrivee;
     }
 
-    @ManyToMany
-    private List<Trajet> lesTrajets;
+    @ManyToOne
+    private Trajet trajet;
 
-        public List<Trajet> getLesTrajets() {
-        return lesTrajets;
+    public Trajet getTrajet() {
+        return trajet;
     }
-    
-    public void setLesTrajets(List<Trajet> lesTrajets) {
-        this.lesTrajets = lesTrajets;
+
+    public void setTrajet(Trajet trajet) {
+        this.trajet = trajet;
     }
 
     private String ligne;

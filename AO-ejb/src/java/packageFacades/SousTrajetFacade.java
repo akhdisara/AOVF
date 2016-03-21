@@ -10,9 +10,8 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import packageEntites.CarteAPuce;
-import packageEntites.Client;
 import packageEntites.SousTrajet;
+import packageEntites.Trajet;
 
 /**
  *
@@ -33,12 +32,13 @@ public class SousTrajetFacade extends AbstractFacade<SousTrajet> implements Sous
     }
     
     @Override
-    public SousTrajet CreerSousTrajet(String d, String a, String l,double tarif) {
+    public SousTrajet CreerSousTrajet(String d, String a, String l,double tarif,Trajet trajet) {
         SousTrajet s = new SousTrajet();
         s.setArretArrivee(a);
         s.setArretDepart(d);
         s.setLigne(l);
         s.setTarif(tarif);
+        s.setTrajet(trajet);
         em.persist(s);
         return s;
     }

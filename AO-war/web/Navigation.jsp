@@ -6,27 +6,7 @@
 <%@page import="packageEntites.Employe"%>
 <%@page import="packageEntites.Client"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-        <meta name="keywords" content="THEMELOCK.COM - Private Transport and Car Hire HTML Template" />
-        <meta name="description" content="THEMELOCK.COM - Private Transport and Car Hire HTML Template">
-        <meta name="author" content="themeenergy.com">
-
-        <title>AO</title>
-
-        <link rel="stylesheet" href="css/theme-red.css" />
-        <link rel="stylesheet" href="css/style.css" />
-        <link rel="stylesheet" href="css/animate.css" />
-        <link href='http://fonts.googleapis.com/css?family=Raleway:400,500,600,700|Montserrat:400,700' rel='stylesheet' type='text/css'>
-        <link rel="shortcut icon" href="images/favicon.ico" />
-   
-    </head>
-    <body class="home">
-        <!-- Header -->
-        <header class="header" role="banner">
+<header class="header" role="banner">
             <div class="wrap">
                 <!-- Logo -->
                 <div class="logo">
@@ -73,6 +53,3 @@
             </div>
         </header>
         <!-- //Header -->
-        
-    </body>
-</html>

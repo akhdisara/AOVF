@@ -8,7 +8,6 @@
 <!DOCTYPE html>
 <html>
   <head>
-      <%@ include file="Navigation.jsp" %>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 	<meta name="keywords" content="THEMELOCK.COM - Private Transport and Car Hire HTML Template" />
@@ -31,6 +30,7 @@
   </head>
   
   <body>
+       <%@ include file="Navigation.jsp" %>
         <!-- Main -->
         <main class="main" role="main">
             <!-- Page info -->
