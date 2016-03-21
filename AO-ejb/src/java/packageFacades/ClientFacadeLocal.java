@@ -38,5 +38,7 @@ public interface ClientFacadeLocal {
     Client RechercherClientParId(long id);
 
     void ModifierClient(long id, String num, String nom, String prenom);
+
+    Client AuthentifierClient(String login, String password);
     
 }

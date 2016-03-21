@@ -29,5 +29,7 @@ public interface AgentCommercialFacadeLocal {
     List<AgentCommercial> findRange(int[] range);
 
     int count();
+
+    void CreerCommercial(String nom, String prenom, String login, String motdepasse);
     
 }

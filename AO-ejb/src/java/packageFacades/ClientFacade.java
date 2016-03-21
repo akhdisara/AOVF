@@ -71,5 +71,21 @@ public class ClientFacade extends AbstractFacade<Client> implements ClientFacade
         c.setPrenom(prenom);
         em.merge(c);
     }
+
+    @Override
+    public Client AuthentifierClient(String login, String password) {
+        Client c = null;
+        String txt = "SELECT c FROM Client as c WHERE c.numClient=:login and c.motDePasse=:password";
+        Query req = getEntityManager().createQuery(txt);
+        req = req.setParameter("login", login);
+        req = req.setParameter("password", password);
+
+        List<Client> list = req.getResultList();
+        for (Client c1 : list) {
+            c = c1;
+        }
+
+        return c;
+    }
     
 }

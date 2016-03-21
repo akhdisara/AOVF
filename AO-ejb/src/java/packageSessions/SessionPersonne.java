@@ -8,9 +8,13 @@ package packageSessions;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import packageEntites.Client;
+import packageEntites.Employe;
 import packageEntites.Question;
 import packageEntites.QuestionProposition;
 import packageEntites.QuestionReponse;
+import packageFacades.ClientFacadeLocal;
+import packageFacades.EmployeFacadeLocal;
 import packageFacades.QuestionFacadeLocal;
 import packageFacades.QuestionPropositionFacadeLocal;
 import packageFacades.QuestionReponseFacadeLocal;
@@ -21,6 +25,10 @@ import packageFacades.QuestionReponseFacadeLocal;
  */
 @Stateless
 public class SessionPersonne implements SessionPersonneLocal {
+    @EJB
+    private EmployeFacadeLocal employeFacade;
+    @EJB
+    private ClientFacadeLocal clientFacade;
     @EJB
     private QuestionFacadeLocal questionFacade;
     @EJB
@@ -57,6 +65,18 @@ public class SessionPersonne implements SessionPersonneLocal {
     public QuestionProposition RechercherPropositionParId(long id) {
         QuestionProposition p = questionPropositionFacade.RechercherPropositionParID(id);
         return p;
+    }
+
+    @Override
+    public Client AuthentifierClient(String login, String password) {
+        Client c = clientFacade.AuthentifierClient(login, password);
+        return c;
+    }
+
+    @Override
+    public Employe AuthentifierCommercial(String login, String password) {
+        Employe e = employeFacade.AuthentifierCommercial(login, password);
+        return e;
     }
     
     

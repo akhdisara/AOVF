@@ -18,15 +18,19 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import packageEntites.AgentCommercial;
 import packageEntites.CarteAPuce;
 import packageEntites.Client;
 import packageEntites.CompteBancaire;
+import packageEntites.Employe;
 import packageEntites.Personne;
 import packageEntites.Question;
 import packageEntites.QuestionProposition;
 import packageEntites.SousTrajet;
 import packageFacades.AbonneFacadeLocal;
 import packageFacades.AbonnementFacadeLocal;
+import packageFacades.AgentCommercialFacadeLocal;
 import packageFacades.CarteAPuceFacadeLocal;
 import packageFacades.SousTrajetFacadeLocal;
 import packageFacades.TrajetFacadeLocal;
@@ -89,23 +93,18 @@ public class Servlet extends HttpServlet {
         if ((act == null) || (act.equals("null"))) {
             jspClient = "/index.jsp";
             //trajet("Lyon", "Macon");
-        } else if (act.equals("Accueil")) {
-            jspClient = "/Accueil.jsp";
-            //request.setAttribute("message", "");
-        } /* else if (act.equals("MenuAuthentifier")) {
+        } else if (act.equals("MenuAuthentifier")) {
          int i;
          i = doActionAuthentifier(request, response);
          if (i == 1) {
-         jspClient = "/MenuCouturier.jsp";
+         jspClient = "/login.jsp";
          } else if (i == 2) {
-         jspClient = "/MenuMannequin.jsp";
+         jspClient = "/menuCommercial.jsp";
          } else if (i == 3) {
-         jspClient = "/MenuOrganisateur.jsp";
-         } else if (i == 4) {
-         jspClient = "/Authentifier.jsp";
+         jspClient = "/menuClient.jsp";
          }
-             
-         */ else if (act.equals("AfficherClients")) {
+        }    
+         else if (act.equals("AfficherClients")) {
             jspClient = "/ClientAfficher.jsp";
             List<Client> list = sessionCommercial.RetournerClients();
             request.setAttribute("listeclients", list);
@@ -234,6 +233,40 @@ public class Servlet extends HttpServlet {
         Rd.forward(request, response);
     }
 
+    protected int doActionAuthentifier(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String login = request.getParameter("login");
+        String password = request.getParameter("password");
+
+        int i = 0;
+
+        HttpSession session = request.getSession();
+
+        if (login.trim().isEmpty() || password.trim().isEmpty()) {
+            i = 1; //Si les champs sont vides, alors on retourne à la page connexion
+        } else {
+            Personne p = null;
+            p = sessionPersonne.AuthentifierClient(login, password);
+            
+            if (p == null) { //AuthentifierPersonne retourne null si la recherche de login/mdp ne donne aucun résultat
+                Employe e = null; // 2 méthodes d'authentifiation différentes
+                e = sessionPersonne.AuthentifierCommercial(login, password);
+                if (p == null && e == null) {
+                    i = 1; //si i==1, jsp = /login.jsp
+                } 
+            else if (e instanceof AgentCommercial) {
+                    i = 2; //si i==1, jsp = /MenuCouturier.jsp
+                    session.setAttribute("utilisateur", p);
+                }
+            }else if (p != null) {
+                    session.setAttribute("client", p);
+                    i = 3;//JSP Menu Client
+                }
+
+            }
+        
+        return i;
+    }
+    
     protected void NCarteEtTitreTransport(HttpServletRequest request, HttpServletResponse response) {
         String carte = request.getParameter("carte");
         String l1 = request.getParameter("l1");
