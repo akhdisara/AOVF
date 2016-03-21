@@ -84,7 +84,7 @@
                         <a href="Servlet?client=<%=c.getId()%>&action=GererCompte"><button>Gérer comptes</button></a>
                     </td>
                     <td Width=10%><%if(!c.getLaCarteAPuce().getLesAbonnements().isEmpty()){ 
-                        for (Abonnement a: c.getLaCarteAPuce().getLesAbonnements()){%><%=a.getType()%><br/><%
+                        for (Abonnement a: c.getLaCarteAPuce().getLesAbonnements()){%><%=a.getType()%><br><%
                         }
                     }
                         else {%>Pas d'abonnement<%}%>

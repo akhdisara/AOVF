@@ -1091,6 +1091,9 @@ public class Servlet extends HttpServlet {
         List<LigneSTR> listeL = retournerlignesSTR();
         request.setAttribute("listearrets", listeA);
         request.setAttribute("listelignesSTR", listeL);
+        
+        List<packageEntites.Abonnement> listeAbos = sessionCommercial.RecherheAbonnementParCarte(client.getLaCarteAPuce());
+        request.setAttribute("listeabos", listeAbos);
     }
 
     protected void doActionAfficherGestionAbonnementSTFClient(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -1193,6 +1196,8 @@ public class Servlet extends HttpServlet {
         List<Ligne> listeL = retournerLignesSTF();
         request.setAttribute("listegares", listeG);
         request.setAttribute("listelignes", listeL);
+        List<packageEntites.Abonnement> listeAbos = sessionCommercial.RecherheAbonnementParCarte(client.getLaCarteAPuce());
+        request.setAttribute("listeabos", listeAbos);
     }
 
     private void trajet(String arretD, String arretF) {
