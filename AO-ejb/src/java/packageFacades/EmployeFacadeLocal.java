@@ -29,5 +29,7 @@ public interface EmployeFacadeLocal {
     List<Employe> findRange(int[] range);
 
     int count();
+
+    Employe AuthentifierCommercial(String login, String password);
     
 }

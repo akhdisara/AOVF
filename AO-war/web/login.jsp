@@ -39,7 +39,6 @@
 				<a href="index.html" title="Transfers"><img src="images/transfers.jpg" alt="Transfers" /></a>
 			</div>
 			<!-- //Logo -->
-			
 			<!-- Main Nav -->
 			<nav role="navigation" class="main-nav">
 				<ul>
@@ -102,57 +101,61 @@
 				</ul>
 			</nav>
 			<!-- //Main Nav -->
+                        
 		</div>
 	</header>
-	<!-- //Header -->
-	
-	<!-- Main -->
-	<main class="main" role="main">
-		<!-- Page info -->
-		<header class="site-title color">
-			<div class="wrap">
-				<div class="container">
-					<h1>Login</h1>
-				</div>
-			</div>
-		</header>
-		<!-- //Page info -->
-		
-		<div class="wrap">
-			<div class="row">
-				<!--- Content -->
-				<div class="content one-half modal">
-					<!--Login-->
-					<div class="box">
-						<form>
-							<div class="f-row">
-								<div class="full-width">
-									<label for="username">Connexion</label>
-									<input type="text" id="username" />
-								</div>
-							</div>
-							<div class="f-row">
-								<div class="full-width">
-									<label for="password">Mot de passe</label>
-									<input type="password" id="password" />
-								</div>
-							</div>
-							
-							<div class="f-row">
-								<div class="full-width">
-									<input type="submit" value="Se connecter" class="btn color medium full" />
-								</div>
-							</div>
-							
-                                                </form>
-					</div>
-					<!--//Login-->
-				</div>
-				<!--- //Content -->
-			</div>
-		</div>
-	</main>
-	<!-- //Main -->
+    <!-- //Header -->
+    
+
+        <!-- Main -->
+        <main class="main" role="main">
+            <!-- Page info -->
+            <header class="site-title color">
+                <div class="wrap">
+                    <div class="container">
+                        <h1>Login</h1>
+                    </div>
+                </div>
+            </header>
+            <!-- //Page info -->
+
+            <div class="wrap">
+                <div class="row">
+                    <!--- Content -->
+                    <div class="content one-half modal">
+                        <!--Login-->
+                        <div class="box">
+                            <form role="form" action="Servlet" method="post">
+                                <div class="f-row">
+                                    <div class="full-width">
+                                        <label for="login">Connexion</label>
+                                        <input type="text" id="login" name="login"/>
+                                    </div>
+                                </div>
+                                <div class="f-row">
+                                    <div class="full-width">
+                                        <label for="password">Mot de passe</label>
+                                        <input type="password" id="password" name="password"/>
+                                    </div>
+                                </div>
+
+                                <div class="f-row">
+                                    <div class="full-width">
+                                        <input type="hidden" name="action" value="MenuAuthentifier">
+                                        <input type="submit" value="Se connecter" class="btn color medium full" />
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                        <!--//Login-->
+                    </div>
+                    <!--- //Content -->
+                </div>
+            </div>
+        </main>
+    
+    <!-- //Main -->
 	
 	<!-- Footer -->
 	<footer class="footer black" role="contentinfo">

@@ -7,8 +7,9 @@ package packageSessions;
 
 import java.util.List;
 import javax.ejb.Local;
+import packageEntites.Client;
+import packageEntites.Employe;
 import packageEntites.QuestionProposition;
-import packageEntites.QuestionReponse;
 
 /**
  *
@@ -26,5 +27,9 @@ public interface SessionPersonneLocal {
     void AjouterReponse(QuestionProposition proposition);
 
     QuestionProposition RechercherPropositionParId(long id);
+
+    Client AuthentifierClient(String login, String password);
+
+    Employe AuthentifierCommercial(String login, String password);
     
 }

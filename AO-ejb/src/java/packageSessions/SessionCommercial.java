@@ -92,4 +92,5 @@ public class SessionCommercial implements SessionCommercialLocal {
     public void CreerPorteMonnaieElectronique(CarteAPuce carte) {
         porteMonnaieElecFacade.CreerPorteMonnaieElec(carte);
     }
+    
 }

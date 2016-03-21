@@ -27,5 +27,15 @@ public class AgentCommercialFacade extends AbstractFacade<AgentCommercial> imple
     public AgentCommercialFacade() {
         super(AgentCommercial.class);
     }
+
+    @Override
+    public void CreerCommercial(String nom, String prenom, String login, String motdepasse) {
+        AgentCommercial ag = new AgentCommercial();
+        ag.setNom(nom);
+        ag.setPrenom(prenom);
+        ag.setLogin(login);
+        ag.setMotDePasse(motdepasse);
+        em.persist(ag);
+    }
     
 }
