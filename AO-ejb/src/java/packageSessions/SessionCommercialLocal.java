@@ -14,6 +14,7 @@ import packageEntites.Client;
 import packageEntites.CompteBancaire;
 import packageEntites.Personne;
 import packageEntites.SousTrajet;
+import packageEntites.Trajet;
 
 /**
  *
@@ -44,7 +45,7 @@ public interface SessionCommercialLocal {
 
     void CreerPorteMonnaieElectronique(CarteAPuce carte);
     
-    SousTrajet CreerSousTrajet(String depart, String arrivee, String ligne, double tarif);
+    SousTrajet CreerSousTrajet(String depart, String arrivee, String ligne, double tarif,Trajet trajet);
 
     List<SousTrajet> RetournerSousTrajets();
 }

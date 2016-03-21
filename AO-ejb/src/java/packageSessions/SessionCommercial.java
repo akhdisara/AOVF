@@ -13,8 +13,8 @@ import packageEntites.Abonnement;
 import packageEntites.CarteAPuce;
 import packageEntites.Client;
 import packageEntites.CompteBancaire;
-import packageEntites.Personne;
 import packageEntites.SousTrajet;
+import packageEntites.Trajet;
 import packageFacades.AbonnementFacadeLocal;
 import packageFacades.CarteAPuceFacadeLocal;
 import packageFacades.ClientFacadeLocal;
@@ -98,8 +98,8 @@ public class SessionCommercial implements SessionCommercialLocal {
     }
     
     @Override
-    public SousTrajet CreerSousTrajet(String depart, String arrivee, String ligne, double tarif) {
-        return sousTrajetFacade.CreerSousTrajet(depart, arrivee, ligne, tarif);
+    public SousTrajet CreerSousTrajet(String depart, String arrivee, String ligne, double tarif,Trajet trajet) {
+        return sousTrajetFacade.CreerSousTrajet(depart, arrivee, ligne, tarif,trajet);
     }
 
     @Override

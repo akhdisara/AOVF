@@ -8,6 +8,7 @@ package packageFacades;
 import java.util.List;
 import javax.ejb.Local;
 import packageEntites.SousTrajet;
+import packageEntites.Trajet;
 
 /**
  *
@@ -30,7 +31,7 @@ public interface SousTrajetFacadeLocal {
 
     int count();
     
-    SousTrajet CreerSousTrajet(String d, String a, String l,double tarif);
+    SousTrajet CreerSousTrajet(String d, String a, String l,double tarif,Trajet trajet);
     
     List<SousTrajet> RetournerSousTrajets();
 }

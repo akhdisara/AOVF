@@ -285,25 +285,29 @@ public class Servlet extends HttpServlet {
             List<packageEntites.Abonnement> listeAbn = abonnementFacade.RecherheAbonnementParCarte(c);
             System.out.println("-->" + listeAbn);
             if (listeAbn.isEmpty()) {
-                System.out.println("n'est pas Abonné");
                 request.setAttribute("message", "Non abonné : Titre de transport enregistré");
-                packageEntites.Trajet t = trajetFacade.CreerTrajet(D, A , 0, 0);
-                System.out.println("****"+t.getArretArrivee());
-                System.out.println("****"+A);
-                sousTrajetFacade.CreerSousTrajet(D, C, l1, Double.valueOf(t1));
-                if (!l2.equals("")) {
-                    sousTrajetFacade.CreerSousTrajet(C, A, l2, Double.valueOf(t2));
-                }
+                if (l2.equals("")) {
+                    packageEntites.Trajet t = trajetFacade.CreerTrajet(D, C , 0, 0);
+                    sousTrajetFacade.CreerSousTrajet(D, C, l1, Double.valueOf(t1),t);
+                 }else
+                {
+                    packageEntites.Trajet t = trajetFacade.CreerTrajet(D, A , 0, 0);
+                    sousTrajetFacade.CreerSousTrajet(D, C, l1, Double.valueOf(t1),t);
+                    sousTrajetFacade.CreerSousTrajet(C, A, l2, Double.valueOf(t2),t);  
+                }              
             } else {
                 System.out.println("Est Abonné");
                 request.setAttribute("message", "Abonné : Titre de transport enregistré");
-                packageEntites.Trajet t = trajetFacade.CreerTrajet(D, A , 0, 0);
-                System.out.println("****"+t.getArretArrivee());
-                System.out.println("****"+A);
-                sousTrajetFacade.CreerSousTrajet(D, C, l1, Double.valueOf(t1) * 0.15);
-                if (!l2.equals("")) {
-                    sousTrajetFacade.CreerSousTrajet(C, A, l2, Double.valueOf(t2) * 0.15);
-                }
+                if (l2.equals("")) {
+                    packageEntites.Trajet t = trajetFacade.CreerTrajet(D, C , 0, 0);
+                    sousTrajetFacade.CreerSousTrajet(D, C, l1, Double.valueOf(t1) *0.15,t);
+                    
+                }else
+                {
+                    packageEntites.Trajet t = trajetFacade.CreerTrajet(D, A , 0, 0);
+                    sousTrajetFacade.CreerSousTrajet(D, C, l1, Double.valueOf(t1)*0.15,t);
+                    sousTrajetFacade.CreerSousTrajet(C, A, l2, Double.valueOf(t2)*0.15,t);  
+                }  
             }
 
         }
@@ -1057,17 +1061,17 @@ public class Servlet extends HttpServlet {
 
             String type = "STR"+typeabo;
 
-            List<SousTrajet> listeST = sessionCommercial.RetournerSousTrajets();
-            SousTrajet leSousTrajet = null;
+             /* List<SousTrajet> listeST = sessionCommercial.RetournerSousTrajets();
             
+           
             for (SousTrajet st : listeST){
                 if (st.getArretDepart().equalsIgnoreCase(depart) && st.getArretArrivee().equalsIgnoreCase(arrivee) && st.getLigne().equalsIgnoreCase(ligne)){
                     leSousTrajet = st;
                 }
-            }
-            if (leSousTrajet==null){
-                leSousTrajet = sessionCommercial.CreerSousTrajet(depart, arrivee, ligne, tarifbase);
-            }
+            }*/
+            
+            SousTrajet leSousTrajet  = sessionCommercial.CreerSousTrajet(depart, arrivee, ligne, tarifbase,null);
+            
             
             System.out.println("WWWWWWWAbonnement : "+num+" "+ type+" "+tarif+" ------ SousTrajet : "+depart+" "+arrivee+" "+laligne.getIdentifiant()+" "+tarif);
             sessionCommercial.CreerAbonnement(num, type, tarif, client.getLaCarteAPuce(), leSousTrajet);
@@ -1155,17 +1159,16 @@ public class Servlet extends HttpServlet {
             Double montant = tarifbase * (1-reduction) * nbtrajet; //Montant de l'abonnement avec la réduction
             
             List<SousTrajet> listeST = sessionCommercial.RetournerSousTrajets();
-            SousTrajet leSousTrajet = null;
+            
+            /*SousTrajet leSousTrajet = null;
             
             for (SousTrajet st : listeST){
                 if (st.getArretDepart().equalsIgnoreCase(depart) && st.getArretArrivee().equalsIgnoreCase(arrivee) && st.getLigne().equalsIgnoreCase(ligne)){
                     leSousTrajet = st;
                 }
-            }
-            if (leSousTrajet==null){
-                leSousTrajet = sessionCommercial.CreerSousTrajet(depart, arrivee, ligne, tarifbase);
-            }
+            }*/
             
+            SousTrajet leSousTrajet = sessionCommercial.CreerSousTrajet(depart, arrivee, ligne, tarifbase,null);       
             //System.out.println("WWWWWWWAbonnement : "+num+" "+ type+" "+reduction+" "+montant+" ------ SousTrajet : "+depart+" "+arrivee+" "+laligne.getNumLigne()+" "+tarif);
             sessionCommercial.CreerAbonnement(num, type, montant, client.getLaCarteAPuce(), leSousTrajet);
 
