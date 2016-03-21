@@ -13,7 +13,7 @@
 <html>
     <head>
         <title>AO</title>
-
+        <%@ include file="Navigation.jsp" %>
         <link rel="stylesheet" href="css/theme-pink.css" />
         <link rel="stylesheet" href="css/style.css" />
         <link rel="stylesheet" href="css/animate.css" />
@@ -29,25 +29,7 @@
     </head>
 
     <body>
-        <!-- Header -->
-        <header class="header" role="banner">
-            <div class="wrap">
-                <!-- Logo -->
-                <div class="logo">
-                    <a href="index.html" title="Transfers"><img src="images/transfers.jpg" alt="Transfers" /></a>
-                </div>
-                <!-- //Logo -->
-
-                <!-- Main Nav -->
-                <nav role="navigation" class="main-nav">
-
-                </nav>
-                <!-- //Main Nav -->
-            </div>
-        <jsp:useBean id="listeclients" scope="request" class="java.util.List"></jsp:useBean>
-        </header>
-        <!-- //Header -->
-
+    <jsp:useBean id="listeclients" scope="request" class="java.util.List"></jsp:useBean>
         <!-- Main -->
         <main class="main" role="main">
             <!-- Page info -->

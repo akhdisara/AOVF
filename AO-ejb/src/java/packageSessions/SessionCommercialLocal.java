@@ -48,4 +48,6 @@ public interface SessionCommercialLocal {
     SousTrajet CreerSousTrajet(String depart, String arrivee, String ligne, double tarif,Trajet trajet);
 
     List<SousTrajet> RetournerSousTrajets();
+    
+    public List<Abonnement> RecherheAbonnementParCarte(CarteAPuce carte);
 }

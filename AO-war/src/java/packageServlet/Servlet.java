@@ -56,6 +56,7 @@ import webservice.Trajet;
  */
 @WebServlet(name = "Servlet", urlPatterns = {"/Servlet"})
 public class Servlet extends HttpServlet {
+
     @EJB
     private TrajetFacadeLocal trajetFacade;
 
@@ -92,19 +93,22 @@ public class Servlet extends HttpServlet {
         String act = request.getParameter("action");
         if ((act == null) || (act.equals("null"))) {
             jspClient = "/index.jsp";
+            HttpSession session = request.getSession();
+            session.setAttribute("client", null);
+            session.setAttribute("employe", null);
             //trajet("Lyon", "Macon");
         } else if (act.equals("MenuAuthentifier")) {
-         int i;
-         i = doActionAuthentifier(request, response);
-         if (i == 1) {
-         jspClient = "/login.jsp";
-         } else if (i == 2) {
-         jspClient = "/menuCommercial.jsp";
-         } else if (i == 3) {
-         jspClient = "/menuClient.jsp";
-         }
-        }    
-         else if (act.equals("AfficherClients")) {
+            int i;
+            i = doActionAuthentifier(request, response);
+            if (i == 1) {
+                jspClient = "/login.jsp";
+            } else if (i == 2) {
+                jspClient = "/index.jsp";
+            }
+        } else if (act.equals("Deconnexion")) {
+            jspClient = "/index.jsp";
+            doActionDeconnexion(request, response);
+        } else if (act.equals("AfficherClients")) {
             jspClient = "/ClientAfficher.jsp";
             List<Client> list = sessionCommercial.RetournerClients();
             request.setAttribute("listeclients", list);
@@ -148,9 +152,6 @@ public class Servlet extends HttpServlet {
         } else if (act.equals("Trajet")) {
             jspClient = "/TrajetRechercher.jsp";
             request.setAttribute("message", "");
-        } else if (act.equals("ChercherTrajet")) {
-            jspClient = "/TrajetRechercher.jsp";
-            doActionChercherTrajet(request, response);
         } else if (act.equalsIgnoreCase("lignesSTR")) {
             lignesSTR(request, response);
             jspClient = "/lignesSTR.jsp";
@@ -244,29 +245,26 @@ public class Servlet extends HttpServlet {
         if (login.trim().isEmpty() || password.trim().isEmpty()) {
             i = 1; //Si les champs sont vides, alors on retourne à la page connexion
         } else {
-            Personne p = null;
-            p = sessionPersonne.AuthentifierClient(login, password);
-            
-            if (p == null) { //AuthentifierPersonne retourne null si la recherche de login/mdp ne donne aucun résultat
-                Employe e = null; // 2 méthodes d'authentifiation différentes
-                e = sessionPersonne.AuthentifierCommercial(login, password);
-                if (p == null && e == null) {
-                    i = 1; //si i==1, jsp = /login.jsp
-                } 
-            else if (e instanceof AgentCommercial) {
-                    i = 2; //si i==1, jsp = /MenuCouturier.jsp
-                    session.setAttribute("utilisateur", p);
-                }
-            }else if (p != null) {
-                    session.setAttribute("client", p);
-                    i = 3;//JSP Menu Client
-                }
+            Client c = sessionPersonne.AuthentifierClient(login, password);
 
+            if (c == null) { //AuthentifierPersonne retourne null si la recherche de login/mdp ne donne aucun résultat
+                Employe e = sessionPersonne.AuthentifierCommercial(login, password);
+                if (e == null) {
+                    i = 1; //si i==1, jsp = /login.jsp
+                } else if (e instanceof AgentCommercial) {
+                    i = 2; //si i==1, jsp = /MenuCouturier.jsp
+                    System.out.println(""+e.getNom());
+                    session.setAttribute("employe", e);
+                }
+            } else {
+                session.setAttribute("client", c);
+                i = 2;//JSP Menu Client
             }
-        
+        }
+
         return i;
     }
-    
+
     protected void NCarteEtTitreTransport(HttpServletRequest request, HttpServletResponse response) {
         String carte = request.getParameter("carte");
         String l1 = request.getParameter("l1");
@@ -313,6 +311,12 @@ public class Servlet extends HttpServlet {
         }
 
     }
+    protected void doActionDeconnexion(HttpServletRequest request, HttpServletResponse response) {
+        HttpSession session = request.getSession();
+        session.setAttribute("client", null);
+        session.setAttribute("employe", null);
+    }
+    
 
     protected void AvoirTitreTransport(HttpServletRequest request, HttpServletResponse response) {
         String l1 = request.getParameter("l1");
@@ -993,10 +997,13 @@ public class Servlet extends HttpServlet {
 
         Client client = sessionCommercial.RechercherClientParId(idclient);
 
+        List<packageEntites.Abonnement> listeAbos = sessionCommercial.RecherheAbonnementParCarte(client.getLaCarteAPuce());
+        request.setAttribute("listeabos", listeAbos);
+        
         String message = "Abonnements du client N°" + client.getNumClient() + ", " + client.getPrenom() + " " + client.getNom();
         request.setAttribute("message", message);
         request.setAttribute("client", client);
-                
+
         List<Arret> listeA = retournerArretsSTR();
         List<LigneSTR> listeL = retournerlignesSTR();
         request.setAttribute("listearrets", listeA);
@@ -1007,14 +1014,14 @@ public class Servlet extends HttpServlet {
         String c = request.getParameter("client");
         Long idclient = Long.valueOf(c);
         Client client = sessionCommercial.RechercherClientParId(idclient);
-        
+
         String num = request.getParameter("num");
         String typeabo = request.getParameter("type");
         String ligne = request.getParameter("ligne");
         String depart = request.getParameter("arretdepart");
         String arrivee = request.getParameter("arretarrivee");
         String message;
-        
+
         if (num.trim().isEmpty() || typeabo.trim().isEmpty() || ligne.trim().isEmpty() || depart.trim().isEmpty() || arrivee.trim().isEmpty()) {
             message = "<div class='msg_error'>Erreur - Vous n'avez pas rempli tous les champs obligatoires.</div>";
         } else {
@@ -1022,58 +1029,56 @@ public class Servlet extends HttpServlet {
             webservice.WebServicesSTR port = service.getWebServicesSTRPort();
 
             LigneSTR laligne = port.rechercheLigneParId(Long.valueOf(ligne));
-            
+
             List<Arret> listeA = retournerArretsSTR();
-            
+
             Arret arretDepart = null;
             Arret arretArrivee = null;
-            
-            for (Arret a: listeA){
-                if (a.getNom().equalsIgnoreCase(depart)){
+
+            for (Arret a : listeA) {
+                if (a.getNom().equalsIgnoreCase(depart)) {
                     arretDepart = a;
                 }
-                if (a.getNom().equalsIgnoreCase(arrivee)){
+                if (a.getNom().equalsIgnoreCase(arrivee)) {
                     arretArrivee = a;
-                } 
-            }
-            
-            List<Reduction> lesAbo = (List<Reduction>)(Object)port.afficherListeReductions(); //les objets Reduction sont les Abonnements (pour différencier STR et STF)
-            
-            Double tauxReduction = 0.0;
-            for(Reduction r : lesAbo ){ 
-                if (r.getTypeReduction().toString().equalsIgnoreCase("scolaire")){
-                    tauxReduction = 1.0*r.getTauxReduction()/100;
                 }
             }
-            
+
+            List<Reduction> lesAbo = (List<Reduction>) (Object) port.afficherListeReductions(); //les objets Reduction sont les Abonnements (pour différencier STR et STF)
+
+            Double tauxReduction = 0.0;
+            for (Reduction r : lesAbo) {
+                if (r.getTypeReduction().toString().equalsIgnoreCase("scolaire")) {
+                    tauxReduction = 1.0 * r.getTauxReduction() / 100;
+                }
+            }
+
             Double tarifbase = port.tarifBaseParArrets(laligne, arretDepart, arretArrivee);
             Double tarif = 0.0;
-            
-            if (typeabo.equalsIgnoreCase("mensuel")){
+
+            if (typeabo.equalsIgnoreCase("mensuel")) {
                 tarif = port.tarifMensuelParArrets(laligne, arretDepart, arretArrivee);
-            }
-            else if (typeabo.equalsIgnoreCase("hebdomadaire")){
+            } else if (typeabo.equalsIgnoreCase("hebdomadaire")) {
                 tarif = port.tarifHebdomadaireParArrets(laligne, arretDepart, arretArrivee);
-            }
-            else if (typeabo.equalsIgnoreCase("scolaire")){
-                tarif = tarifbase*tauxReduction;
+            } else if (typeabo.equalsIgnoreCase("scolaire")) {
+                tarif = tarifbase * tauxReduction;
             }
 
-            String type = "STR"+typeabo;
+            String type = "STR" + typeabo;
 
-             /* List<SousTrajet> listeST = sessionCommercial.RetournerSousTrajets();
-            
-           
-            for (SousTrajet st : listeST){
-                if (st.getArretDepart().equalsIgnoreCase(depart) && st.getArretArrivee().equalsIgnoreCase(arrivee) && st.getLigne().equalsIgnoreCase(ligne)){
+            List<SousTrajet> listeST = sessionCommercial.RetournerSousTrajets();
+            SousTrajet leSousTrajet = null;
+
+            for (SousTrajet st : listeST) {
+                if (st.getArretDepart().equalsIgnoreCase(depart) && st.getArretArrivee().equalsIgnoreCase(arrivee) && st.getLigne().equalsIgnoreCase(ligne)) {
                     leSousTrajet = st;
                 }
-            }*/
-            
-            SousTrajet leSousTrajet  = sessionCommercial.CreerSousTrajet(depart, arrivee, ligne, tarifbase,null);
-            
-            
-            System.out.println("WWWWWWWAbonnement : "+num+" "+ type+" "+tarif+" ------ SousTrajet : "+depart+" "+arrivee+" "+laligne.getIdentifiant()+" "+tarif);
+            }
+            if (leSousTrajet == null) {
+                leSousTrajet = sessionCommercial.CreerSousTrajet(depart, arrivee, ligne, tarifbase);
+            }
+
+            System.out.println("WWWWWWWAbonnement : " + num + " " + type + " " + tarif + " ------ SousTrajet : " + depart + " " + arrivee + " " + laligne.getIdentifiant() + " " + tarif);
             sessionCommercial.CreerAbonnement(num, type, tarif, client.getLaCarteAPuce(), leSousTrajet);
 
             message = "<div class='msg_success'>L'abonnement est ajouté avec succès !</div>";
@@ -1081,11 +1086,11 @@ public class Servlet extends HttpServlet {
 
         request.setAttribute("message", message);
         request.setAttribute("client", client);
-        
+
         List<Arret> listeA = retournerArretsSTR();
         List<LigneSTR> listeL = retournerlignesSTR();
-        request.setAttribute("listegares", listeA);
-        request.setAttribute("listelignes", listeL);
+        request.setAttribute("listearrets", listeA);
+        request.setAttribute("listelignesSTR", listeL);
     }
 
     protected void doActionAfficherGestionAbonnementSTFClient(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -1093,11 +1098,14 @@ public class Servlet extends HttpServlet {
         Long idclient = Long.valueOf(c);
 
         Client client = sessionCommercial.RechercherClientParId(idclient);
+        
+        List<packageEntites.Abonnement> listeAbos = sessionCommercial.RecherheAbonnementParCarte(client.getLaCarteAPuce());
+        request.setAttribute("listeabos", listeAbos);
 
         String message = "Abonnements du client N°" + client.getNumClient() + ", " + client.getPrenom() + " " + client.getNom();
         request.setAttribute("message", message);
         request.setAttribute("client", client);
-        
+
         List<Gare> listeG = retournerGaresSTF();
         List<Ligne> listeL = retournerLignesSTF();
         request.setAttribute("listegares", listeG);
@@ -1108,14 +1116,14 @@ public class Servlet extends HttpServlet {
         String c = request.getParameter("client");
         Long idclient = Long.valueOf(c);
         Client client = sessionCommercial.RechercherClientParId(idclient);
-        
+
         String num = request.getParameter("num");
         String typeabo = request.getParameter("type");
         String ligne = request.getParameter("ligne");
         String depart = request.getParameter("garedepart");
         String arrivee = request.getParameter("garearrivee");
         String message;
-        
+
         if (num.trim().isEmpty() || typeabo.trim().isEmpty() || ligne.trim().isEmpty() || depart.trim().isEmpty() || arrivee.trim().isEmpty()) {
             message = "<div class='msg_error'>Erreur - Vous n'avez pas rempli tous les champs obligatoires.</div>";
         } else {
@@ -1125,50 +1133,53 @@ public class Servlet extends HttpServlet {
             Ligne laligne = port.rechercherLigneSTFParId(Long.valueOf(ligne));
             List<DistanceGare> lesDistances = port.retournerDistanceGareParLigne(laligne);
             double prixKm = port.getPrixilometre();
-            
-            String type = "STF"+typeabo;
-            
-            Double distanceDepart=0.0;
-            Double distanceArrivee=0.0;
-            
-            for(DistanceGare d : lesDistances){ //Pour les 2 gares on récupère les distances
-                if (d.getLaGare().getNomGare().equalsIgnoreCase(depart)){
+
+            String type = "STF" + typeabo;
+
+            Double distanceDepart = 0.0;
+            Double distanceArrivee = 0.0;
+
+            for (DistanceGare d : lesDistances) { //Pour les 2 gares on récupère les distances
+                if (d.getLaGare().getNomGare().equalsIgnoreCase(depart)) {
                     distanceDepart = d.getDistanceGare();
                 }
-                if (d.getLaGare().getNomGare().equalsIgnoreCase(arrivee)){
+                if (d.getLaGare().getNomGare().equalsIgnoreCase(arrivee)) {
                     distanceArrivee = d.getDistanceGare();
                 }
             }
-                        
+
             Double laDistance = Math.abs(distanceDepart - distanceArrivee); //Calcule la distance du trajet = valeur absolue de la différence des distances
-                    
+
             Double tarifbase = laDistance * prixKm; //tarif de base du trajet
-            
-            Double reduction=0.0;
+
+            Double reduction = 0.0;
             List<Abonnement> lesAbo = port.retournerAbonnementSTF();
-            for(Abonnement a : lesAbo ){ 
-                if (a.getType().toString().equalsIgnoreCase(typeabo)){
+            for (Abonnement a : lesAbo) {
+                if (a.getType().toString().equalsIgnoreCase(typeabo)) {
                     reduction = a.getTauxReduction();
                 }
             }
             int nbtrajet;
-            if (typeabo.equalsIgnoreCase("hebdomadaire")){
+            if (typeabo.equalsIgnoreCase("hebdomadaire")) {
                 nbtrajet = 10;
-            } else nbtrajet = 42;
-            
-            Double montant = tarifbase * (1-reduction) * nbtrajet; //Montant de l'abonnement avec la réduction
-            
+            } else {
+                nbtrajet = 42;
+            }
+
+            Double montant = tarifbase * (1 - reduction) * nbtrajet; //Montant de l'abonnement avec la réduction
+
             List<SousTrajet> listeST = sessionCommercial.RetournerSousTrajets();
-            
-            /*SousTrajet leSousTrajet = null;
-            
-            for (SousTrajet st : listeST){
-                if (st.getArretDepart().equalsIgnoreCase(depart) && st.getArretArrivee().equalsIgnoreCase(arrivee) && st.getLigne().equalsIgnoreCase(ligne)){
+            SousTrajet leSousTrajet = null;
+
+            for (SousTrajet st : listeST) {
+                if (st.getArretDepart().equalsIgnoreCase(depart) && st.getArretArrivee().equalsIgnoreCase(arrivee) && st.getLigne().equalsIgnoreCase(ligne)) {
                     leSousTrajet = st;
                 }
-            }*/
-            
-            SousTrajet leSousTrajet = sessionCommercial.CreerSousTrajet(depart, arrivee, ligne, tarifbase,null);       
+            }
+            if (leSousTrajet == null) {
+                leSousTrajet = sessionCommercial.CreerSousTrajet(depart, arrivee, ligne, tarifbase);
+            }
+
             //System.out.println("WWWWWWWAbonnement : "+num+" "+ type+" "+reduction+" "+montant+" ------ SousTrajet : "+depart+" "+arrivee+" "+laligne.getNumLigne()+" "+tarif);
             sessionCommercial.CreerAbonnement(num, type, montant, client.getLaCarteAPuce(), leSousTrajet);
 
@@ -1177,84 +1188,11 @@ public class Servlet extends HttpServlet {
 
         request.setAttribute("message", message);
         request.setAttribute("client", client);
-        
+
         List<Gare> listeG = retournerGaresSTF();
         List<Ligne> listeL = retournerLignesSTF();
         request.setAttribute("listegares", listeG);
         request.setAttribute("listelignes", listeL);
-    }
-
-    protected void doActionChercherTrajet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String depart = request.getParameter("depart");
-        String arrivee = request.getParameter("arrivee");
-
-        /*
-         //Appel de la couche service
-        
-         //Traitements de la couche service:
-        
-         //Trouver les arrêts STR à partir des Strings
-         Arret a = RechercherArretParNom(String depart);
-         Arret b = RechercherArretParNom(String arrivee);
-        
-         //Trouver les gares STF à partir des Strings
-         Gare a = RechercherGareParNom(String depart);
-         Gare b = RechercherGareParNom(String arrivee);
-        
-         //Trouver les lignes STR qui contiennent au moins 1 des 2 arrêts
-         List<Ligne> lesLignesSTR = RechercherLignesParArrets(Arret a, Arret b);
-         if (!lesLignesSTR.isempty()) {
-         List<Ligne> lignesSTRDirectes = new ArrayList();
-         for (Ligne l: lesLignesSTR) {
-         if (l.getLesArrets().contains(a) && l.getLesArrets().contains(b)) {
-         lignesSTRDirectes.add(l);
-         }
-         }
-         }
-        
-         //Trouver les lignes STF qui contiennent au moins 1 des 2 gares
-         List<Ligne> lesLignesSTF = RechercherLignesParArrets(Gare a, Gare b);
-         if (!lesLignesSTF.isempty()) {
-         List<Ligne> lignesSTFDirectes = new ArrayList();
-         for (Ligne l: lesLignesSTF) {
-         if (l.getLesGares().contains(a) && l.getLesGares().contains(b)) {
-         lignesSTFDirectes.add(l);
-         }
-         }
-         }
-        
-         //Si des lignes directes ont été trouvées (au moins une par réseau)
-         if (!lignesSTRDirectes.isempty() && !lignesSTFDirectes.isempty()) {
-         //Retourner une des lignes?
-         }
-        
-         //Sinon si des lignes STR sont directes, on les retourne
-         else if (!lignesSTRDirectes.isempty()) {
-         return lignesSTRDirectes;
-         }
-        
-         //Sinon si des lignes STF sont directes, on les retourne
-         else if (!lignesSTFDirectes.isempty()) {
-         return lignesSTFDirectes;
-         }
-        
-         //Sinon (si aucune ligne directe n'est trouvée), on tri les lignes qui contiennent le départ, les lignes qui contiennent l'arrivée, et on cherche les arrêts communs entre ces lignes)
-         else {
-         List<Ligne> lesLignesSTRDepart = RechercherLignesParArretDepart(Arret a);
-         List<Ligne> lesLignesSTFDepart = RechercherLignesParGareDepart(Gare a);
-         List<Ligne> lesLignesSTRArrivee = RechercherLignesParArretArrivee(Arret b);
-         List<Ligne> lesLignesSTFArrivee = RechercherLignesParGareArrivee(Gare b);
-        
-         Pour chaque ligne depart (STR puis STF), parcourir les lignes arrivee  et les lignes stf trouvées (si non null), et vérifier si elles contiennent 
-         }
-        
-        
-        
-        
-        
-         */
-        request.setAttribute("message", "message");
-
     }
 
     private void trajet(String arretD, String arretF) {

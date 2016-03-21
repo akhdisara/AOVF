@@ -26,54 +26,21 @@
         <jsp:useBean id="listearrets" scope="request" class="java.util.List"></jsp:useBean>
         <jsp:useBean id="listelignesSTR" scope="request" class="java.util.List"></jsp:useBean>
         
-        </head>
-
-        <body>
-            <!-- Header -->
-            <header class="header" role="banner">
-                <div class="wrap">
-                    <!-- Logo -->
-                    <div class="logo">
-                        <a href="index.html" title="Transfers"><img src="images/transfers.jpg" alt="Transfers" /></a>
-                    </div>
-                    <!-- //Logo -->
-
-                    <!-- Main Nav -->
-                    <nav role="navigation" class="main-nav">
-
-                    </nav>
-                    <!-- //Main Nav -->
-                </div>
-            </header>
-            <!-- //Header -->
-
-            <!-- Main -->
-            <main class="main" role="main">
-                <!-- Page info -->
-                <header class="site-title color">
-                    <div class="wrap">
-                        <div class="container">
-                            <h1>Lignes STR</h1>
-                        </div>
-                    </div>
-                </header>
-                <!-- //Page info -->
-               
-                <div class="wrap">	
-                    <div class="row">
-                        <h3>
-                        <%
-                            String attribut = (String) request.getAttribute("message");
-                            out.println(attribut);
-                        %>
-                    </h3>
-                    <!--- Content -->
-                    <div class="content offset">
-
-                      <% List<Abonnement> listeAboSTR = new ArrayList();
-        if(!client.getLaCarteAPuce().getLesAbonnements().isEmpty()){
-            List<Abonnement> listAbo = client.getLaCarteAPuce().getLesAbonnements();
-            for (Abonnement abo : listAbo){
+        <h1 id="h1">Gestion des abonnements STR</h1>
+        <br><br>
+        <div class ="text">
+        <%
+            String attribut=(String)request.getAttribute("message");
+            out.println(attribut);
+        %>
+        </div>
+        
+        <br><br>
+        <%List<Abonnement> listeAbo = (List<Abonnement>)request.getAttribute("listeabos");
+        List<Abonnement> listeAboSTR = new ArrayList();
+        if(listeAbo.isEmpty()){%>Aucun abonnement enregistré pour ce client<%}
+        else {
+            for (Abonnement abo : listeAbo){
                 if (abo.getType().startsWith("STR")){
                     listeAboSTR.add(abo);
                 }

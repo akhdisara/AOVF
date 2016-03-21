@@ -106,4 +106,9 @@ public class SessionCommercial implements SessionCommercialLocal {
     public List<SousTrajet> RetournerSousTrajets() {
         return sousTrajetFacade.RetournerSousTrajets();
     }
+    
+    @Override
+    public List<Abonnement> RecherheAbonnementParCarte(CarteAPuce carte) {
+        return abonnementFacade.RecherheAbonnementParCarte(carte);
+    }
 }
