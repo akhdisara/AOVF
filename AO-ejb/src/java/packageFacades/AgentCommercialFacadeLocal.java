@@ -31,5 +31,7 @@ public interface AgentCommercialFacadeLocal {
     int count();
 
     void CreerCommercial(String nom, String prenom, String login, String motdepasse);
+
+    String MD5(String input);
     
 }

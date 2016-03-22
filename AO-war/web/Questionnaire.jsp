@@ -30,7 +30,7 @@
                 <header class="site-title color">
                     <div class="wrap">
                         <div class="container">
-                            <h1>Questionnaires</h1>
+                            <h1>Questionnaire</h1>
                         </div>
                     </div>
                 </header>

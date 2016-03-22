@@ -34,5 +34,8 @@ public interface SessionPersonneLocal {
     Employe AuthentifierCommercial(String login, String password);
 
     QuestionProposition CreerProposition(String proposition, Question idquestion);
-    
+
+    String MD5(String input);
+
+   
 }

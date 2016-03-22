@@ -50,4 +50,6 @@ public interface SessionCommercialLocal {
     List<SousTrajet> RetournerSousTrajets();
     
     public List<Abonnement> RecherheAbonnementParCarte(CarteAPuce carte);
+
+    String MD5(String input);
 }

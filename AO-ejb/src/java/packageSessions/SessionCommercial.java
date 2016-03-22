@@ -16,6 +16,7 @@ import packageEntites.CompteBancaire;
 import packageEntites.SousTrajet;
 import packageEntites.Trajet;
 import packageFacades.AbonnementFacadeLocal;
+import packageFacades.AgentCommercialFacadeLocal;
 import packageFacades.CarteAPuceFacadeLocal;
 import packageFacades.ClientFacadeLocal;
 import packageFacades.CompteBancaireFacadeLocal;
@@ -29,6 +30,8 @@ import packageFacades.SousTrajetFacadeLocal;
 @Stateless
 public class SessionCommercial implements SessionCommercialLocal {
     @EJB
+    private AgentCommercialFacadeLocal agentCommercialFacade;
+    @EJB
     private PorteMonnaieElecFacadeLocal porteMonnaieElecFacade;
     @EJB
     private AbonnementFacadeLocal abonnementFacade;
@@ -40,6 +43,7 @@ public class SessionCommercial implements SessionCommercialLocal {
     private ClientFacadeLocal clientFacade;
     @EJB
     private SousTrajetFacadeLocal sousTrajetFacade;
+    
     @Override
     public Client CreerClient(String num, String mdp, String nom, String prenom, CarteAPuce carte) {
         Client c = clientFacade.CreerClient(num, mdp, nom, prenom, carte);
@@ -111,4 +115,12 @@ public class SessionCommercial implements SessionCommercialLocal {
     public List<Abonnement> RecherheAbonnementParCarte(CarteAPuce carte) {
         return abonnementFacade.RecherheAbonnementParCarte(carte);
     }
+
+    @Override
+    public String MD5(String input) {
+        String a = agentCommercialFacade.MD5(input);
+        return a;
+    }
+    
+    
 }

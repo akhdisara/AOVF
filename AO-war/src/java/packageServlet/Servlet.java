@@ -56,7 +56,6 @@ import webservice.Trajet;
  */
 @WebServlet(name = "Servlet", urlPatterns = {"/Servlet"})
 public class Servlet extends HttpServlet {
-
     @EJB
     private TrajetFacadeLocal trajetFacade;
 
@@ -88,7 +87,7 @@ public class Servlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
+        
         String jspClient = null;
         String act = request.getParameter("action");
         if ((act == null) || (act.equals("null"))) {
@@ -241,14 +240,14 @@ public class Servlet extends HttpServlet {
         int i = 0;
 
         HttpSession session = request.getSession();
-
+        String mdp5 = sessionCommercial.MD5(password);
         if (login.trim().isEmpty() || password.trim().isEmpty()) {
             i = 1; //Si les champs sont vides, alors on retourne à la page connexion
         } else {
-            Client c = sessionPersonne.AuthentifierClient(login, password);
+            Client c = sessionPersonne.AuthentifierClient(login, mdp5);
 
             if (c == null) { //AuthentifierPersonne retourne null si la recherche de login/mdp ne donne aucun résultat
-                Employe e = sessionPersonne.AuthentifierCommercial(login, password);
+                Employe e = sessionPersonne.AuthentifierCommercial(login, mdp5);
                 if (e == null) {
                     i = 1; //si i==1, jsp = /login.jsp
                 } else if (e instanceof AgentCommercial) {
@@ -851,8 +850,10 @@ public class Servlet extends HttpServlet {
             Date dateFinValidite = cal.getTime();
 
             CarteAPuce carte = sessionCommercial.CreerCarteAPuce(dateDebutValidite, dateFinValidite);
-
-            Client client = sessionCommercial.CreerClient(num, mdp, nom, prenom, carte);
+            
+            String mdp5 = sessionCommercial.MD5(mdp);
+            
+            Client client = sessionCommercial.CreerClient(num, mdp5, nom, prenom, carte);
             message = "<div class='msg_success'>Le client est créé avec succès !</div>";
 
             sessionCommercial.CreerPorteMonnaieElectronique(carte);

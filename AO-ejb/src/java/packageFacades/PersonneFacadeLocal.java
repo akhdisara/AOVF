@@ -29,5 +29,7 @@ public interface PersonneFacadeLocal {
     List<Personne> findRange(int[] range);
 
     int count();
+
+    String MD5(String input);
     
 }

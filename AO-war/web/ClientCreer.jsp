@@ -73,7 +73,7 @@
                                     </div>
                                     <div class="full-width">
                                         <label for="carte">Mot de passe</label>
-                                        <input type="text" id="carte" name="mdp" />
+                                        <input type="password" id="carte" name="mdp" />
                                     </div>
                                 </div>
                                 

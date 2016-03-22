@@ -31,7 +31,7 @@
                                 <li><a href="Servlet?action=listAbonnementsSTF" title="Post">Abonnements</a></li>
                             </ul>
                         </li>
-                        <li><a href="Servlet?action=AfficherQuestionnaire" title="Questionnaires">Questionnaires</a></li>
+                        <li><a href="Servlet?action=AfficherQuestionnaire" title="Questionnaires">Questionnaire</a></li>
                         
                         <% if (cl == null && e == null){%>
                             <li><a href="login.jsp" title="Contact">Connexion</a></li>

@@ -15,6 +15,7 @@ import packageEntites.QuestionProposition;
 import packageEntites.QuestionReponse;
 import packageFacades.ClientFacadeLocal;
 import packageFacades.EmployeFacadeLocal;
+import packageFacades.PersonneFacadeLocal;
 import packageFacades.QuestionFacadeLocal;
 import packageFacades.QuestionPropositionFacadeLocal;
 import packageFacades.QuestionReponseFacadeLocal;
@@ -25,6 +26,8 @@ import packageFacades.QuestionReponseFacadeLocal;
  */
 @Stateless
 public class SessionPersonne implements SessionPersonneLocal {
+    @EJB
+    private PersonneFacadeLocal personneFacade;
     @EJB
     private QuestionPropositionFacadeLocal questionPropositionFacade1;
     @EJB
@@ -85,6 +88,12 @@ public class SessionPersonne implements SessionPersonneLocal {
     public QuestionProposition CreerProposition(String proposition, Question idquestion) {
         return questionPropositionFacade.CreerProposition(proposition, idquestion);
         
+    }
+
+    @Override
+    public String MD5(String input) {
+        String a = personneFacade.MD5(input);
+        return a;
     }
     
     

@@ -70,10 +70,15 @@
 
 <xs:element name="RetournerLignesSTFResponse" type="tns:RetournerLignesSTFResponse"/>
 
-<xs:complexType name="RetournerDistanceLigneGare">
+<xs:complexType name="RechercherLigneSTFParId">
 <xs:sequence>
-<xs:element name="laLigne" type="tns:ligne" minOccurs="0"/>
-<xs:element name="laGare" type="tns:gare" minOccurs="0"/>
+<xs:element name="id" type="xs:long" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="RechercherLigneSTFParIdResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:ligne" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -105,31 +110,25 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="RetournerDistanceLigneGareResponse">
-<xs:sequence>
-<xs:element name="return" type="xs:double"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="GetPrixilometre">
+<xs:complexType name="InvokeLigneSTF">
 <xs:sequence/>
 </xs:complexType>
 
-<xs:complexType name="GetPrixilometreResponse">
+<xs:complexType name="InvokeLigneSTFResponse">
 <xs:sequence>
-<xs:element name="return" type="xs:double"/>
+<xs:element name="return" type="tns:ligne" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="RechercherHoraireSTFParLigne">
+<xs:complexType name="RechercherGareParNom">
 <xs:sequence>
-<xs:element name="ligne" type="tns:ligne" minOccurs="0"/>
+<xs:element name="nom" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="RechercherHoraireSTFParLigneResponse">
+<xs:complexType name="RechercherGareParNomResponse">
 <xs:sequence>
-<xs:element name="return" type="tns:horaire" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="return" type="tns:gare" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -143,15 +142,31 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="RetournerDistanceGareParLigne">
+<xs:complexType name="InvokeAbonnement">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="InvokeAbonnementResponse">
 <xs:sequence>
-<xs:element name="ligne" type="tns:ligne" minOccurs="0"/>
+<xs:element name="return" type="tns:abonnement" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="RetournerDistanceGareParLigneResponse">
+<xs:complexType name="abonnement">
 <xs:sequence>
-<xs:element name="return" type="tns:distanceGare" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="id" type="xs:long" minOccurs="0"/>
+<xs:element name="tauxReduction" type="xs:double"/>
+<xs:element name="type" type="tns:typeAbonnement" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="InvokeDistanceGare">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="InvokeDistanceGareResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:distanceGare" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -161,16 +176,6 @@
 <xs:element name="id" type="xs:long" minOccurs="0"/>
 <xs:element name="laGare" type="tns:gare" minOccurs="0"/>
 <xs:element name="laLigne" type="tns:ligne" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="RetournerGaresSTF">
-<xs:sequence/>
-</xs:complexType>
-
-<xs:complexType name="RetournerGaresSTFResponse">
-<xs:sequence>
-<xs:element name="return" type="tns:gare" minOccurs="0" maxOccurs="unbounded"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -191,67 +196,15 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="RechercherGareParNom">
+<xs:complexType name="RechercherHoraireSTFParLigne">
 <xs:sequence>
-<xs:element name="nom" type="xs:string" minOccurs="0"/>
+<xs:element name="ligne" type="tns:ligne" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="RechercherGareParNomResponse">
+<xs:complexType name="RechercherHoraireSTFParLigneResponse">
 <xs:sequence>
-<xs:element name="return" type="tns:gare" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="RechercherLigneSTFParNum">
-<xs:sequence>
-<xs:element name="numLigne" type="xs:int"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="RechercherLigneSTFParNumResponse">
-<xs:sequence>
-<xs:element name="return" type="tns:ligne" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="RechercherLigneSTFParId">
-<xs:sequence>
-<xs:element name="id" type="xs:long" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="RechercherLigneSTFParIdResponse">
-<xs:sequence>
-<xs:element name="return" type="tns:ligne" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="InvokeLigneSTF">
-<xs:sequence/>
-</xs:complexType>
-
-<xs:complexType name="InvokeLigneSTFResponse">
-<xs:sequence>
-<xs:element name="return" type="tns:ligne" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="RetournerAbonnementSTF">
-<xs:sequence/>
-</xs:complexType>
-
-<xs:complexType name="RetournerAbonnementSTFResponse">
-<xs:sequence>
-<xs:element name="return" type="tns:abonnement" minOccurs="0" maxOccurs="unbounded"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="abonnement">
-<xs:sequence>
-<xs:element name="id" type="xs:long" minOccurs="0"/>
-<xs:element name="tauxReduction" type="xs:double"/>
-<xs:element name="type" type="tns:typeAbonnement" minOccurs="0"/>
+<xs:element name="return" type="tns:horaire" minOccurs="0" maxOccurs="unbounded"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -265,13 +218,16 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="InvokeAbonnement">
-<xs:sequence/>
+<xs:complexType name="RetournerDistanceLigneGare">
+<xs:sequence>
+<xs:element name="laLigne" type="tns:ligne" minOccurs="0"/>
+<xs:element name="laGare" type="tns:gare" minOccurs="0"/>
+</xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="InvokeAbonnementResponse">
+<xs:complexType name="RetournerDistanceLigneGareResponse">
 <xs:sequence>
-<xs:element name="return" type="tns:abonnement" minOccurs="0"/>
+<xs:element name="return" type="xs:double"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -282,6 +238,16 @@
 <xs:complexType name="InvokeGareResponse">
 <xs:sequence>
 <xs:element name="return" type="tns:gare" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="RetournerAbonnementSTF">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="RetournerAbonnementSTFResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:abonnement" minOccurs="0" maxOccurs="unbounded"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -297,13 +263,47 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="InvokeDistanceGare">
+<xs:complexType name="RechercherLigneSTFParNum">
+<xs:sequence>
+<xs:element name="numLigne" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="RechercherLigneSTFParNumResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:ligne" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="GetPrixilometre">
 <xs:sequence/>
 </xs:complexType>
 
-<xs:complexType name="InvokeDistanceGareResponse">
+<xs:complexType name="GetPrixilometreResponse">
 <xs:sequence>
-<xs:element name="return" type="tns:distanceGare" minOccurs="0"/>
+<xs:element name="return" type="xs:double"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="RetournerDistanceGareParLigne">
+<xs:sequence>
+<xs:element name="ligne" type="tns:ligne" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="RetournerDistanceGareParLigneResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:distanceGare" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="RetournerGaresSTF">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="RetournerGaresSTFResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:gare" minOccurs="0" maxOccurs="unbounded"/>
 </xs:sequence>
 </xs:complexType>
 
