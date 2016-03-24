@@ -23,7 +23,7 @@
         </head>
 
         <body>
-
+            <h3><%=(String) request.getAttribute("message")%></h3>
             <!-- Main -->
             <main class="main" role="main">
 
@@ -53,9 +53,9 @@
                                                 
                                             </td>
                                         </tr>
-                                        <%} else if (q.getId() == 506) {%>
+                                        <%} else if (q.getId() == 505) {%>
                                         <tr id="trContenu">
-                                            <td Width=5%><input type="time" name="<%=q.getId()%>"/>
+                                            <td Width=5%><input type="time" name="<%=q.getId()%>" placeholder="hh:mm"/>
                                             </td>
                                         </tr>
                                         <%} else {

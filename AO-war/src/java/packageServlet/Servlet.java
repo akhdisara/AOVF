@@ -1213,7 +1213,9 @@ public class Servlet extends HttpServlet {
         for (Question q : questions) {
             String pId = request.getParameter(q.getId().toString());
             QuestionProposition p  =  null;
-            if (q.getId() == 503) {
+            if (pId == null) {
+                request.setAttribute("message", "Erreur Les champs ne sont pas remplis !!");
+            } else if (q.getId() == 503){
                 p = sessionPersonne.CreerProposition(pId, q);
             } else if (q.getId() == 504){
                 p = sessionPersonne.CreerProposition(pId, q);
