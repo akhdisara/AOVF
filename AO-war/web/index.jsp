@@ -35,7 +35,7 @@
                         <h1 class="wow fadeInDown">Tour de france</h1>
                         
                         <div class="actions">
-                            <a href="#services" title="STR" class="btn large white wow fadeInLeft anchor">STR</a>
+                            <a href="#booking" title="STR" class="btn large white wow fadeInLeft anchor">STR</a>
                             <a href="#booking" title="STF" class="btn large color wow fadeInRight anchor">STF</a>
                         </div>
                     </div>
