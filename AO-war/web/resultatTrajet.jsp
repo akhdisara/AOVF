@@ -9,7 +9,7 @@
 <html>
     <head>
         <title>AO</title>
-
+        <%@ include file="Navigation.jsp" %>
         <link rel="stylesheet" href="css/theme-pink.css" />
         <link rel="stylesheet" href="css/style.css" />
         <link rel="stylesheet" href="css/animate.css" />
@@ -27,34 +27,7 @@
     <body>
         <!-- Header -->
         <header class="header" role="banner">
-            <div class="wrap">
-                <!-- Logo -->
-                <div class="logo">
-                    <a href="index.html" title="Transfers"><img src="images/transfers.jpg" alt="Transfers" /></a>
-                </div>
-                <!-- //Logo -->
-
-                <!-- Main Nav -->
-                <nav role="navigation" class="main-nav">
-                     <ul>
-                        <li class="active"><a href="index.html" title="">accueil</a></li>
-                        <li><a href="destinations.html" title="Destinations">STR</a>
-                            <ul>
-                                <li><a href="destination-single.html" title="Single destination">Lignes</a></li>
-                                <li><a href="destination-micro.html" title="Micro destination">Abonnements</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="blog.html" title="Blog">STF</a>
-                            <ul>
-                                <li><a href="blog.html" title="Post">Lignes</a></li>
-                                <li><a href="blog2.html" title="Post">Abonnements</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="contact.html" title="Contact">Questionnaires</a></li>
-                        <li><a href="contact.html" title="Contact">Connexion</a></li>
-                       </ul>
-                </nav>
-                <!-- //Main Nav -->
+            
             </div>
         </header>
         <!-- //Header -->

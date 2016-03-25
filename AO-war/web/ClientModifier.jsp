@@ -12,9 +12,10 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <jsp:useBean id="client" scope="request" class="Client"></jsp:useBean>
         <title>Gestion client</title>
+        <%@ include file="Navigation.jsp" %>
     </head>
     <body>
-        <%@ include file="Navigation.jsp" %>
+        
         
         <h1 id="h1">Modifier Client</h1>
         
