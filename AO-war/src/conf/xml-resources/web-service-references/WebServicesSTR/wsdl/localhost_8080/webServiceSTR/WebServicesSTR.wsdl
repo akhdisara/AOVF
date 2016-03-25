@@ -4,24 +4,6 @@
 <xsd:import namespace="http://webService/" schemaLocation="http://localhost:8080/webServiceSTR/WebServicesSTR?xsd=1"/>
 </xsd:schema>
 </types>
-<message name="RechercheFicheHoraireParLignePeriode">
-<part name="parameters" element="tns:RechercheFicheHoraireParLignePeriode"/>
-</message>
-<message name="RechercheFicheHoraireParLignePeriodeResponse">
-<part name="parameters" element="tns:RechercheFicheHoraireParLignePeriodeResponse"/>
-</message>
-<message name="RecherchePlagesHorairesParFicheHoraire">
-<part name="parameters" element="tns:RecherchePlagesHorairesParFicheHoraire"/>
-</message>
-<message name="RecherchePlagesHorairesParFicheHoraireResponse">
-<part name="parameters" element="tns:RecherchePlagesHorairesParFicheHoraireResponse"/>
-</message>
-<message name="RechercheLigneParId">
-<part name="parameters" element="tns:RechercheLigneParId"/>
-</message>
-<message name="RechercheLigneParIdResponse">
-<part name="parameters" element="tns:RechercheLigneParIdResponse"/>
-</message>
 <message name="InvokePositionArretLigne">
 <part name="parameters" element="tns:InvokePositionArretLigne"/>
 </message>
@@ -70,11 +52,59 @@
 <message name="RechercheArretSTRParNomResponse">
 <part name="parameters" element="tns:RechercheArretSTRParNomResponse"/>
 </message>
+<message name="InvokeReduction">
+<part name="parameters" element="tns:InvokeReduction"/>
+</message>
+<message name="InvokeReductionResponse">
+<part name="parameters" element="tns:InvokeReductionResponse"/>
+</message>
 <message name="RecherchePositionParLigne">
 <part name="parameters" element="tns:RecherchePositionParLigne"/>
 </message>
 <message name="RecherchePositionParLigneResponse">
 <part name="parameters" element="tns:RecherchePositionParLigneResponse"/>
+</message>
+<message name="InvokeLigne">
+<part name="parameters" element="tns:InvokeLigne"/>
+</message>
+<message name="InvokeLigneResponse">
+<part name="parameters" element="tns:InvokeLigneResponse"/>
+</message>
+<message name="InvokeTrajet">
+<part name="parameters" element="tns:InvokeTrajet"/>
+</message>
+<message name="InvokeTrajetResponse">
+<part name="parameters" element="tns:InvokeTrajetResponse"/>
+</message>
+<message name="listeLignesSTR">
+<part name="parameters" element="tns:listeLignesSTR"/>
+</message>
+<message name="listeLignesSTRResponse">
+<part name="parameters" element="tns:listeLignesSTRResponse"/>
+</message>
+<message name="RechercheFicheHoraireParLignePeriode">
+<part name="parameters" element="tns:RechercheFicheHoraireParLignePeriode"/>
+</message>
+<message name="RechercheFicheHoraireParLignePeriodeResponse">
+<part name="parameters" element="tns:RechercheFicheHoraireParLignePeriodeResponse"/>
+</message>
+<message name="RecherchePlagesHorairesParFicheHoraire">
+<part name="parameters" element="tns:RecherchePlagesHorairesParFicheHoraire"/>
+</message>
+<message name="RecherchePlagesHorairesParFicheHoraireResponse">
+<part name="parameters" element="tns:RecherchePlagesHorairesParFicheHoraireResponse"/>
+</message>
+<message name="afficherListeReductions">
+<part name="parameters" element="tns:afficherListeReductions"/>
+</message>
+<message name="afficherListeReductionsResponse">
+<part name="parameters" element="tns:afficherListeReductionsResponse"/>
+</message>
+<message name="RechercheLigneParId">
+<part name="parameters" element="tns:RechercheLigneParId"/>
+</message>
+<message name="RechercheLigneParIdResponse">
+<part name="parameters" element="tns:RechercheLigneParIdResponse"/>
 </message>
 <message name="RechercheTrajetParLigne">
 <part name="parameters" element="tns:RechercheTrajetParLigne"/>
@@ -100,49 +130,7 @@
 <message name="TarifHebdomadaireParArretsResponse">
 <part name="parameters" element="tns:TarifHebdomadaireParArretsResponse"/>
 </message>
-<message name="afficherListeReductions">
-<part name="parameters" element="tns:afficherListeReductions"/>
-</message>
-<message name="afficherListeReductionsResponse">
-<part name="parameters" element="tns:afficherListeReductionsResponse"/>
-</message>
-<message name="listeLignesSTR">
-<part name="parameters" element="tns:listeLignesSTR"/>
-</message>
-<message name="listeLignesSTRResponse">
-<part name="parameters" element="tns:listeLignesSTRResponse"/>
-</message>
-<message name="InvokeTrajet">
-<part name="parameters" element="tns:InvokeTrajet"/>
-</message>
-<message name="InvokeTrajetResponse">
-<part name="parameters" element="tns:InvokeTrajetResponse"/>
-</message>
-<message name="InvokeLigne">
-<part name="parameters" element="tns:InvokeLigne"/>
-</message>
-<message name="InvokeLigneResponse">
-<part name="parameters" element="tns:InvokeLigneResponse"/>
-</message>
-<message name="InvokeReduction">
-<part name="parameters" element="tns:InvokeReduction"/>
-</message>
-<message name="InvokeReductionResponse">
-<part name="parameters" element="tns:InvokeReductionResponse"/>
-</message>
 <portType name="WebServicesSTR">
-<operation name="RechercheFicheHoraireParLignePeriode">
-<input wsam:Action="http://webService/WebServicesSTR/RechercheFicheHoraireParLignePeriodeRequest" message="tns:RechercheFicheHoraireParLignePeriode"/>
-<output wsam:Action="http://webService/WebServicesSTR/RechercheFicheHoraireParLignePeriodeResponse" message="tns:RechercheFicheHoraireParLignePeriodeResponse"/>
-</operation>
-<operation name="RecherchePlagesHorairesParFicheHoraire">
-<input wsam:Action="http://webService/WebServicesSTR/RecherchePlagesHorairesParFicheHoraireRequest" message="tns:RecherchePlagesHorairesParFicheHoraire"/>
-<output wsam:Action="http://webService/WebServicesSTR/RecherchePlagesHorairesParFicheHoraireResponse" message="tns:RecherchePlagesHorairesParFicheHoraireResponse"/>
-</operation>
-<operation name="RechercheLigneParId">
-<input wsam:Action="http://webService/WebServicesSTR/RechercheLigneParIdRequest" message="tns:RechercheLigneParId"/>
-<output wsam:Action="http://webService/WebServicesSTR/RechercheLigneParIdResponse" message="tns:RechercheLigneParIdResponse"/>
-</operation>
 <operation name="InvokePositionArretLigne">
 <input wsam:Action="http://webService/WebServicesSTR/InvokePositionArretLigneRequest" message="tns:InvokePositionArretLigne"/>
 <output wsam:Action="http://webService/WebServicesSTR/InvokePositionArretLigneResponse" message="tns:InvokePositionArretLigneResponse"/>
@@ -175,9 +163,41 @@
 <input wsam:Action="http://webService/WebServicesSTR/RechercheArretSTRParNomRequest" message="tns:RechercheArretSTRParNom"/>
 <output wsam:Action="http://webService/WebServicesSTR/RechercheArretSTRParNomResponse" message="tns:RechercheArretSTRParNomResponse"/>
 </operation>
+<operation name="InvokeReduction">
+<input wsam:Action="http://webService/WebServicesSTR/InvokeReductionRequest" message="tns:InvokeReduction"/>
+<output wsam:Action="http://webService/WebServicesSTR/InvokeReductionResponse" message="tns:InvokeReductionResponse"/>
+</operation>
 <operation name="RecherchePositionParLigne">
 <input wsam:Action="http://webService/WebServicesSTR/RecherchePositionParLigneRequest" message="tns:RecherchePositionParLigne"/>
 <output wsam:Action="http://webService/WebServicesSTR/RecherchePositionParLigneResponse" message="tns:RecherchePositionParLigneResponse"/>
+</operation>
+<operation name="InvokeLigne">
+<input wsam:Action="http://webService/WebServicesSTR/InvokeLigneRequest" message="tns:InvokeLigne"/>
+<output wsam:Action="http://webService/WebServicesSTR/InvokeLigneResponse" message="tns:InvokeLigneResponse"/>
+</operation>
+<operation name="InvokeTrajet">
+<input wsam:Action="http://webService/WebServicesSTR/InvokeTrajetRequest" message="tns:InvokeTrajet"/>
+<output wsam:Action="http://webService/WebServicesSTR/InvokeTrajetResponse" message="tns:InvokeTrajetResponse"/>
+</operation>
+<operation name="listeLignesSTR">
+<input wsam:Action="http://webService/WebServicesSTR/listeLignesSTRRequest" message="tns:listeLignesSTR"/>
+<output wsam:Action="http://webService/WebServicesSTR/listeLignesSTRResponse" message="tns:listeLignesSTRResponse"/>
+</operation>
+<operation name="RechercheFicheHoraireParLignePeriode">
+<input wsam:Action="http://webService/WebServicesSTR/RechercheFicheHoraireParLignePeriodeRequest" message="tns:RechercheFicheHoraireParLignePeriode"/>
+<output wsam:Action="http://webService/WebServicesSTR/RechercheFicheHoraireParLignePeriodeResponse" message="tns:RechercheFicheHoraireParLignePeriodeResponse"/>
+</operation>
+<operation name="RecherchePlagesHorairesParFicheHoraire">
+<input wsam:Action="http://webService/WebServicesSTR/RecherchePlagesHorairesParFicheHoraireRequest" message="tns:RecherchePlagesHorairesParFicheHoraire"/>
+<output wsam:Action="http://webService/WebServicesSTR/RecherchePlagesHorairesParFicheHoraireResponse" message="tns:RecherchePlagesHorairesParFicheHoraireResponse"/>
+</operation>
+<operation name="afficherListeReductions">
+<input wsam:Action="http://webService/WebServicesSTR/afficherListeReductionsRequest" message="tns:afficherListeReductions"/>
+<output wsam:Action="http://webService/WebServicesSTR/afficherListeReductionsResponse" message="tns:afficherListeReductionsResponse"/>
+</operation>
+<operation name="RechercheLigneParId">
+<input wsam:Action="http://webService/WebServicesSTR/RechercheLigneParIdRequest" message="tns:RechercheLigneParId"/>
+<output wsam:Action="http://webService/WebServicesSTR/RechercheLigneParIdResponse" message="tns:RechercheLigneParIdResponse"/>
 </operation>
 <operation name="RechercheTrajetParLigne">
 <input wsam:Action="http://webService/WebServicesSTR/RechercheTrajetParLigneRequest" message="tns:RechercheTrajetParLigne"/>
@@ -195,56 +215,9 @@
 <input wsam:Action="http://webService/WebServicesSTR/TarifHebdomadaireParArretsRequest" message="tns:TarifHebdomadaireParArrets"/>
 <output wsam:Action="http://webService/WebServicesSTR/TarifHebdomadaireParArretsResponse" message="tns:TarifHebdomadaireParArretsResponse"/>
 </operation>
-<operation name="afficherListeReductions">
-<input wsam:Action="http://webService/WebServicesSTR/afficherListeReductionsRequest" message="tns:afficherListeReductions"/>
-<output wsam:Action="http://webService/WebServicesSTR/afficherListeReductionsResponse" message="tns:afficherListeReductionsResponse"/>
-</operation>
-<operation name="listeLignesSTR">
-<input wsam:Action="http://webService/WebServicesSTR/listeLignesSTRRequest" message="tns:listeLignesSTR"/>
-<output wsam:Action="http://webService/WebServicesSTR/listeLignesSTRResponse" message="tns:listeLignesSTRResponse"/>
-</operation>
-<operation name="InvokeTrajet">
-<input wsam:Action="http://webService/WebServicesSTR/InvokeTrajetRequest" message="tns:InvokeTrajet"/>
-<output wsam:Action="http://webService/WebServicesSTR/InvokeTrajetResponse" message="tns:InvokeTrajetResponse"/>
-</operation>
-<operation name="InvokeLigne">
-<input wsam:Action="http://webService/WebServicesSTR/InvokeLigneRequest" message="tns:InvokeLigne"/>
-<output wsam:Action="http://webService/WebServicesSTR/InvokeLigneResponse" message="tns:InvokeLigneResponse"/>
-</operation>
-<operation name="InvokeReduction">
-<input wsam:Action="http://webService/WebServicesSTR/InvokeReductionRequest" message="tns:InvokeReduction"/>
-<output wsam:Action="http://webService/WebServicesSTR/InvokeReductionResponse" message="tns:InvokeReductionResponse"/>
-</operation>
 </portType>
 <binding name="WebServicesSTRPortBinding" type="tns:WebServicesSTR">
 <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
-<operation name="RechercheFicheHoraireParLignePeriode">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="RecherchePlagesHorairesParFicheHoraire">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="RechercheLigneParId">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
 <operation name="InvokePositionArretLigne">
 <soap:operation soapAction=""/>
 <input>
@@ -317,7 +290,79 @@
 <soap:body use="literal"/>
 </output>
 </operation>
+<operation name="InvokeReduction">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
 <operation name="RecherchePositionParLigne">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="InvokeLigne">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="InvokeTrajet">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="listeLignesSTR">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="RechercheFicheHoraireParLignePeriode">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="RecherchePlagesHorairesParFicheHoraire">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="afficherListeReductions">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="RechercheLigneParId">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -354,51 +399,6 @@
 </output>
 </operation>
 <operation name="TarifHebdomadaireParArrets">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="afficherListeReductions">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="listeLignesSTR">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="InvokeTrajet">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="InvokeLigne">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="InvokeReduction">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>

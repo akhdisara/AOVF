@@ -94,24 +94,9 @@
 
 <xs:element name="trajet" type="tns:trajet"/>
 
-<xs:complexType name="RechercheLigneParId">
+<xs:complexType name="RecherchePositionSTRParArret">
 <xs:sequence>
-<xs:element name="id" type="xs:long" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="RechercheLigneParIdResponse">
-<xs:sequence>
-<xs:element name="return" type="tns:ligneSTR" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="ligneSTR">
-<xs:sequence>
-<xs:element name="id" type="xs:long" minOccurs="0"/>
-<xs:element name="Identifiant" type="xs:string" minOccurs="0"/>
-<xs:element name="debut" type="tns:arret" minOccurs="0"/>
-<xs:element name="Fin" type="tns:arret" minOccurs="0"/>
+<xs:element name="arret" type="tns:arret" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -120,12 +105,6 @@
 <xs:element name="id" type="xs:long" minOccurs="0"/>
 <xs:element name="Nom" type="xs:string" minOccurs="0"/>
 <xs:element name="Adresse" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="RecherchePositionSTRParArret">
-<xs:sequence>
-<xs:element name="arret" type="tns:arret" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -141,6 +120,27 @@
 <xs:element name="ligne" type="tns:ligneSTR" minOccurs="0"/>
 <xs:element name="arret" type="tns:arret" minOccurs="0"/>
 <xs:element name="position" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="ligneSTR">
+<xs:sequence>
+<xs:element name="id" type="xs:long" minOccurs="0"/>
+<xs:element name="Identifiant" type="xs:string" minOccurs="0"/>
+<xs:element name="debut" type="tns:arret" minOccurs="0"/>
+<xs:element name="Fin" type="tns:arret" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="RechercheLigneParId">
+<xs:sequence>
+<xs:element name="id" type="xs:long" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="RechercheLigneParIdResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:ligneSTR" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -330,18 +330,6 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="RecherchePlagesHorairesParFicheHoraire">
-<xs:sequence>
-<xs:element name="ficheHoraire" type="tns:ficheHoraire" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="RecherchePlagesHorairesParFicheHoraireResponse">
-<xs:sequence>
-<xs:element name="return" type="xs:anyType" minOccurs="0" maxOccurs="unbounded"/>
-</xs:sequence>
-</xs:complexType>
-
 <xs:complexType name="RechercheTrajetParLigneID">
 <xs:sequence>
 <xs:element name="id" type="xs:long" minOccurs="0"/>
@@ -349,6 +337,18 @@
 </xs:complexType>
 
 <xs:complexType name="RechercheTrajetParLigneIDResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:anyType" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="RecherchePlagesHorairesParFicheHoraire">
+<xs:sequence>
+<xs:element name="ficheHoraire" type="tns:ficheHoraire" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="RecherchePlagesHorairesParFicheHoraireResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:anyType" minOccurs="0" maxOccurs="unbounded"/>
 </xs:sequence>

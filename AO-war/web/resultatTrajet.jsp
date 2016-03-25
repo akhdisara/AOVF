@@ -142,7 +142,7 @@
                             <%}%>
                         </div>
                     </div>
-                        
+                    
                     <a href="Servlet?action=AvoirTitreTransport&l1=<%=l1%>&l2=<%=l2%>&D=<%=(String) request.getAttribute("depart1")%>&C=<%=(String) request.getAttribute("arrivee1")%>&A=<%=(String) request.getAttribute("arrivee2")%>&t1=<%=(String) request.getAttribute("tarif1")%>&t2=<%=(String) request.getAttribute("tarif2")%>" class="btn medium color right">Titre de transport</a>													           
                     <!--- //Content -->
                 </div>

@@ -10,7 +10,7 @@
             <div class="wrap">
                 <!-- Logo -->
                 <div class="logo">
-                    <a href="index.html" title="Transfers"><img src="images/transfers.jpg" alt="Transfers" /></a>
+                    <a href="" title="Transfers"><img src="images/transfers.jpg" alt="Transfers" /></a>
                 </div>
                 <!-- //Logo -->
                         <% Client cl = (Client) session.getAttribute("client");%>
@@ -31,7 +31,7 @@
                                 <li><a href="Servlet?action=listAbonnementsSTF" title="Post">Abonnements</a></li>
                             </ul>
                         </li>
-                        <li><a href="Servlet?action=AfficherQuestionnaire" title="Questionnaires">Questionnaire</a></li>
+                        <li><a href="Servlet?action=AfficherQuestionnaire" title="Enquête de satisfaction">Questionnaire</a></li>
                         
                         <% if (cl == null && e == null){%>
                             <li><a href="login.jsp" title="Contact">Connexion</a></li>

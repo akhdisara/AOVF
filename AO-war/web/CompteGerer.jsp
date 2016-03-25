@@ -11,14 +11,24 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <%@ include file="Navigation.jsp" %>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <jsp:useBean id="client" scope="request" class="Client"></jsp:useBean>
         <title>Gestion compte</title>
     </head>
     <body>
-        <%@ include file="Navigation.jsp" %>
         
-        <h1 id="h1">Gestion des informations bancaires</h1>
+        <!-- Main -->
+        <main class="main" role="main">
+            <!-- Page info -->
+            <header class="site-title color">
+                <div class="wrap">
+                    <div class="container">
+                        <h1>Gestion des informations bancaires</h1>
+                    </div>
+                </div>
+            </header>
+        
         <br><br>
         <div class ="text">
         <%
@@ -30,14 +40,21 @@
         <br><br>
         <%if(client.getLesComptesBancaires().isEmpty()){%>Aucun compte enregistré pour ce client<%}
         else {%>
-            <TABLE id="allTable">
-            <tr id="allTr">
-                <th>Id</th>
-                <th>Num compte</th>
-                <th>Titulaire</th>
-                <th>Banque</th>
-                <th>N°guichet</th>
-            </tr>
+            <!-- //Page info -->
+
+            <div class="wrap">	
+                <div class="row">
+                    <!--- Content -->
+                    <div class="content offset">
+
+                        <table class="hover">
+                            <tr>
+                                <th>Id</th>
+                                <th>Num compte</th>
+                                <th>Titulaire</th>
+                                <th>Banque</th>
+                                <th>N°guichet</th>
+                            </tr>
             <%
                 List<CompteBancaire> lesCpt=client.getLesComptesBancaires();
                 for(CompteBancaire cpt: lesCpt){%>
@@ -89,5 +106,10 @@
                 <input type="reset" value="Remettre à zéro"/>
                 <br/>
         </form>
+                </div>
+                </div>
+            </div>
+        </main>
+        <!-- //Main -->
     </body>
 </html>
